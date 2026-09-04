@@ -1,37 +1,44 @@
 {
   "name": "skillnest",
   "version": "1.0.0",
-  "description": "Micro skill marketplace built with TanStack Start, TypeScript, and Tailwind CSS.",
-  "type": "module",
+  "description": "React Native micro skill marketplace built with Expo, TypeScript, NativeWind, and TanStack Query.",
+  "main": "expo/AppEntry.js",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build && tsc --noEmit",
-    "preview": "vite preview"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "tanstack-start",
-    "react",
-    "tailwind",
+    "expo",
+    "react-native",
+    "nativewind",
+    "tanstack-query",
     "typescript",
     "marketplace"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@tanstack/react-router": "^1.170.32",
-    "@tanstack/react-start": "^1.168.49",
-    "lucide-react": "^1.41.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "@expo/vector-icons": "^15.0.2",
+    "@tanstack/react-query": "^5.102.8",
+    "expo": "^57.0.20",
+    "expo-font": "~57.0.3",
+    "expo-status-bar": "~57.0.1",
+    "nativewind": "^4.2.6",
+    "react": "19.2.3",
+    "react-dom": "^19.2.3",
+    "react-native": "0.86.3",
+    "react-native-reanimated": "4.5.1",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-worklets": "0.10.1"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "^26.4.1",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
-    "@vitejs/plugin-react": "^6.1.1",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^5.9.3",
-    "vite": "^8.2.2"
+    "babel-preset-expo": "^57.0.10",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwindcss": "^3.4.19",
+    "typescript": "~6.0.3"
   }
 }

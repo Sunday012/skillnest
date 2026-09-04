@@ -1,7 +1,8 @@
 node_modules
-.output
-.tanstack
+.expo
 dist
+web-build
+.native
 .env
 .env.*
 !.env.example
