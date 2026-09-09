@@ -18,12 +18,16 @@ Core product line: **"Show your skill. Get discovered. Get hired."**
 - **Backend:** NestJS (TypeScript), modular monolith — not a multi-language microservices split.
 - **Database access:** Prisma ORM → PostgreSQL.
 - **Hosting for dev:** Supabase (Postgres) + Upstash (Redis) — used instead of local Docker due to setup issues.
-- **Package manager:** pnpm (not npm).
+- **Package manager:** npm.
 - **Repo shape:** monorepo with shared types between backend and mobile/web app.
 - **Project folder:** `SkillNest Marketplace` (fresh build — not the old `Desktop/My Projects/SkillNest` folder).
 
 ## Current Sequencing
 **Frontend first, backend second.** All frontend pages/screens are being built and finalized before any backend/Prisma/schema work resumes. Do not start backend implementation until told the frontend phase is complete.
+
+## Platform-Specific Entry Flow (locked)
+- **Web:** opens on the full marketing landing page.
+- **Native (iOS/Android):** opens on a simple branded splash screen (the "S" logo mark alongside the "SkillNest" wordmark) — no landing page on native — then proceeds straight to Sign Up / Log In.
 
 ## Design Direction (locked)
 The overall visual identity should follow the style of a reference project called **Primus** (a forex trading brand site Gideon built), adapted to SkillNest's content. This applies **app-wide, across every page** — not just the landing page.

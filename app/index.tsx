@@ -7,6 +7,7 @@ import { FAQItem } from '../src/components/landing/FAQItem';
 import { ProcessCard } from '../src/components/landing/ProcessCard';
 import { PricingCard } from '../src/components/landing/PricingCard';
 import { RoadmapItem } from '../src/components/landing/RoadmapItem';
+import { HeroVisual } from '../src/components/landing/HeroVisual';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 
@@ -111,33 +112,19 @@ export default function LandingPage() {
           </View>
 
           {/* Hero Visual */}
-          <View className="flex-1 h-[320px] md:h-[440px] items-center justify-center relative mt-5 md:mt-0">
-            <LinearGradient
-              colors={['rgba(236,18,87,0.22)', 'rgba(236,18,87,0)']}
-              start={{ x: 0.35, y: 0.3 }}
-              end={{ x: 0.65, y: 0.65 }}
-              className="absolute w-[360px] h-[360px] rounded-full blur-xl"
-            />
-            <View className="bg-white border border-border rounded-[18px] p-[22px] w-[280px] rotate-[-4deg]" style={Platform.select({ web: { boxShadow: '0 30px 60px -20px rgba(16,23,42,.22)' }, default: { elevation: 15, shadowColor: '#10172A', shadowOffset: { width: 0, height: 15 }, shadowOpacity: 0.22, shadowRadius: 30 }}) as any}>
-              <View className="absolute -top-4 -right-4 bg-navy px-3.5 py-2 rounded-full flex-row items-center gap-1.5" style={{ elevation: 5, shadowColor: '#0B1220', shadowOpacity: 0.4, shadowRadius: 12, shadowOffset: { width: 0, height: 5 }}}>
-                <Text className="text-white text-[12px] font-bold">✓ Verified</Text>
-              </View>
-              <View className="w-11 h-11 rounded-full bg-navy items-center justify-center mb-3.5">
-                <Text className="text-white font-bold">MV</Text>
-              </View>
-              <Text className="font-manrope font-extrabold text-[16px] text-ink mb-1">Mira Vance</Text>
-              <Text className="text-[13px] text-gray-body mb-3.5">Brand Designer & Identity Systems</Text>
-              <Text className="text-[13px] text-[#F5A623] mb-4">★★★★★ 4.9 (212)</Text>
-              <View className="border-t border-border pt-3.5 flex-row justify-between items-center">
-                <Text className="text-[13px] text-gray-body">Starting at</Text>
-                <Text className="font-manrope font-extrabold text-[18px] text-ink">$450</Text>
-              </View>
-              <View className="absolute -bottom-4 -left-7 bg-white border border-border px-4 py-2.5 rounded-xl flex-row items-center gap-2" style={{ elevation: 5, shadowColor: '#10172A', shadowOpacity: 0.25, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }}}>
-                <View className="w-2 h-2 rounded-full bg-green" />
-                <Text className="text-[13px] font-bold text-ink">Held in escrow</Text>
-              </View>
-            </View>
-          </View>
+          <HeroVisual 
+            variant="talent"
+            topPillText="Verified"
+            topPillIcon="verified"
+            avatarText="MV"
+            title="Mira Vance"
+            subtitle="Brand Designer & Identity Systems"
+            tagOrStat="★★★★★ 4.9 (212)"
+            priceLabel="Starting at"
+            price="$450"
+            bottomPillText="Held in escrow"
+            bottomPillIcon="dot"
+          />
         </View>
 
         {/* Stats */}

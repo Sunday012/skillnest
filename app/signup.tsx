@@ -1,10 +1,11 @@
 import { View, Text, ScrollView, Platform, KeyboardAvoidingView, Pressable } from 'react-native';
 import { Button } from '../src/components/Button';
 import { Input } from '../src/components/Input';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 
 export default function SignupScreen() {
+  const router = useRouter();
   const [role, setRole] = useState<'client' | 'freelancer'>('client');
 
   return (
@@ -59,7 +60,13 @@ export default function SignupScreen() {
             secureTextEntry 
           />
           
-          <Button title="Create Account" onPress={() => {}} className="mb-6 mt-2" />
+          <Button 
+            title="Create Account" 
+            onPress={() => {
+              router.push(`/onboarding/${role}`);
+            }} 
+            className="mb-6 mt-2" 
+          />
           
           <View className="flex-row justify-center">
             <Text className="text-gray-body">Already have an account? </Text>

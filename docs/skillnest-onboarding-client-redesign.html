@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Client Onboarding (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --white:#FFFFFF; --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+
+  /* ---- Dev-only step toggle (NOT part of the design — remove in RN build) ---- */
+  .dev-toggle{position:fixed;top:14px;right:14px;z-index:100;background:var(--navy);border-radius:100px;
+    padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .dev-toggle button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:12px;padding:7px 14px;border-radius:100px;cursor:pointer;}
+  .dev-toggle button.active{background:var(--pink);color:#fff;}
+  .dev-label{position:fixed;top:52px;right:14px;z-index:100;font-size:11px;color:var(--gray-400);
+    font-family:'Inter',sans-serif;background:#fff;padding:4px 10px;border-radius:6px;border:1px solid var(--border);}
+
+  /* ---- Wizard chrome ---- */
+  .wizard-top{background:var(--white);border-bottom:1px solid var(--border);}
+  .top-inner{max-width:1040px;margin:0 auto;padding:18px 24px 16px;display:flex;justify-content:space-between;align-items:center;}
+  .back-link{display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;color:var(--gray-600);cursor:pointer;}
+  .step-label{font-weight:600;font-size:14px;color:var(--gray-400);}
+  .progress-track{max-width:1040px;margin:0 auto;height:6px;background:var(--border);border-radius:100px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--pink-dark));border-radius:100px;transition:width .3s ease;}
+
+  .wizard-body{max-width:1040px;margin:0 auto;padding:64px 24px 140px;}
+  .step-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;min-height:52vh;}
+
+  .eyebrow-badge{display:inline-flex;align-items:center;gap:8px;background:var(--pink-tint);color:var(--pink-dark);
+    padding:7px 15px;border-radius:100px;font-weight:700;font-size:13px;margin-bottom:22px;}
+  .step-grid h1{font-size:40px;font-weight:800;line-height:1.12;margin-bottom:16px;}
+  .step-grid h1 .pink{color:var(--pink);}
+  .step-grid > div > p.lead{font-size:16.5px;color:var(--gray-600);max-width:440px;margin-bottom:32px;}
+
+  .feature-list{display:flex;flex-direction:column;gap:18px;}
+  .feature-item{display:flex;gap:14px;align-items:flex-start;}
+  .feature-icon{width:38px;height:38px;flex-shrink:0;border-radius:10px;background:var(--pink-tint);
+    display:flex;align-items:center;justify-content:center;font-size:17px;}
+  .feature-item h4{font-size:15.5px;font-weight:700;margin-bottom:2px;}
+  .feature-item p{font-size:14px;color:var(--gray-600);}
+
+  /* ---- Decorative side visual ---- */
+  .visual{position:relative;height:400px;display:flex;align-items:center;justify-content:center;}
+  .blob{position:absolute;width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(236,18,87,.18), rgba(236,18,87,0) 65%);}
+  .job-card{position:relative;width:290px;background:#fff;border:1px solid var(--border);border-radius:18px;
+    padding:22px;box-shadow:0 30px 60px -20px rgba(16,23,42,.22);transform:rotate(3deg);}
+  .job-card .tag{display:inline-block;background:var(--pink-tint);color:var(--pink-dark);font-size:11px;
+    font-weight:700;padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+  .job-card h4{font-size:16px;margin-bottom:6px;}
+  .job-card .meta{font-size:13px;color:var(--gray-600);margin-bottom:16px;}
+  .job-card .row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:14px;}
+  .job-card .budget{font-weight:800;font-size:17px;}
+  .avatars{display:flex;margin-left:8px;}
+  .avatars span{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;border:2px solid #fff;margin-left:-8px;}
+  .float-pill{position:absolute;background:#fff;border:1px solid var(--border);padding:9px 14px;border-radius:12px;
+    font-size:12.5px;font-weight:700;box-shadow:0 20px 40px -16px rgba(16,23,42,.25);display:flex;align-items:center;gap:7px;}
+  .float-pill.top{top:-14px;left:-24px;}
+  .float-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green);}
+
+  /* ---- Category grid (Step 2) ---- */
+  .cat-head{max-width:640px;margin:0 auto 40px;text-align:center;}
+  .cat-head h1{font-size:34px;font-weight:800;margin-bottom:10px;}
+  .cat-head p{color:var(--gray-600);font-size:16px;}
+  .cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+  .cat-card{border:1.5px solid var(--border);border-radius:14px;padding:20px 12px;text-align:center;cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;position:relative;background:#fff;}
+  .cat-card:hover{border-color:#C9CEDB;}
+  .cat-card.selected{border-color:var(--pink);background:var(--pink-tint);}
+  .cat-card .check{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--pink);
+    color:#fff;font-size:11px;display:none;align-items:center;justify-content:center;font-weight:800;}
+  .cat-card.selected .check{display:flex;}
+  .cat-icon{font-size:24px;margin-bottom:10px;}
+  .cat-card span{font-size:13px;font-weight:600;}
+  .skip-link{display:block;text-align:center;margin-top:28px;color:var(--gray-600);font-weight:600;font-size:14px;}
+  .skip-link:hover{color:var(--pink);}
+
+  /* ---- Fixed bottom bar ---- */
+  .wizard-bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);
+    padding:18px 24px;z-index:20;}
+  .bottom-inner{max-width:1040px;margin:0 auto;display:flex;justify-content:flex-end;}
+  .btn-continue{background:var(--pink);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:15.5px;
+    padding:15px 40px;border-radius:10px;border:none;cursor:pointer;box-shadow:0 10px 24px -10px rgba(236,18,87,.55);
+    transition:background .15s ease, transform .15s ease;}
+  .btn-continue:hover{background:var(--pink-dark);transform:translateY(-1px);}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  @media(max-width:760px){
+    .step-grid{grid-template-columns:1fr;gap:36px;}
+    .visual{height:280px;order:-1;}
+    .step-grid h1{font-size:30px;}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="dev-toggle">
+  <button class="active" onclick="showStep(1)">Step 1</button>
+  <button onclick="showStep(2)">Step 2</button>
+</div>
+<div class="dev-label">Dev toggle only — not part of the UI</div>
+
+<!-- ============ STEP 1: WELCOME ============ -->
+<div id="step1" class="view active">
+  <div class="wizard-top">
+    <div class="top-inner">
+      <div class="back-link">← Back</div>
+      <div class="step-label">Step 1 of 2</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+  </div>
+
+  <div class="wizard-body">
+    <div class="step-grid">
+      <div>
+        <div class="eyebrow-badge">👋 You're in</div>
+        <h1>Welcome to <span class="pink">SkillNest.</span></h1>
+        <p class="lead">You're joining a global marketplace of vetted freelancers. Here's what makes hiring here different.</p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">📝</div>
+            <div><h4>Post a job in minutes</h4><p>Describe what you need — freelancers apply, or we recommend a match.</p></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔒</div>
+            <div><h4>Escrow-protected payments</h4><p>Funds release only when you approve each milestone. No surprises.</p></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">✅</div>
+            <div><h4>Verified freelancers only</h4><p>Every professional completes identity verification before taking a job.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual">
+        <div class="blob"></div>
+        <div class="job-card">
+          <div class="float-pill top"><span class="dot"></span> Escrow funded</div>
+          <span class="tag">Design</span>
+          <h4>Rebrand for a coffee roaster</h4>
+          <div class="meta">Posted 2 min ago · Remote</div>
+          <div class="row">
+            <div class="avatars"><span>M</span><span>D</span><span>+9</span></div>
+            <span class="budget">$3,400</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wizard-bottom">
+    <div class="bottom-inner"><button class="btn-continue" onclick="showStep(2)">Continue →</button></div>
+  </div>
+</div>
+
+<!-- ============ STEP 2: CATEGORY PICKER ============ -->
+<div id="step2" class="view">
+  <div class="wizard-top">
+    <div class="top-inner">
+      <div class="back-link" onclick="showStep(1)">← Back</div>
+      <div class="step-label">Step 2 of 2</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+
+  <div class="wizard-body">
+    <div class="cat-head">
+      <div class="eyebrow-badge" style="margin-bottom:14px;">Personalize your feed</div>
+      <h1>What are you looking to hire for?</h1>
+      <p>Select all that apply — we'll use this to tailor your homepage. You can change this anytime.</p>
+    </div>
+
+    <div class="cat-grid" id="catGrid">
+      <!-- populated by JS -->
+    </div>
+
+    <a class="skip-link" href="#">Skip for now</a>
+  </div>
+
+  <div class="wizard-bottom">
+    <div class="bottom-inner"><button class="btn-continue">Finish →</button></div>
+  </div>
+</div>
+
+<script>
+  function showStep(n){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('step'+n).classList.add('active');
+    document.querySelectorAll('.dev-toggle button').forEach((b,i)=>b.classList.toggle('active', i===n-1));
+    window.scrollTo(0,0);
+  }
+
+  const categories = [
+    ['🎥','Videography'],['✂️','Video Editing'],['📷','Photography'],['🎨','Graphic Design'],
+    ['🖥️','Web Design'],['💻','Software Development'],['✍️','Script Writing'],['📝','Copywriting'],
+    ['📱','UGC Creation'],['🎬','Animation'],['🎙️','Voice Over'],['📣','Social Media Mgmt'],
+    ['📈','Digital Marketing'],['🗂️','Virtual Assistance'],['✨','Other Digital Skills']
+  ];
+  const grid = document.getElementById('catGrid');
+  categories.forEach(([icon,label])=>{
+    const card = document.createElement('div');
+    card.className = 'cat-card';
+    card.innerHTML = `<div class="check">✓</div><div class="cat-icon">${icon}</div><span>${label}</span>`;
+    card.onclick = () => card.classList.toggle('selected');
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
