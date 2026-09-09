@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Hire skilled hands. Get real work done.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220;
+    --navy-soft:#101B2E;
+    --pink:#EC1257;
+    --pink-dark:#C10E48;
+    --pink-tint:#FDE8EF;
+    --ink:#10172A;
+    --gray-600:#5B6472;
+    --gray-400:#93A0B4;
+    --bg-alt:#F6F7FB;
+    --border:#E7E9F1;
+    --green:#17A34A;
+    --white:#FFFFFF;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;color:var(--ink);letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    display:inline-block;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;
+    letter-spacing:0.09em;text-transform:uppercase;color:var(--pink);margin-bottom:14px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:10px;
+    font-family:'Inter',sans-serif;font-weight:700;font-size:15px;cursor:pointer;border:2px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--pink);color:var(--white);box-shadow:0 8px 20px -8px rgba(236,18,87,.55);}
+  .btn-primary:hover{background:var(--pink-dark);}
+  .btn-outline{background:var(--white);color:var(--ink);border-color:var(--border);}
+  .btn-outline:hover{border-color:var(--ink);}
+  .btn-outline.on-dark{background:transparent;color:var(--white);border-color:rgba(255,255,255,.28);}
+  .btn-outline.on-dark:hover{border-color:var(--white);}
+
+  /* ---- Utility bar ---- */
+  .utility-bar{background:var(--navy);color:var(--gray-400);font-size:13px;}
+  .utility-bar .wrap{display:flex;justify-content:space-between;align-items:center;height:38px;}
+  .utility-bar span{margin-right:20px;}
+  .utility-bar a{color:var(--gray-400);}
+  .utility-bar a:hover{color:var(--white);}
+  .utility-links{display:flex;gap:20px;}
+
+  /* ---- Nav ---- */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Manrope',sans-serif;font-weight:800;font-size:20px;}
+  .logo-mark{width:34px;height:34px;border-radius:9px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;}
+  .nav-links{display:flex;gap:34px;font-weight:600;font-size:15px;color:var(--ink);}
+  .nav-links a:hover{color:var(--pink);}
+  .nav-right{display:flex;align-items:center;gap:22px;}
+  .nav-login{font-weight:700;font-size:15px;}
+  .menu-toggle{display:none;background:none;border:none;font-size:26px;cursor:pointer;color:var(--ink);}
+
+  /* ---- Hero ---- */
+  .hero{padding:88px 0 0;overflow:hidden;position:relative;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:var(--pink-tint);color:var(--pink-dark);
+    padding:8px 16px;border-radius:100px;font-weight:700;font-size:14px;margin-bottom:26px;}
+  .hero h1{font-size:56px;line-height:1.06;font-weight:800;margin-bottom:22px;}
+  .hero h1 .pink{color:var(--pink);}
+  .hero p.lead{font-size:19px;color:var(--gray-600);max-width:520px;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:14px;margin-bottom:28px;flex-wrap:wrap;}
+  .trust-row{display:flex;gap:26px;flex-wrap:wrap;font-size:14px;color:var(--gray-600);font-weight:600;}
+  .trust-row span{display:flex;align-items:center;gap:7px;}
+  .check{color:var(--green);font-weight:800;}
+
+  .hero-visual{position:relative;height:440px;display:flex;align-items:center;justify-content:center;}
+  .blob{position:absolute;width:360px;height:360px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(236,18,87,.22), rgba(236,18,87,0) 65%);filter:blur(4px);}
+  .gig-card{position:relative;width:280px;background:var(--white);border:1px solid var(--border);border-radius:18px;
+    box-shadow:0 30px 60px -20px rgba(16,23,42,.22);padding:22px;transform:rotate(-4deg);}
+  .gig-card .avatar{width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;
+    display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .gig-card h4{font-size:16px;margin-bottom:4px;}
+  .gig-card .role{font-size:13px;color:var(--gray-600);margin-bottom:14px;}
+  .gig-card .stars{color:#F5A623;font-size:13px;margin-bottom:16px;}
+  .gig-card .price-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:14px;}
+  .gig-card .price{font-weight:800;font-size:18px;}
+  .verified-pill{position:absolute;top:-16px;right:-18px;background:var(--navy);color:#fff;font-size:12px;
+    font-weight:700;padding:8px 14px;border-radius:100px;display:flex;align-items:center;gap:6px;box-shadow:0 10px 24px -8px rgba(11,18,32,.4);}
+  .escrow-pill{position:absolute;bottom:14px;left:-30px;background:#fff;border:1px solid var(--border);
+    padding:10px 16px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 20px 40px -16px rgba(16,23,42,.25);
+    display:flex;align-items:center;gap:8px;}
+  .escrow-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
+
+  /* ---- Stats band ---- */
+  .stats{background:var(--navy);padding:52px 0;margin-top:80px;}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;}
+  .stats-grid div + div{border-left:1px solid rgba(255,255,255,.12);}
+  .stat-num{font-family:'Manrope',sans-serif;font-weight:800;font-size:38px;color:#fff;}
+  .stat-label{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pink);margin-top:6px;}
+
+  /* ---- Section header ---- */
+  section{padding:96px 0;}
+  .section-alt{background:var(--bg-alt);}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 56px;}
+  .sec-head h2{font-size:38px;font-weight:800;margin-bottom:14px;}
+  .sec-head p{color:var(--gray-600);font-size:17px;}
+
+  /* ---- Process ---- */
+  .process-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .process-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
+    padding:34px 28px;position:relative;overflow:hidden;}
+  .process-num{position:absolute;top:14px;right:20px;font-family:'Manrope',sans-serif;font-weight:800;
+    font-size:56px;color:var(--pink-tint);line-height:1;}
+  .process-icon{width:48px;height:48px;border-radius:12px;background:var(--pink);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:22px;}
+  .process-card h3{font-size:20px;margin-bottom:10px;}
+  .process-card p{color:var(--gray-600);font-size:15px;}
+
+  /* ---- Roadmap ---- */
+  .roadmap{position:relative;}
+  .roadmap-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--border);transform:translateX(-50%);}
+  .roadmap-line-fill{position:absolute;left:0;top:0;width:100%;height:26%;background:var(--pink);}
+  .rm-item{display:grid;grid-template-columns:1fr 60px 1fr;align-items:start;margin-bottom:64px;}
+  .rm-item:last-child{margin-bottom:0;}
+  .rm-content{max-width:380px;}
+  .rm-item.right .rm-content{grid-column:3;}
+  .rm-item.left .rm-content{grid-column:1;text-align:right;margin-left:auto;}
+  .rm-quarter{font-family:'Inter',sans-serif;font-weight:700;font-size:14px;color:var(--pink);margin-bottom:8px;}
+  .rm-content h3{font-size:21px;margin-bottom:10px;}
+  .rm-content p{color:var(--gray-600);font-size:15px;}
+  .rm-dot{grid-column:2;width:22px;height:22px;border-radius:50%;border:3px solid var(--pink);background:#fff;
+    margin:4px auto 0;position:relative;z-index:2;}
+  .rm-dot.active{background:var(--pink);box-shadow:0 0 0 6px var(--pink-tint);}
+  .rm-dot.future{border-color:var(--border);}
+
+  /* ---- Platforms ---- */
+  .platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .platform-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:30px;}
+  .platform-card .icn{font-size:26px;margin-bottom:18px;}
+  .platform-card h3{font-size:19px;margin-bottom:10px;}
+  .platform-card p{color:var(--gray-600);font-size:14.5px;margin-bottom:18px;}
+  .learn{color:var(--pink);font-weight:700;font-size:14px;}
+
+  /* ---- Pricing ---- */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;}
+  .price-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:34px 28px;
+    display:flex;flex-direction:column;}
+  .price-card.pop{border:2px solid var(--pink);position:relative;box-shadow:0 24px 50px -24px rgba(236,18,87,.35);}
+  .pop-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--pink);color:#fff;
+    font-size:12px;font-weight:700;padding:6px 16px;border-radius:100px;letter-spacing:.03em;}
+  .price-card h3{font-size:19px;margin-bottom:6px;}
+  .price-card .sub{color:var(--gray-600);font-size:14px;margin-bottom:18px;}
+  .price-card .amount{font-family:'Manrope',sans-serif;font-weight:800;font-size:34px;margin-bottom:22px;}
+  .price-card .amount small{font-family:'Inter',sans-serif;font-weight:600;font-size:15px;color:var(--gray-600);}
+  .price-list{list-style:none;margin-bottom:26px;flex:1;}
+  .price-list li{display:flex;gap:10px;font-size:14.5px;color:var(--ink);margin-bottom:12px;}
+  .price-list .tick{color:var(--green);font-weight:800;}
+
+  /* ---- FAQ ---- */
+  .faq-wrap{max-width:760px;margin:0 auto;}
+  details{border-bottom:1px solid var(--border);padding:22px 0;}
+  details:first-child{border-top:1px solid var(--border);}
+  summary{cursor:pointer;font-weight:700;font-size:17px;display:flex;justify-content:space-between;align-items:center;list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:'+';font-size:22px;color:var(--gray-400);font-weight:400;transition:transform .2s ease;}
+  details[open] summary::after{content:'–';}
+  details p{color:var(--gray-600);margin-top:14px;font-size:15px;max-width:640px;}
+
+  /* ---- Trust band ---- */
+  .trust-band{background:var(--navy);color:#fff;padding:56px 0;}
+  .trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .trust-grid h4{font-size:17px;margin-bottom:10px;color:#fff;}
+  .trust-grid p{color:var(--gray-400);font-size:14.5px;}
+
+  /* ---- Footer ---- */
+  footer{background:var(--navy);color:var(--gray-400);padding:64px 0 30px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:44px;}
+  .footer-grid h5{color:#fff;font-size:13px;letter-spacing:.06em;margin-bottom:16px;}
+  .footer-grid a{display:block;color:var(--gray-400);font-size:14px;margin-bottom:11px;}
+  .footer-grid a:hover{color:#fff;}
+  .footer-logo{display:flex;align-items:center;gap:10px;color:#fff;font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;margin-bottom:14px;}
+  .footer-tag{font-size:14px;max-width:260px;}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;font-size:12.5px;color:var(--gray-400);}
+
+  .back-top{position:fixed;bottom:26px;right:26px;width:46px;height:46px;border-radius:50%;background:var(--pink);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;
+    box-shadow:0 12px 28px -10px rgba(236,18,87,.6);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:60;border:none;}
+  .back-top.show{opacity:1;pointer-events:auto;}
+
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{height:320px;margin-top:20px;}
+    .hero h1{font-size:38px;}
+    .nav-links{display:none;}
+    .menu-toggle{display:block;}
+    .stats-grid{grid-template-columns:repeat(2,1fr);gap:24px;}
+    .stats-grid div:nth-child(2){border-left:1px solid rgba(255,255,255,.12);}
+    .stats-grid div:nth-child(3){border-left:none;}
+    .process-grid,.platform-grid,.price-grid{grid-template-columns:1fr;}
+    .rm-item,.rm-item.left,.rm-item.right{grid-template-columns:44px 1fr;}
+    .rm-item .rm-content, .rm-item.left .rm-content, .rm-item.right .rm-content{grid-column:2;text-align:left;margin-left:0;max-width:none;}
+    .rm-dot{grid-column:1;margin:4px 0 0;}
+    .roadmap-line{left:22px;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .trust-grid{grid-template-columns:1fr;}
+    .utility-bar span:nth-child(2){display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <div><span>🌍 Trusted in 45+ countries</span><span>🔒 Escrow-protected payments</span></div>
+    <div class="utility-links"><a href="#">Become a Seller</a><a href="#">For Business</a><a href="#">EN ▾</a></div>
+  </div>
+</div>
+
+<header class="nav">
+  <nav class="wrap">
+    <div class="logo"><div class="logo-mark">S</div>SkillNest</div>
+    <div class="nav-links">
+      <a href="#process">How it works</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <a class="nav-login" href="#">Log in</a>
+      <a class="btn btn-primary" href="#">Get Started →</a>
+    </div>
+    <button class="menu-toggle">☰</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="badge">⭐ Rated 4.9 by 12,000+ professionals</div>
+      <h1>Hire skilled hands.<br><span class="pink">Get real work done.</span></h1>
+      <p class="lead">SkillNest connects vetted freelancers with clients through milestone escrow — work gets delivered, funds move safely, and nobody chases an invoice.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#">Post a Job →</a>
+        <a class="btn btn-outline" href="#">Browse Talent</a>
+      </div>
+      <div class="trust-row">
+        <span><span class="check">✓</span> Milestone escrow</span>
+        <span><span class="check">✓</span> Identity-verified freelancers</span>
+        <span><span class="check">✓</span> 5% platform fee</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="blob"></div>
+      <div class="gig-card">
+        <div class="verified-pill">✓ Verified</div>
+        <div class="avatar">MV</div>
+        <h4>Mira Vance</h4>
+        <div class="role">Brand Designer &amp; Identity Systems</div>
+        <div class="stars">★★★★★ 4.9 (212)</div>
+        <div class="price-row">
+          <span style="font-size:13px;color:var(--gray-600);">Starting at</span>
+          <span class="price">$450</span>
+        </div>
+        <div class="escrow-pill"><span class="dot"></span> Held in escrow</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap stats-grid">
+    <div><div class="stat-num">12k+</div><div class="stat-label">Verified Pros</div></div>
+    <div><div class="stat-num">98%</div><div class="stat-label">On-Time Delivery</div></div>
+    <div><div class="stat-num">$2.4M</div><div class="stat-label">Escrowed Monthly</div></div>
+    <div><div class="stat-num">45</div><div class="stat-label">Countries</div></div>
+  </div>
+</div>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">The Process</div>
+      <h2>From Brief to Delivery in Three Steps</h2>
+      <p>No guesswork, no chasing invoices — just a clear path from posting to payment.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-card">
+        <div class="process-num">01</div>
+        <div class="process-icon">📝</div>
+        <h3>Post or Browse</h3>
+        <p>Describe the job you need done, or explore ready-made gigs from vetted specialists across every category.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-num">02</div>
+        <div class="process-icon">💰</div>
+        <h3>Fund the Milestone</h3>
+        <p>Break the budget into stages. Funds sit in escrow — not with us, not with the freelancer — until you approve.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-num">03</div>
+        <div class="process-icon">✅</div>
+        <h3>Approve &amp; Release</h3>
+        <p>Review each delivery against the brief. Payment releases the moment you're satisfied, milestone by milestone.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" class="section-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Roadmap</div>
+      <h2>Building the Future of Freelance Work</h2>
+      <p>Here's what's coming next as we grow the platform with our community.</p>
+    </div>
+    <div class="roadmap">
+      <div class="roadmap-line"><div class="roadmap-line-fill"></div></div>
+
+      <div class="rm-item left">
+        <div class="rm-content">
+          <div class="rm-quarter">Q4 2026</div>
+          <h3>Video Portfolios</h3>
+          <p>Freelancers showcase real work through short video reels alongside images — not just static thumbnails.</p>
+        </div>
+        <div class="rm-dot active"></div>
+        <div></div>
+      </div>
+
+      <div class="rm-item right">
+        <div></div>
+        <div class="rm-dot"></div>
+        <div class="rm-content">
+          <div class="rm-quarter">Q1 2027</div>
+          <h3>Smart Talent Matching</h3>
+          <p>Post a job and get freelancer recommendations ranked by skill fit, budget, and availability — instantly.</p>
+        </div>
+      </div>
+
+      <div class="rm-item left">
+        <div class="rm-content">
+          <div class="rm-quarter">Q2 2027</div>
+          <h3>Native Mobile Apps</h3>
+          <p>iOS and Android apps so freelancers can manage gigs, chat with clients, and get paid from anywhere.</p>
+        </div>
+        <div class="rm-dot future"></div>
+        <div></div>
+      </div>
+
+      <div class="rm-item right">
+        <div></div>
+        <div class="rm-dot future"></div>
+        <div class="rm-content">
+          <div class="rm-quarter">Q3 2027</div>
+          <h3>Team Accounts</h3>
+          <p>Agencies manage multiple freelancers and shared billing under one workspace, with role-based access.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="platforms">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Built For How You Work</div>
+      <h2>Work From Anywhere</h2>
+      <p>Manage gigs, clients, and payments across every device you use.</p>
+    </div>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <div class="icn">💻</div>
+        <h3>Web App</h3>
+        <p>Full marketplace access from any browser. Post jobs, browse talent, and manage orders — no downloads required.</p>
+        <span class="learn">Learn more →</span>
+      </div>
+      <div class="platform-card">
+        <div class="icn">📱</div>
+        <h3>Mobile Apps</h3>
+        <p>iOS and Android apps built for on-the-go work — chat, deliver, and get paid without opening a laptop.</p>
+        <span class="learn">Learn more →</span>
+      </div>
+      <div class="platform-card">
+        <div class="icn">💬</div>
+        <h3>Real-Time Messaging</h3>
+        <p>Discuss scope, share files, and stay aligned with clients or freelancers in one running conversation per order.</p>
+        <span class="learn">Learn more →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="section-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Plans</div>
+      <h2>Grow Without the Overhead</h2>
+      <p>Start free. Upgrade when unlimited applications and priority ranking start paying for themselves.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Free</h3>
+        <div class="sub">Perfect for getting started.</div>
+        <div class="amount">$0</div>
+        <ul class="price-list">
+          <li><span class="tick">✓</span> Post &amp; apply to gigs</li>
+          <li><span class="tick">✓</span> Standard search ranking</li>
+          <li><span class="tick">✓</span> Escrow-protected orders</li>
+          <li><span class="tick">✓</span> Ads shown between sessions</li>
+        </ul>
+        <a class="btn btn-outline" href="#">Get Started</a>
+      </div>
+      <div class="price-card pop">
+        <div class="pop-badge">MOST POPULAR</div>
+        <h3>Premium Monthly</h3>
+        <div class="sub">For freelancers ready to scale.</div>
+        <div class="amount">$5<small>/month</small></div>
+        <ul class="price-list">
+          <li><span class="tick">✓</span> Unlimited job applications</li>
+          <li><span class="tick">✓</span> No advertisements</li>
+          <li><span class="tick">✓</span> Higher ranking priority</li>
+          <li><span class="tick">✓</span> Gig visibility boosts</li>
+          <li><span class="tick">✓</span> Premium profile badge</li>
+        </ul>
+        <a class="btn btn-primary" href="#">Go Premium</a>
+      </div>
+      <div class="price-card">
+        <h3>Premium Quarterly</h3>
+        <div class="sub">Save with quarterly billing.</div>
+        <div class="amount">$12.99<small>/3 months</small></div>
+        <ul class="price-list">
+          <li><span class="tick">✓</span> Everything in Premium</li>
+          <li><span class="tick">✓</span> ~13% cheaper than monthly</li>
+          <li><span class="tick">✓</span> Priority support</li>
+        </ul>
+        <a class="btn btn-outline" href="#">Choose Quarterly</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Support</div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-wrap">
+      <details open>
+        <summary>How does escrow protect my payment?</summary>
+        <p>When a milestone is funded, money moves into a secure escrow account — not to the freelancer and not to SkillNest. It only releases once you review and approve the delivered work.</p>
+      </details>
+      <details>
+        <summary>What happens if there's a dispute?</summary>
+        <p>Either side can open a dispute on a milestone. Funds stay frozen while a mediator reviews the evidence submitted by both parties before releasing or refunding.</p>
+      </details>
+      <details>
+        <summary>How much does SkillNest charge?</summary>
+        <p>SkillNest takes a small commission on completed transactions. Freelancers can also opt into a Premium plan for unlimited applications and higher visibility.</p>
+      </details>
+      <details>
+        <summary>Can I hire freelancers from anywhere?</summary>
+        <p>Yes — SkillNest is a global marketplace. You can filter talent by location, or set your job to remote-only if location doesn't matter.</p>
+      </details>
+      <details>
+        <summary>What if I'm not satisfied with the delivery?</summary>
+        <p>You can request revisions within the scope agreed upfront, or open a dispute if the delivery doesn't match what was promised in the milestone.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="trust-band">
+  <div class="wrap trust-grid">
+    <div>
+      <h4>🔒 Escrow Protection</h4>
+      <p>Funds are held securely until you approve each milestone, so payment always matches delivered work — never before, never blind.</p>
+    </div>
+    <div>
+      <h4>🛡 Verified Professionals</h4>
+      <p>Every freelancer completes identity verification before earning the verified badge, so you know exactly who you're working with.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><div class="logo-mark">S</div>SkillNest</div>
+        <p class="footer-tag">The trusted way to hire freelancers and get hired — backed by milestone escrow.</p>
+      </div>
+      <div>
+        <h5>CATEGORIES</h5>
+        <a href="#">Design</a><a href="#">Development</a><a href="#">Writing</a><a href="#">Marketing</a><a href="#">Video</a><a href="#">AI &amp; Data</a>
+      </div>
+      <div>
+        <h5>COMPANY</h5>
+        <a href="#">About SkillNest</a><a href="#">Contact Us</a><a href="#">Careers</a><a href="#">Become a Seller</a>
+      </div>
+      <div>
+        <h5>LEGAL</h5>
+        <a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a><a href="#">Trust &amp; Safety</a><a href="#">Dispute Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      SkillNest is a marketplace connecting independent freelancers with clients worldwide. Freelancers are independent contractors, not employees of SkillNest.<br><br>
+      © 2026 SkillNest. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" aria-label="Back to top">↑</button>
+
+<script>
+  const backTop = document.querySelector('.back-top');
+  window.addEventListener('scroll', () => {
+    backTop.classList.toggle('show', window.scrollY > 500);
+  });
+  backTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  menuToggle.addEventListener('click', () => {
+    const open = navLinks.style.display === 'flex';
+    navLinks.style.display = open ? 'none' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position = 'absolute';
+    navLinks.style.top = '76px';
+    navLinks.style.left = '0';
+    navLinks.style.right = '0';
+    navLinks.style.background = '#fff';
+    navLinks.style.padding = '20px 24px';
+    navLinks.style.borderBottom = '1px solid var(--border)';
+    navLinks.style.gap = '18px';
+  });
+</script>
+
+</body>
+</html>
