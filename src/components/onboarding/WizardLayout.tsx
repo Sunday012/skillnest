@@ -59,14 +59,15 @@ export function WizardLayout({
           </View>
         </View>
         
-        <View className="h-1.5 w-full bg-bg-alt rounded-full overflow-hidden">
-          <LinearGradient
-            colors={['#EC1257', '#C10E48']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            className="h-full rounded-full transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
+        <View className="h-1.5 w-full bg-border rounded-full overflow-hidden">
+          <View style={{ width: `${progress}%`, height: '100%' }}>
+            <LinearGradient
+              colors={['#EC1257', '#C10E48']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </View>
         </View>
       </View>
 
