@@ -72,7 +72,7 @@ export function WizardLayout({
       </View>
 
       <ScrollView contentContainerClassName="flex-grow px-6 py-8 pb-32">
-        <View className="mx-auto w-full max-w-xl">
+        <View className="mx-auto w-full max-w-5xl">
           <Text className="text-3xl font-manrope font-extrabold text-ink mb-2">
             {title}
           </Text>
@@ -88,7 +88,7 @@ export function WizardLayout({
 
       {/* Bottom Fixed Action Bar */}
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-border p-6 pb-8 z-20">
-        <View className="mx-auto w-full max-w-xl flex-row items-center gap-4">
+        <View className="mx-auto w-full max-w-5xl flex-row items-center gap-4">
           <Button 
             title={nextLabel} 
             onPress={onNext} 

@@ -16,9 +16,10 @@ export function RadioCard({ title, description, isSelected, onSelect, className 
       className={`p-4 rounded-xl border-2 mb-3 ${
         isSelected ? 'border-pink bg-pink-tint' : 'border-border bg-white'
       } ${className}`}
+      style={className.includes('flex-1') ? { flex: 1 } : undefined}
     >
       <View className="flex-row items-center justify-between">
-        <View className="flex-1 pr-4">
+        <View className="flex-1 min-w-0 pr-4">
           <Text className={`font-bold text-[15px] mb-1 ${isSelected ? 'text-pink-dark' : 'text-ink'}`}>
             {title}
           </Text>

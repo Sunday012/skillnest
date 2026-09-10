@@ -53,3 +53,4 @@ export function MultiSelectChip({ options, selected, onChange, maxSelection, cla
     </View>
   );
 }
+

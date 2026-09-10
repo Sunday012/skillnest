@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Freelancer Onboarding (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --white:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+  input,textarea{
+    width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Inter',sans-serif;
+    font-size:14.5px;color:var(--ink);background:#fff;outline:none;transition:border-color .15s ease;
+  }
+  input:focus,textarea:focus{border-color:var(--pink);}
+  textarea{resize:vertical;min-height:88px;}
+  .field{margin-bottom:22px;}
+  .field .hint{font-size:12.5px;color:var(--gray-400);margin-top:6px;}
+
+  /* ===== NOTE FOR ANTIGRAVITY: everything inside .devtoggle-DO-NOT-BUILD is preview
+     tooling for this mockup only. Do not implement it in the app. ===== */
+  .devtoggle-DO-NOT-BUILD{position:fixed;top:14px;right:14px;z-index:100;background:var(--navy);
+    border-radius:100px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .devtoggle-DO-NOT-BUILD button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:12px;padding:7px 12px;border-radius:100px;cursor:pointer;}
+  .devtoggle-DO-NOT-BUILD button.active{background:var(--pink);color:#fff;}
+  .devtoggle-label{position:fixed;top:52px;right:14px;z-index:100;font-size:11px;color:#B91C1C;font-weight:700;
+    font-family:'Inter',sans-serif;background:#FEF2F2;padding:4px 10px;border-radius:6px;border:1px solid #FCA5A5;}
+
+  /* ---- Wizard chrome ---- */
+  .wizard-top{background:var(--white);border-bottom:1px solid var(--border);}
+  .top-inner{max-width:1080px;margin:0 auto;padding:18px 24px 16px;display:flex;justify-content:space-between;align-items:center;}
+  .back-link{display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;color:var(--gray-600);cursor:pointer;}
+  .step-label{font-weight:600;font-size:14px;color:var(--gray-400);}
+  .progress-track{max-width:1080px;margin:0 auto;height:6px;background:var(--border);border-radius:100px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--pink-dark));border-radius:100px;transition:width .3s ease;}
+
+  .wizard-body{max-width:1080px;margin:0 auto;padding:48px 24px 140px;}
+  .layout-grid{display:grid;grid-template-columns:1fr 320px;gap:48px;align-items:start;}
+
+  .step-eyebrow{color:var(--pink);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+  .step-title{font-size:28px;font-weight:800;margin-bottom:8px;}
+  .step-sub{color:var(--gray-600);font-size:15px;margin-bottom:32px;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+  /* ---- Radio cards (availability, category, payout method) ---- */
+  .radio-grid{display:grid;gap:12px;}
+  .radio-grid.cols3{grid-template-columns:repeat(3,1fr);}
+  .radio-card{border:1.5px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;background:#fff;position:relative;
+    transition:border-color .15s ease, background .15s ease;}
+  .radio-card.selected{border-color:var(--pink);background:var(--pink-tint);}
+  .radio-card h4{font-size:14.5px;font-weight:700;margin-bottom:3px;}
+  .radio-card p{font-size:12.5px;color:var(--gray-600);}
+  .radio-card .dot-status{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;}
+  .dot-available{background:var(--green);} .dot-busy{background:#F5A623;} .dot-away{background:#94A3B8;}
+
+  /* ---- Category grid (single select, reused pattern) ---- */
+  .cat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px;}
+  .cat-card{border:1.5px solid var(--border);border-radius:12px;padding:16px 8px;text-align:center;cursor:pointer;
+    background:#fff;position:relative;transition:border-color .15s ease, background .15s ease;}
+  .cat-card.selected{border-color:var(--pink);background:var(--pink-tint);}
+  .cat-card .check{position:absolute;top:6px;right:6px;width:16px;height:16px;border-radius:50%;background:var(--pink);
+    color:#fff;font-size:10px;display:none;align-items:center;justify-content:center;font-weight:800;}
+  .cat-card.selected .check{display:flex;}
+  .cat-icon{font-size:20px;margin-bottom:8px;}
+  .cat-card span{font-size:12px;font-weight:600;}
+
+  /* ---- Skill chips ---- */
+  .chip-pool{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px;}
+  .chip{border:1.5px solid var(--border);border-radius:100px;padding:9px 16px;font-size:13.5px;font-weight:600;
+    cursor:pointer;background:#fff;transition:all .15s ease;}
+  .chip.selected{border-color:var(--pink);background:var(--pink);color:#fff;}
+  .chip-note{font-size:12.5px;color:var(--gray-400);margin-bottom:18px;}
+
+  /* ---- Dropzones ---- */
+  .dropzone{border:1.5px dashed var(--border);border-radius:14px;padding:32px;text-align:center;cursor:pointer;
+    background:#fff;transition:border-color .15s ease;margin-bottom:14px;}
+  .dropzone:hover{border-color:var(--pink);}
+  .dropzone.filled{border-style:solid;border-color:var(--pink);background:var(--pink-tint);}
+  .dropzone .dz-icon{font-size:26px;margin-bottom:10px;}
+  .dropzone h4{font-size:14.5px;margin-bottom:4px;}
+  .dropzone p{font-size:12.5px;color:var(--gray-400);}
+
+  .link-row{display:flex;gap:10px;margin-bottom:12px;}
+  .link-row input{flex:1;}
+  .add-link{color:var(--pink);font-weight:700;font-size:13.5px;cursor:pointer;display:inline-block;margin-bottom:24px;}
+
+  .skip-link{display:inline-block;color:var(--gray-600);font-weight:600;font-size:14px;margin-top:6px;}
+  .skip-link:hover{color:var(--pink);}
+
+  .kyc-banner{display:flex;gap:12px;align-items:flex-start;background:var(--pink-tint);border-radius:12px;padding:16px;margin-bottom:28px;}
+  .kyc-banner .ic{font-size:18px;}
+  .kyc-banner h4{font-size:13.5px;margin-bottom:3px;}
+  .kyc-banner p{font-size:12.5px;color:var(--gray-600);}
+
+  /* ---- Live preview card (sticky) ---- */
+  .preview-wrap{position:sticky;top:24px;}
+  .preview-label{font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+  .preview-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 20px 44px -24px rgba(16,23,42,.2);}
+  .preview-avatar{width:54px;height:54px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;
+    justify-content:center;font-weight:800;font-size:18px;margin-bottom:14px;}
+  .preview-card h4{font-size:17px;margin-bottom:2px;}
+  .preview-role{font-size:13px;color:var(--gray-600);margin-bottom:12px;}
+  .preview-status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;background:var(--bg-alt);
+    padding:5px 10px;border-radius:100px;margin-bottom:16px;}
+  .preview-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+  .preview-tag{background:var(--pink-tint);color:var(--pink-dark);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:100px;}
+  .preview-row{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:14px;font-size:13px;}
+  .preview-row strong{font-size:16px;}
+  .preview-portfolio{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:14px;}
+  .preview-portfolio div{aspect-ratio:1;border-radius:8px;background:var(--bg-alt);border:1px dashed var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gray-400);}
+
+  /* ---- Bottom bar ---- */
+  .wizard-bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);padding:18px 24px;z-index:20;}
+  .bottom-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+  .btn-back-text{color:var(--gray-600);font-weight:700;font-size:14.5px;cursor:pointer;}
+  .btn-continue{background:var(--pink);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;
+    padding:14px 36px;border-radius:10px;border:none;cursor:pointer;box-shadow:0 10px 24px -10px rgba(236,18,87,.55);}
+  .btn-continue:hover{background:var(--pink-dark);}
+
+  .view{display:none;} .view.active{display:block;}
+
+  @media(max-width:880px){
+    .layout-grid{grid-template-columns:1fr;}
+    .preview-wrap{position:static;order:-1;margin-bottom:8px;}
+    .two-col,.radio-grid.cols3{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:repeat(3,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<!-- PREVIEW-ONLY controls, not part of the design — see comment in <style> -->
+<div class="devtoggle-DO-NOT-BUILD">
+  <button class="active" onclick="showStep(1)">1</button>
+  <button onclick="showStep(2)">2</button>
+  <button onclick="showStep(3)">3</button>
+  <button onclick="showStep(4)">4</button>
+</div>
+<div class="devtoggle-label">⚠ Mockup nav only — do not implement</div>
+
+<!-- ================= STEP 1: BASIC INFO ================= -->
+<div id="step1" class="view active">
+  <div class="wizard-top">
+    <div class="top-inner"><div class="back-link">← Back</div><div class="step-label">Step 1 of 4</div></div>
+    <div class="progress-track"><div class="progress-fill" style="width:25%"></div></div>
+  </div>
+  <div class="wizard-body">
+    <div class="layout-grid">
+      <div>
+        <div class="step-eyebrow">Basic Info</div>
+        <h1 class="step-title">Tell clients who you are</h1>
+        <p class="step-sub">This shows up at the top of your public profile.</p>
+
+        <div class="two-col">
+          <div class="field"><label>Display Name</label><input id="in-name" type="text" placeholder="e.g. Mira Vance" oninput="sync()"></div>
+          <div class="field"><label>Location</label><input type="text" placeholder="e.g. Lisbon, PT"></div>
+        </div>
+        <div class="field"><label>Professional Headline</label><input id="in-role" type="text" placeholder="e.g. Brand Designer & Identity Systems" oninput="sync()"></div>
+        <div class="field"><label>Short Bio</label><textarea placeholder="A short paragraph — what you do and who you do it for."></textarea></div>
+
+        <div class="field">
+          <label>Availability Status</label>
+          <div class="radio-grid cols3" id="availGrid">
+            <div class="radio-card selected" data-status="Available"><h4><span class="dot-status dot-available"></span>Available</h4><p>Ready for new work</p></div>
+            <div class="radio-card" data-status="Busy"><h4><span class="dot-status dot-busy"></span>Busy</h4><p>Limited capacity</p></div>
+            <div class="radio-card" data-status="Not Available"><h4><span class="dot-status dot-away"></span>Not Available</h4><p>Not taking work</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="preview-wrap">
+        <div class="preview-label">Live Preview</div>
+        <div class="preview-card" id="previewCard"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wizard-bottom"><div class="bottom-inner"><span></span><button class="btn-continue" onclick="showStep(2)">Continue →</button></div></div>
+</div>
+
+<!-- ================= STEP 2: SKILLS & CATEGORY ================= -->
+<div id="step2" class="view">
+  <div class="wizard-top">
+    <div class="top-inner"><div class="back-link" onclick="showStep(1)">← Back</div><div class="step-label">Step 2 of 4</div></div>
+    <div class="progress-track"><div class="progress-fill" style="width:50%"></div></div>
+  </div>
+  <div class="wizard-body">
+    <div class="layout-grid">
+      <div>
+        <div class="step-eyebrow">Skills & Category</div>
+        <h1 class="step-title">What do you do best?</h1>
+        <p class="step-sub">Pick one primary category — this is how clients will find you.</p>
+
+        <div class="cat-grid" id="catGridFL"></div>
+
+        <div class="field">
+          <label>Skills <span style="font-weight:400;color:var(--gray-400);">— pick up to 8</span></label>
+          <div class="chip-pool" id="skillPool">
+            <div class="chip selected" onclick="toggleChip(this)">Brand Identity</div>
+            <div class="chip" onclick="toggleChip(this)">Logo Design</div>
+            <div class="chip" onclick="toggleChip(this)">Packaging</div>
+            <div class="chip" onclick="toggleChip(this)">Art Direction</div>
+            <div class="chip" onclick="toggleChip(this)">Figma</div>
+            <div class="chip" onclick="toggleChip(this)">Motion</div>
+            <div class="chip" onclick="toggleChip(this)">Design Systems</div>
+          </div>
+          <p class="chip-note">Note for Antigravity: this chip pool should be data-driven per selected category, not hardcoded — shown here with example Design skills only.</p>
+        </div>
+
+        <div class="field" style="max-width:220px;">
+          <label>Hourly Rate (USD)</label>
+          <input id="in-rate" type="text" placeholder="e.g. 85" oninput="sync()">
+        </div>
+      </div>
+      <div class="preview-wrap">
+        <div class="preview-label">Live Preview</div>
+        <div class="preview-card" id="previewCard2"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wizard-bottom"><div class="bottom-inner"><span class="btn-back-text" onclick="showStep(1)">Back</span><button class="btn-continue" onclick="showStep(3)">Continue →</button></div></div>
+</div>
+
+<!-- ================= STEP 3: PORTFOLIO ================= -->
+<div id="step3" class="view">
+  <div class="wizard-top">
+    <div class="top-inner"><div class="back-link" onclick="showStep(2)">← Back</div><div class="step-label">Step 3 of 4</div></div>
+    <div class="progress-track"><div class="progress-fill" style="width:75%"></div></div>
+  </div>
+  <div class="wizard-body">
+    <div class="layout-grid">
+      <div>
+        <div class="step-eyebrow">Portfolio</div>
+        <h1 class="step-title">Show your best work</h1>
+        <p class="step-sub">Add whatever format fits your craft — images, a short video, or links. All optional.</p>
+
+        <div class="two-col">
+          <div class="dropzone" onclick="this.classList.toggle('filled')">
+            <div class="dz-icon">🖼️</div><h4>Upload Images</h4><p>PNG or JPG, up to 6 images</p>
+          </div>
+          <div class="dropzone" onclick="this.classList.toggle('filled')">
+            <div class="dz-icon">🎬</div><h4>Upload Showcase Video</h4><p>Up to 60 seconds, max 100MB</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>External Links</label>
+          <div class="link-row"><input type="text" placeholder="e.g. YouTube, Behance, GitHub, personal site — https://"></div>
+        </div>
+        <span class="add-link">+ Add another link</span>
+        <br>
+        <a class="skip-link" href="#">Skip for now →</a>
+      </div>
+      <div class="preview-wrap">
+        <div class="preview-label">Live Preview</div>
+        <div class="preview-card" id="previewCard3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wizard-bottom"><div class="bottom-inner"><span class="btn-back-text" onclick="showStep(2)">Back</span><button class="btn-continue" onclick="showStep(4)">Continue →</button></div></div>
+</div>
+
+<!-- ================= STEP 4: PAYOUT SETUP ================= -->
+<div id="step4" class="view">
+  <div class="wizard-top">
+    <div class="top-inner"><div class="back-link" onclick="showStep(3)">← Back</div><div class="step-label">Step 4 of 4</div></div>
+    <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+  <div class="wizard-body">
+    <div class="layout-grid">
+      <div>
+        <div class="step-eyebrow">Payout Setup</div>
+        <h1 class="step-title">Where should we send the money?</h1>
+        <p class="step-sub">Set up how you'll get paid once orders start coming in.</p>
+
+        <div class="kyc-banner">
+          <div class="ic">🛡️</div>
+          <div><h4>Identity verification unlocks payouts and the verified badge</h4><p>This is a mocked step for now — no real KYC integration yet.</p></div>
+        </div>
+
+        <div class="field">
+          <label>Payout Method</label>
+          <div class="radio-grid cols3">
+            <div class="radio-card selected"><h4>🏦 Bank Transfer</h4><p>2–3 business days</p></div>
+            <div class="radio-card"><h4>💳 PayPal</h4><p>Instant</p></div>
+            <div class="radio-card"><h4>🌐 Wise</h4><p>1–2 business days</p></div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field"><label>Account Holder Name</label><input type="text" placeholder="Full legal name"></div>
+          <div class="field"><label>IBAN / Account Number</label><input type="text" placeholder="PT50 •••• •••• 4417"></div>
+        </div>
+        <div class="field" style="max-width:280px;"><label>Tax Country</label><input type="text" placeholder="e.g. Portugal"></div>
+      </div>
+      <div class="preview-wrap">
+        <div class="preview-label">Live Preview</div>
+        <div class="preview-card" id="previewCard4"></div>
+      </div>
+    </div>
+  </div>
+  <div class="wizard-bottom"><div class="bottom-inner"><span class="btn-back-text" onclick="showStep(3)">Back</span><button class="btn-continue">Finish Setup →</button></div></div>
+</div>
+
+<script>
+  function showStep(n){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('step'+n).classList.add('active');
+    document.querySelectorAll('.devtoggle-DO-NOT-BUILD button').forEach((b,i)=>b.classList.toggle('active', i===n-1));
+    window.scrollTo(0,0);
+  }
+
+  // Availability radio cards
+  document.getElementById('availGrid').addEventListener('click', (e)=>{
+    const card = e.target.closest('.radio-card'); if(!card) return;
+    document.querySelectorAll('#availGrid .radio-card').forEach(c=>c.classList.remove('selected'));
+    card.classList.add('selected');
+    sync();
+  });
+
+  // Category grid (single-select), 15 categories
+  const categories = [
+    ['🎥','Videography'],['✂️','Video Editing'],['📷','Photography'],['🎨','Graphic Design'],
+    ['🖥️','Web Design'],['💻','Software Development'],['✍️','Script Writing'],['📝','Copywriting'],
+    ['📱','UGC Creation'],['🎬','Animation'],['🎙️','Voice Over'],['📣','Social Media Mgmt'],
+    ['📈','Digital Marketing'],['🗂️','Virtual Assistance'],['✨','Other Digital Skills']
+  ];
+  const catGrid = document.getElementById('catGridFL');
+  categories.forEach(([icon,label],i)=>{
+    const card = document.createElement('div');
+    card.className = 'cat-card' + (i===3 ? ' selected' : ''); // default: Graphic Design selected for preview
+    card.innerHTML = `<div class="check">✓</div><div class="cat-icon">${icon}</div><span>${label}</span>`;
+    card.onclick = () => { document.querySelectorAll('#catGridFL .cat-card').forEach(c=>c.classList.remove('selected')); card.classList.add('selected'); sync(); };
+    catGrid.appendChild(card);
+  });
+
+  function toggleChip(el){ el.classList.toggle('selected'); sync(); }
+
+  function getInitials(name){
+    if(!name) return '?';
+    return name.trim().split(/\s+/).slice(0,2).map(w=>w[0].toUpperCase()).join('');
+  }
+
+  function sync(){
+    const name = document.getElementById('in-name').value || 'Your Name';
+    const role = document.getElementById('in-role').value || 'Your headline goes here';
+    const rate = document.getElementById('in-rate') ? document.getElementById('in-rate').value : '';
+    const status = document.querySelector('#availGrid .radio-card.selected')?.dataset.status || 'Available';
+    const statusDot = status === 'Available' ? 'dot-available' : status === 'Busy' ? 'dot-busy' : 'dot-away';
+    const selectedCat = document.querySelector('#catGridFL .cat-card.selected span')?.textContent || '';
+    const skills = Array.from(document.querySelectorAll('#skillPool .chip.selected')).map(c=>c.textContent);
+
+    const cardHTML = `
+      <div class="preview-avatar">${getInitials(name)}</div>
+      <h4>${name}</h4>
+      <div class="preview-role">${role}</div>
+      <div class="preview-status"><span class="dot-status ${statusDot}"></span>${status}</div>
+      <div class="preview-tags">
+        ${selectedCat ? `<span class="preview-tag">${selectedCat}</span>` : ''}
+        ${skills.slice(0,3).map(s=>`<span class="preview-tag">${s}</span>`).join('')}
+      </div>
+      <div class="preview-row"><span>Rate</span><strong>${rate ? '$'+rate+'/hr' : '—'}</strong></div>
+    `;
+    ['previewCard','previewCard2','previewCard3','previewCard4'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.innerHTML = cardHTML + (id==='previewCard3' ? '<div class="preview-portfolio"><div>🖼️</div><div>🎬</div><div>+</div></div>' : '');
+    });
+  }
+  sync();
+</script>
+
+</body>
+</html>
