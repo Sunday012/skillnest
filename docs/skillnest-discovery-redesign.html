@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Phase 3: Discovery (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --white:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* ===== NOTE FOR ANTIGRAVITY: everything inside .devtoggle-DO-NOT-BUILD is preview
+     tooling for this mockup only. Do not implement it in the app. ===== */
+  .devtoggle-DO-NOT-BUILD{position:fixed;top:14px;right:14px;z-index:200;background:var(--navy);
+    border-radius:100px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .devtoggle-DO-NOT-BUILD button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:12px;padding:7px 14px;border-radius:100px;cursor:pointer;white-space:nowrap;}
+  .devtoggle-DO-NOT-BUILD button.active{background:var(--pink);color:#fff;}
+  .devtoggle-label{position:fixed;top:52px;right:14px;z-index:200;font-size:11px;color:#B91C1C;font-weight:700;
+    font-family:'Inter',sans-serif;background:#FEF2F2;padding:4px 10px;border-radius:6px;border:1px solid #FCA5A5;}
+
+  /* ---- Authenticated top nav ---- */
+  .app-nav{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+  .app-nav .wrap{display:flex;align-items:center;gap:28px;height:72px;}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;flex-shrink:0;}
+  .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;}
+  .search-pill{flex:1;max-width:420px;display:flex;align-items:center;gap:8px;background:var(--bg-alt);border-radius:100px;padding:10px 16px;font-size:14px;color:var(--gray-400);}
+  .nav-links{display:flex;gap:26px;font-weight:600;font-size:14.5px;color:var(--gray-600);margin-left:auto;}
+  .nav-links a.active{color:var(--ink);}
+  .nav-icons{display:flex;align-items:center;gap:18px;}
+  .icon-btn{position:relative;font-size:18px;color:var(--gray-600);cursor:pointer;}
+  .icon-btn .badge{position:absolute;top:-4px;right:-6px;width:8px;height:8px;border-radius:50%;background:var(--pink);}
+  .avatar-sm{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+
+  .page{padding:36px 0 64px;}
+  .greet{font-size:13.5px;color:var(--gray-600);margin-bottom:4px;}
+  .greet strong{color:var(--ink);}
+
+  /* ---- Find Talent / Find Work split ---- */
+  .split-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0 44px;}
+  .split-card{border-radius:18px;padding:32px;display:flex;flex-direction:column;justify-content:space-between;min-height:170px;cursor:pointer;transition:transform .15s ease;}
+  .split-card:hover{transform:translateY(-2px);}
+  .split-card.talent{background:var(--navy);color:#fff;}
+  .split-card.work{background:var(--pink-tint);color:var(--ink);}
+  .split-card .split-icon{font-size:26px;margin-bottom:14px;}
+  .split-card h3{font-size:22px;margin-bottom:6px;}
+  .split-card p{font-size:14px;opacity:.8;max-width:280px;}
+  .split-card .arrow{align-self:flex-end;font-weight:800;font-size:20px;}
+
+  .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;}
+  .section-head h2{font-size:21px;font-weight:800;}
+  .section-head .see-all{font-size:13.5px;font-weight:700;color:var(--pink);}
+  section.blk{margin-bottom:48px;}
+
+  /* ---- Category chips ---- */
+  .cat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+  .cat-chip{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:border-color .15s ease;}
+  .cat-chip:hover{border-color:var(--pink);}
+  .cat-chip .ic{font-size:20px;margin-bottom:8px;}
+  .cat-chip span{display:block;font-size:12.5px;font-weight:700;}
+  .cat-chip small{font-size:11px;color:var(--gray-400);}
+
+  /* ---- Talent card (Featured + Browse) ---- */
+  .talent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .talent-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;}
+  .talent-top{display:flex;gap:12px;margin-bottom:14px;}
+  .avatar-md{width:46px;height:46px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .talent-name-row{display:flex;align-items:center;gap:6px;}
+  .talent-top h4{font-size:15.5px;}
+  .verified-tick{color:var(--pink);font-size:12px;}
+  .talent-role{font-size:12.5px;color:var(--gray-600);}
+  .avail-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;background:var(--bg-alt);padding:3px 9px;border-radius:100px;margin-top:6px;}
+  .dot-status{width:7px;height:7px;border-radius:50%;display:inline-block;}
+  .dot-available{background:var(--green);} .dot-busy{background:#F5A623;} .dot-away{background:#94A3B8;}
+  .talent-tags{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 14px;}
+  .ttag{background:var(--pink-tint);color:var(--pink-dark);font-size:11px;font-weight:700;padding:4px 9px;border-radius:100px;}
+  .talent-strip{display:flex;gap:6px;margin-bottom:14px;}
+  .talent-strip div{flex:1;aspect-ratio:1.4;border-radius:8px;background:var(--bg-alt);}
+  .talent-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:14px;}
+  .talent-foot .rating{font-size:12.5px;color:var(--gray-600);}
+  .talent-foot .price{font-weight:800;font-size:16px;}
+
+  /* ---- Job card ---- */
+  .job-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .job-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;}
+  .job-card .tag{display:inline-block;background:var(--pink-tint);color:var(--pink-dark);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;margin-bottom:12px;}
+  .job-card h4{font-size:16px;margin-bottom:8px;}
+  .job-card .meta{font-size:12.5px;color:var(--gray-600);margin-bottom:16px;}
+  .job-card .row{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:14px;font-size:13px;}
+  .job-card .budget{font-weight:800;font-size:16px;}
+
+  /* ================= BROWSE TALENT PAGE ================= */
+  .browse-head h1{font-size:28px;font-weight:800;margin-bottom:8px;}
+  .browse-head p{color:var(--gray-600);font-size:14.5px;margin-bottom:28px;}
+  .browse-layout{display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:start;}
+  .filter-box{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;position:sticky;top:92px;}
+  .filter-box h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-400);margin-bottom:14px;}
+  .filter-search{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;font-size:13.5px;margin-bottom:22px;}
+  .filter-group{margin-bottom:22px;}
+  .filter-group label{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink);margin-bottom:10px;cursor:pointer;}
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+  .toggle-row span{font-size:13.5px;font-weight:600;}
+  .toggle{width:38px;height:22px;border-radius:100px;background:var(--border);position:relative;cursor:pointer;}
+  .toggle.on{background:var(--pink);}
+  .toggle .knob{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left .15s ease;}
+  .toggle.on .knob{left:19px;}
+  .talent-list{display:flex;flex-direction:column;gap:16px;}
+  .talent-row-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;gap:16px;align-items:flex-start;}
+  .talent-row-card .avatar-md{width:52px;height:52px;font-size:17px;}
+  .trc-body{flex:1;}
+  .trc-price{text-align:right;flex-shrink:0;}
+  .trc-price .amt{font-weight:800;font-size:18px;}
+  .trc-price .btn-mini{margin-top:10px;display:inline-block;background:var(--navy);color:#fff;font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:8px;cursor:pointer;}
+
+  /* ================= PROFILE PAGE ================= */
+  .profile-banner{height:150px;border-radius:18px;background:linear-gradient(120deg,var(--navy),var(--pink));margin-bottom:-46px;}
+  .profile-head{display:flex;gap:20px;align-items:flex-end;padding:0 8px;margin-bottom:24px;}
+  .avatar-lg{width:92px;height:92px;border-radius:50%;background:var(--navy);color:#fff;font-size:30px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;border:4px solid #fff;flex-shrink:0;}
+  .profile-info{flex:1;padding-bottom:6px;}
+  .profile-info h1{font-size:24px;margin-bottom:4px;}
+  .profile-info .sub{font-size:14px;color:var(--gray-600);}
+  .profile-actions{display:flex;gap:10px;padding-bottom:6px;}
+  .btn-outline{background:#fff;border:1.5px solid var(--border);padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .btn-pink{background:var(--pink);color:#fff;border:none;padding:11px 22px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+
+  .stat-bar{display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px 0;margin-bottom:36px;}
+  .stat-bar div{text-align:center;border-left:1px solid var(--border);}
+  .stat-bar div:first-child{border-left:none;}
+  .stat-bar .val{font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;}
+  .stat-bar .lbl{font-size:11.5px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.04em;margin-top:3px;}
+
+  .profile-layout{display:grid;grid-template-columns:1fr 300px;gap:32px;}
+  .about-block{margin-bottom:36px;}
+  .about-block h3{font-size:18px;margin-bottom:12px;}
+  .about-block p{color:var(--gray-600);font-size:14.5px;margin-bottom:16px;}
+  .link-row-p{display:flex;gap:10px;flex-wrap:wrap;}
+  .link-pill{display:flex;align-items:center;gap:7px;background:var(--bg-alt);border:1px solid var(--border);padding:8px 14px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;}
+
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .portfolio-item{aspect-ratio:1;border-radius:12px;background:var(--bg-alt);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:22px;}
+  .portfolio-item.video::after{content:'▶';position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,.6);color:#fff;
+    width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;}
+  .portfolio-item .dur{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;}
+
+  .side-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px;}
+  .side-card h4{font-size:14px;margin-bottom:14px;}
+  .review{border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:14px;}
+  .review:last-child{border:none;margin:0;padding:0;}
+  .review .who{font-size:13px;font-weight:700;}
+  .review .stars{color:#F5A623;font-size:12px;margin-bottom:6px;}
+  .review p{font-size:12.5px;color:var(--gray-600);}
+
+  .view{display:none;} .view.active{display:block;}
+
+  @media(max-width:900px){
+    .split-grid,.talent-grid,.job-grid,.cat-row{grid-template-columns:repeat(2,1fr);}
+    .browse-layout,.profile-layout{grid-template-columns:1fr;}
+    .stat-bar{grid-template-columns:repeat(2,1fr);}
+    .stat-bar div{border-left:none;border-top:1px solid var(--border);padding-top:10px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="devtoggle-DO-NOT-BUILD">
+  <button class="active" onclick="showView('home')">Home</button>
+  <button onclick="showView('browse')">Browse</button>
+  <button onclick="showView('profile')">Profile</button>
+</div>
+<div class="devtoggle-label">⚠ Mockup nav only — do not implement</div>
+
+<div class="app-nav">
+  <div class="wrap">
+    <div class="logo"><div class="logo-mark">S</div>SkillNest</div>
+    <div class="search-pill">🔍 Search gigs, talent, or skills…</div>
+    <div class="nav-links">
+      <a class="active">Discover</a><a>Talent</a><a>Orders</a><a>Messages</a>
+    </div>
+    <div class="nav-icons">
+      <div class="icon-btn">♡</div>
+      <div class="icon-btn">🔔<span class="badge"></span></div>
+      <div class="avatar-sm">M</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= HOME / DISCOVER ================= -->
+<div id="home" class="view active">
+  <div class="wrap page">
+    <div class="greet">Good afternoon, <strong>Mira</strong> — here's what's happening today.</div>
+
+    <div class="split-grid">
+      <div class="split-card talent">
+        <div><div class="split-icon">🔎</div><h3>Find Talent</h3><p>I need someone to do a job — browse vetted freelancers by category.</p></div>
+        <div class="arrow">→</div>
+      </div>
+      <div class="split-card work">
+        <div><div class="split-icon">💼</div><h3>Find Work</h3><p>I have a skill and I'm looking for opportunities — browse open jobs.</p></div>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <section class="blk">
+      <div class="section-head"><h2>Explore Skills</h2><span class="see-all">View all →</span></div>
+      <div class="cat-row">
+        <div class="cat-chip"><div class="ic">✂️</div><span>Video Editing</span><small>870 pros</small></div>
+        <div class="cat-chip"><div class="ic">🎨</div><span>Graphic Design</span><small>2,410 pros</small></div>
+        <div class="cat-chip"><div class="ic">🖥️</div><span>Web Design</span><small>1,240 pros</small></div>
+        <div class="cat-chip"><div class="ic">💻</div><span>Software Dev</span><small>3,180 pros</small></div>
+        <div class="cat-chip"><div class="ic">📣</div><span>Digital Marketing</span><small>1,090 pros</small></div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <div class="section-head"><h2>Featured Talent</h2><span class="see-all">View all →</span></div>
+      <div class="talent-grid">
+        <div class="talent-card">
+          <div class="talent-top">
+            <div class="avatar-md">M</div>
+            <div>
+              <div class="talent-name-row"><h4>Mira Vance</h4><span class="verified-tick">✓</span></div>
+              <div class="talent-role">Brand Designer · Lisbon, PT</div>
+              <div class="avail-badge"><span class="dot-status dot-available"></span>Available</div>
+            </div>
+          </div>
+          <div class="talent-tags"><span class="ttag">Brand Identity</span><span class="ttag">Logo Design</span></div>
+          <div class="talent-strip"><div></div><div></div><div></div></div>
+          <div class="talent-foot"><span class="rating">★ 4.9 (212)</span><span class="price">$85/hr</span></div>
+        </div>
+        <div class="talent-card">
+          <div class="talent-top">
+            <div class="avatar-md">D</div>
+            <div>
+              <div class="talent-name-row"><h4>Devon Park</h4><span class="verified-tick">✓</span></div>
+              <div class="talent-role">Front-end Engineer · Seoul, KR</div>
+              <div class="avail-badge"><span class="dot-status dot-busy"></span>Busy</div>
+            </div>
+          </div>
+          <div class="talent-tags"><span class="ttag">React</span><span class="ttag">Tailwind</span></div>
+          <div class="talent-strip"><div></div><div></div><div></div></div>
+          <div class="talent-foot"><span class="rating">★ 5.0 (98)</span><span class="price">$110/hr</span></div>
+        </div>
+        <div class="talent-card">
+          <div class="talent-top">
+            <div class="avatar-md">P</div>
+            <div>
+              <div class="talent-name-row"><h4>Priya Nair</h4><span class="verified-tick">✓</span></div>
+              <div class="talent-role">Product Designer · Bengaluru, IN</div>
+              <div class="avail-badge"><span class="dot-status dot-available"></span>Available</div>
+            </div>
+          </div>
+          <div class="talent-tags"><span class="ttag">Figma</span><span class="ttag">Dashboards</span></div>
+          <div class="talent-strip"><div></div><div></div><div></div></div>
+          <div class="talent-foot"><span class="rating">★ 4.9 (131)</span><span class="price">$95/hr</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <div class="section-head"><h2>Latest Jobs</h2><span class="see-all">View all →</span></div>
+      <div class="job-grid">
+        <div class="job-card"><span class="tag">Design</span><h4>Rebrand for a coffee roaster</h4>
+          <div class="meta">Posted 2 hours ago · Remote</div>
+          <div class="row"><span>14 proposals</span><span class="budget">$3,400</span></div></div>
+        <div class="job-card"><span class="tag">Development</span><h4>Marketing site build — 6 pages, React</h4>
+          <div class="meta">Posted 1 day ago · Remote</div>
+          <div class="row"><span>22 proposals</span><span class="budget">$5,200</span></div></div>
+        <div class="job-card"><span class="tag">Video</span><h4>Quarterly product launch film</h4>
+          <div class="meta">Posted 2 days ago · On-site (Berlin)</div>
+          <div class="row"><span>8 proposals</span><span class="budget">$2,800</span></div></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ================= BROWSE TALENT ================= -->
+<div id="browse" class="view">
+  <div class="wrap page">
+    <div class="browse-head">
+      <h1>Browse Talent</h1>
+      <p>Every freelancer below has completed identity checks or is in review.</p>
+    </div>
+    <div class="browse-layout">
+      <div class="filter-box">
+        <h4>Search</h4>
+        <input class="filter-search" placeholder="Search by skill or name">
+
+        <h4>Category</h4>
+        <div class="filter-group">
+          <label><input type="checkbox" checked> Graphic Design</label>
+          <label><input type="checkbox"> Web Design</label>
+          <label><input type="checkbox"> Video Editing</label>
+          <label><input type="checkbox"> Software Development</label>
+        </div>
+
+        <h4>Max Hourly Rate</h4>
+        <div class="filter-group"><input type="range" style="width:100%;" min="20" max="150" value="120"></div>
+
+        <h4>Preferences</h4>
+        <div class="toggle-row"><span>Available now</span><div class="toggle on" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+        <div class="toggle-row"><span>KYC-verified only</span><div class="toggle" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+      </div>
+
+      <div class="talent-list">
+        <div class="talent-row-card">
+          <div class="avatar-md">M</div>
+          <div class="trc-body">
+            <div class="talent-name-row"><h4>Mira Vance</h4><span class="verified-tick">✓</span><div class="avail-badge"><span class="dot-status dot-available"></span>Available</div></div>
+            <div class="talent-role">Brand Designer & Identity Systems · Lisbon, PT</div>
+            <p style="font-size:13px;color:var(--gray-600);margin:8px 0;">I build identity systems for founders who care about longevity over trends.</p>
+            <div class="talent-tags"><span class="ttag">Brand Identity</span><span class="ttag">Logo Design</span><span class="ttag">Packaging</span></div>
+          </div>
+          <div class="trc-price"><div class="amt">$85/hr</div><div style="font-size:12px;color:var(--gray-600);">★ 4.9 (212)</div><div class="btn-mini">View Profile</div></div>
+        </div>
+
+        <div class="talent-row-card">
+          <div class="avatar-md">D</div>
+          <div class="trc-body">
+            <div class="talent-name-row"><h4>Devon Park</h4><span class="verified-tick">✓</span><div class="avail-badge"><span class="dot-status dot-busy"></span>Busy</div></div>
+            <div class="talent-role">Front-end Engineer — React & Tailwind · Seoul, KR</div>
+            <p style="font-size:13px;color:var(--gray-600);margin:8px 0;">Marketing sites and product surfaces that load fast and stay maintainable.</p>
+            <div class="talent-tags"><span class="ttag">React</span><span class="ttag">TypeScript</span><span class="ttag">Performance</span></div>
+          </div>
+          <div class="trc-price"><div class="amt">$110/hr</div><div style="font-size:12px;color:var(--gray-600);">★ 5.0 (98)</div><div class="btn-mini">View Profile</div></div>
+        </div>
+
+        <div class="talent-row-card">
+          <div class="avatar-md">P</div>
+          <div class="trc-body">
+            <div class="talent-name-row"><h4>Priya Nair</h4><span class="verified-tick">✓</span><div class="avail-badge"><span class="dot-status dot-away"></span>Not Available</div></div>
+            <div class="talent-role">Product Designer — SaaS & Dashboards · Bengaluru, IN</div>
+            <p style="font-size:13px;color:var(--gray-600);margin:8px 0;">Dense interfaces made calm. I specialise in data-heavy products.</p>
+            <div class="talent-tags"><span class="ttag">Figma</span><span class="ttag">Design Systems</span><span class="ttag">Research</span></div>
+          </div>
+          <div class="trc-price"><div class="amt">$95/hr</div><div style="font-size:12px;color:var(--gray-600);">★ 4.9 (131)</div><div class="btn-mini">View Profile</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TALENT PUBLIC PROFILE ================= -->
+<div id="profile" class="view">
+  <div class="wrap page">
+    <div class="profile-banner"></div>
+    <div class="profile-head">
+      <div class="avatar-lg">M</div>
+      <div class="profile-info">
+        <h1>Mira Vance <span class="verified-tick" style="font-size:16px;">✓</span></h1>
+        <div class="sub">Brand Designer & Identity Systems · Lisbon, PT</div>
+      </div>
+      <div class="profile-actions">
+        <button class="btn-outline">Message</button>
+        <button class="btn-pink">Hire Mira</button>
+      </div>
+    </div>
+
+    <div class="stat-bar">
+      <div><div class="val">4.9</div><div class="lbl">Rating</div></div>
+      <div><div class="val">99%</div><div class="lbl">Completion</div></div>
+      <div><div class="val">$85/hr</div><div class="lbl">Rate</div></div>
+      <div><div class="val"><span class="dot-status dot-available" style="margin-right:4px;"></span>Available</div><div class="lbl">Status</div></div>
+      <div><div class="val">✓ Verified</div><div class="lbl">Identity</div></div>
+    </div>
+
+    <div class="profile-layout">
+      <div>
+        <div class="about-block">
+          <h3>About</h3>
+          <p>I build identity systems for founders who care about longevity over trends. Twelve years in studios, now independent — every project starts with a written strategy, not a mood board.</p>
+          <div class="talent-tags" style="margin-bottom:20px;"><span class="ttag">Brand Identity</span><span class="ttag">Logo Design</span><span class="ttag">Art Direction</span><span class="ttag">Packaging</span></div>
+          <div class="link-row-p">
+            <div class="link-pill">▶ YouTube</div>
+            <div class="link-pill">🎨 Behance</div>
+            <div class="link-pill">🌐 Portfolio Site</div>
+          </div>
+        </div>
+
+        <div class="about-block">
+          <h3>Portfolio</h3>
+          <div class="portfolio-grid">
+            <div class="portfolio-item">🖼️</div>
+            <div class="portfolio-item video">🎬<span class="dur">0:42</span></div>
+            <div class="portfolio-item">🖼️</div>
+            <div class="portfolio-item">🖼️</div>
+            <div class="portfolio-item">🖼️</div>
+            <div class="portfolio-item video">🎬<span class="dur">1:05</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="side-card">
+          <h4>Services</h4>
+          <div style="font-size:13.5px;font-weight:700;margin-bottom:4px;">Complete brand identity & logo system</div>
+          <div style="font-size:12.5px;color:var(--gray-600);margin-bottom:10px;">★ 4.9 (212) · 3-day delivery</div>
+          <div style="font-weight:800;">Starting at $450</div>
+        </div>
+        <div class="side-card">
+          <h4>Reviews (212)</h4>
+          <div class="review"><div class="who">Hannah Lloyd</div><div class="stars">★★★★★</div><p>Mira reframed our whole positioning before touching a logo.</p></div>
+          <div class="review"><div class="who">Marcus Reid</div><div class="stars">★★★★★</div><p>Clear milestones, zero chasing. Delivered a day early.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showView(id){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.devtoggle-DO-NOT-BUILD button').forEach(b=>{
+      b.classList.toggle('active', b.textContent.toLowerCase() === id);
+    });
+    window.scrollTo(0,0);
+  }
+</script>
+
+</body>
+</html>

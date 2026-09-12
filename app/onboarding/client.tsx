@@ -1,5 +1,6 @@
+/// <reference types="nativewind/types" />
 import React, { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, TextInput, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { WizardLayout } from '../../src/components/onboarding/WizardLayout';
 import { CategoryGrid, CategoryOption } from '../../src/components/form/CategoryGrid';
@@ -35,7 +36,7 @@ export default function ClientOnboarding() {
     if (step < totalSteps) {
       setStep(step + 1);
     } else {
-      router.push('/home');
+      router.replace('/home');
     }
   };
 
@@ -126,7 +127,7 @@ export default function ClientOnboarding() {
         onChange={setNeeds} 
       />
 
-      <Pressable onPress={() => router.push('/home')} className="mt-8 items-center">
+      <Pressable onPress={() => router.replace('/home')} className="mt-8 items-center">
         <Text className="text-[14px] font-bold text-gray-body hover:text-pink">Skip for now</Text>
       </Pressable>
     </View>

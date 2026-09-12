@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, Platform, KeyboardAvoidingView, Pressable } from 'react-native';
-import { Button } from '../src/components/Button';
-import { Input } from '../src/components/Input';
+import { Button } from '../../src/components/Button';
+import { Input } from '../../src/components/Input';
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 
@@ -63,7 +63,7 @@ export default function SignupScreen() {
           <Button 
             title="Create Account" 
             onPress={() => {
-              router.push(`/onboarding/${role}`);
+                            router.push(`/onboarding/${role}`);
             }} 
             className="mb-6 mt-2" 
           />

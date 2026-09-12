@@ -1,7 +1,7 @@
 import { View, Text, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
 import { Link } from 'expo-router';
-import { Button } from '../src/components/Button';
-import { Input } from '../src/components/Input';
+import { Button } from '../../src/components/Button';
+import { Input } from '../../src/components/Input';
 
 export default function LoginScreen() {
   return (

@@ -1,0 +1,96 @@
+export const CATEGORIES = [
+  { id: '1', title: 'Video Editing', icon: '✂️', count: '870 pros' },
+  { id: '2', title: 'Graphic Design', icon: '🎨', count: '2,410 pros' },
+  { id: '3', title: 'Web Design', icon: '🖥️', count: '1,240 pros' },
+  { id: '4', title: 'Software Dev', icon: '💻', count: '3,180 pros' },
+  { id: '5', title: 'Digital Marketing', icon: '📣', count: '1,090 pros' },
+];
+
+export const FEATURED_TALENT = [
+  {
+    id: '1',
+    name: 'Mira Vance',
+    initial: 'M',
+    isVerified: true,
+    role: 'Brand Designer',
+    location: 'Lisbon, PT',
+    status: 'available',
+    tags: ['Brand Identity', 'Logo Design', 'Packaging'],
+    rating: 4.9,
+    reviews: 212,
+    price: 85,
+    about: 'I build identity systems for founders who care about longevity over trends. Twelve years in studios, now independent — every project starts with a written strategy, not a mood board.',
+    completion: 99,
+  },
+  {
+    id: '2',
+    name: 'Devon Park',
+    initial: 'D',
+    isVerified: true,
+    role: 'Front-end Engineer — React & Tailwind',
+    location: 'Seoul, KR',
+    status: 'busy',
+    tags: ['React', 'TypeScript', 'Performance'],
+    rating: 5.0,
+    reviews: 98,
+    price: 110,
+    about: 'Marketing sites and product surfaces that load fast and stay maintainable.',
+    completion: 100,
+  },
+  {
+    id: '3',
+    name: 'Priya Nair',
+    initial: 'P',
+    isVerified: true,
+    role: 'Product Designer — SaaS & Dashboards',
+    location: 'Bengaluru, IN',
+    status: 'away',
+    tags: ['Figma', 'Design Systems', 'Research'],
+    rating: 4.9,
+    reviews: 131,
+    price: 95,
+    about: 'Dense interfaces made calm. I specialise in data-heavy products.',
+    completion: 98,
+  },
+];
+
+export const LATEST_JOBS = [
+  {
+    id: '1',
+    tag: 'Design',
+    title: 'Rebrand for a coffee roaster',
+    meta: 'Posted 2 hours ago · Remote',
+    proposals: 14,
+    budget: '$3,400',
+  },
+  {
+    id: '2',
+    tag: 'Development',
+    title: 'Marketing site build — 6 pages, React',
+    meta: 'Posted 1 day ago · Remote',
+    proposals: 22,
+    budget: '$5,200',
+  },
+  {
+    id: '3',
+    tag: 'Video',
+    title: 'Quarterly product launch film',
+    meta: 'Posted 2 days ago · On-site (Berlin)',
+    proposals: 8,
+    budget: '$2,800',
+  },
+];
+
+export const PORTFOLIO_ITEMS = [
+  { id: '1', type: 'image', icon: '🖼️' },
+  { id: '2', type: 'video', icon: '🎬', duration: '0:42' },
+  { id: '3', type: 'image', icon: '🖼️' },
+  { id: '4', type: 'image', icon: '🖼️' },
+  { id: '5', type: 'image', icon: '🖼️' },
+  { id: '6', type: 'video', icon: '🎬', duration: '1:05' },
+];
+
+export const REVIEWS = [
+  { id: '1', who: 'Hannah Lloyd', stars: '★★★★★', text: 'Mira reframed our whole positioning before touching a logo.' },
+  { id: '2', who: 'Marcus Reid', stars: '★★★★★', text: 'Clear milestones, zero chasing. Delivered a day early.' },
+];

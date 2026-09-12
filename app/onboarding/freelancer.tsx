@@ -1,3 +1,4 @@
+/// <reference types="nativewind/types" />
 import React, { useState } from 'react';
 import { View, Text, TextInput, ScrollView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
@@ -51,7 +52,7 @@ export default function FreelancerOnboarding() {
     if (step < totalSteps) {
       setStep(step + 1);
     } else {
-      router.push('/home'); // Or wherever it should go after completion
+      router.replace('/home'); // Navigate to the main app home
     }
   };
 
