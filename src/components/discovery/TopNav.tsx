@@ -1,7 +1,18 @@
 import React from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable, Platform, StyleSheet } from 'react-native';
+import { useRouter, usePathname } from 'expo-router';
+
+const WEB_NAV_LINKS = [
+  { label: 'Discover', href: '/home' },
+  { label: 'Talent',   href: '/browse' },
+  { label: 'Orders',   href: '/orders' },
+  { label: 'Messages', href: '/messages' },
+];
 
 export function TopNav() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <View className="bg-white border-b border-border z-50">
       <View className="flex-row items-center h-[72px] px-6 max-w-[1180px] w-full self-center gap-5">
@@ -14,7 +25,7 @@ export function TopNav() {
           <Text className="font-manrope-extraBold text-[19px] text-ink">SkillNest</Text>
         </View>
 
-        {/* Search pill — flex-1 absorbs space but pill itself is capped at 420px */}
+        {/* Search pill — flex-1 absorbs space, pill itself capped at 420px */}
         <View className="flex-1 items-center">
           <View
             style={{ maxWidth: 420, width: '100%' }}
@@ -30,6 +41,27 @@ export function TopNav() {
             />
           </View>
         </View>
+
+        {/* Web-only nav links — hidden entirely on native */}
+        {Platform.OS === 'web' && (
+          <View style={styles.navLinks}>
+            {WEB_NAV_LINKS.map(({ label, href }) => {
+              const isActive = pathname === href;
+              return (
+                <Pressable
+                  key={label}
+                  onPress={() => router.push(href as any)}
+                  style={styles.navLink}
+                >
+                  <Text style={[styles.navLinkText, isActive && styles.navLinkActive]}>
+                    {label}
+                  </Text>
+                  {isActive && <View style={styles.navLinkUnderline} />}
+                </Pressable>
+              );
+            })}
+          </View>
+        )}
 
         {/* Icons */}
         <View className="flex-row items-center gap-[18px] shrink-0">
@@ -49,4 +81,37 @@ export function TopNav() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  navLinks: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    flexShrink: 0,
+  },
+  navLink: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  navLinkText: {
+    fontSize: 14,
+    fontFamily: 'Inter_600SemiBold',
+    color: '#5B6472',
+  },
+  navLinkActive: {
+    color: '#10172A',
+  },
+  navLinkUnderline: {
+    position: 'absolute',
+    bottom: -1,
+    left: 12,
+    right: 12,
+    height: 2,
+    borderRadius: 2,
+    backgroundColor: '#EC1257',
+  },
+});
+
 

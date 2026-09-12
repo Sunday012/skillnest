@@ -33,7 +33,7 @@ export function WizardLayout({
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <KeyboardAvoidingView 
+    <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-bg-alt"
     >
@@ -51,14 +51,14 @@ export function WizardLayout({
             Step {currentStep} of {totalSteps}
           </Text>
           <View className="w-10">
-             {onSkip && (
-                <Pressable onPress={onSkip} className="p-2 -mr-2 items-end">
-                  <Text className="text-gray-body font-medium">Skip</Text>
-                </Pressable>
-             )}
+            {onSkip && (
+              <Pressable onPress={onSkip} className="p-2 -mr-2 items-end">
+                <Text className="text-gray-body font-medium">Skip</Text>
+              </Pressable>
+            )}
           </View>
         </View>
-        
+
         <View className="h-1.5 w-full bg-border rounded-full overflow-hidden">
           <View style={{ width: `${progress}%`, height: '100%' }}>
             <LinearGradient
@@ -81,7 +81,7 @@ export function WizardLayout({
               {subtitle}
             </Text>
           )}
-          
+
           {children}
         </View>
       </ScrollView>
@@ -89,9 +89,9 @@ export function WizardLayout({
       {/* Bottom Fixed Action Bar */}
       <View className="absolute bottom-0 left-0 right-0 bg-white border-t border-border p-6 pb-8 z-20">
         <View className="mx-auto w-full max-w-5xl flex-row items-center gap-4">
-          <Button 
-            title={nextLabel} 
-            onPress={onNext} 
+          <Button
+            title={nextLabel}
+            onPress={onNext}
             disabled={isNextDisabled}
             isLoading={isLoading}
             className="flex-1"
@@ -101,3 +101,5 @@ export function WizardLayout({
     </KeyboardAvoidingView>
   );
 }
+
+
