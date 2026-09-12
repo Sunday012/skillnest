@@ -66,6 +66,13 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
+          name="my-gigs"
+          options={{
+            title: 'My Gigs',
+            tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>💼</Text>,
+          }}
+        />
+        <Tabs.Screen
           name="orders"
           options={{
             title: 'Orders',
@@ -83,6 +90,18 @@ export default function AppLayout() {
           name="talent/[id]"
           options={{
             href: null, // Dynamic profile — hidden from tab bar
+          }}
+        />
+        <Tabs.Screen
+          name="gigs/create"
+          options={{
+            href: null, // Create gig screen — hidden from tab bar
+          }}
+        />
+        <Tabs.Screen
+          name="gig/[id]"
+          options={{
+            href: null, // Gig detail page — hidden from tab bar
           }}
         />
       </Tabs>

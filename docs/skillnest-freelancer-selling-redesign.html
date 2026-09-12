@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Phase 4: Freelancer Selling Side (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --white:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+  input,textarea,select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;
+    font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);background:#fff;outline:none;}
+  input:focus,textarea:focus,select:focus{border-color:var(--pink);}
+  textarea{resize:vertical;min-height:100px;}
+  .field{margin-bottom:20px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+  /* ===== NOTE FOR ANTIGRAVITY: everything inside .devtoggle-DO-NOT-BUILD is preview
+     tooling for this mockup only. Do not implement it in the app. ===== */
+  .devtoggle-DO-NOT-BUILD{position:fixed;top:14px;right:14px;z-index:200;background:var(--navy);
+    border-radius:100px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .devtoggle-DO-NOT-BUILD button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:12px;padding:7px 12px;border-radius:100px;cursor:pointer;white-space:nowrap;}
+  .devtoggle-DO-NOT-BUILD button.active{background:var(--pink);color:#fff;}
+  .devtoggle-label{position:fixed;top:52px;right:14px;z-index:200;font-size:11px;color:#B91C1C;font-weight:700;
+    font-family:'Inter',sans-serif;background:#FEF2F2;padding:4px 10px;border-radius:6px;border:1px solid #FCA5A5;}
+
+  .app-nav{background:#fff;border-bottom:1px solid var(--border);}
+  .app-nav .wrap{display:flex;align-items:center;gap:24px;height:72px;}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;}
+  .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;}
+  .app-nav-links{display:flex;gap:24px;font-weight:600;font-size:14.5px;color:var(--gray-600);margin-left:16px;}
+  .app-nav-links a.active{color:var(--ink);border-bottom:2px solid var(--pink);padding-bottom:24px;}
+  .avatar-sm{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:auto;}
+
+  .page{padding:36px 0 64px;}
+
+  /* ================= MY GIGS DASHBOARD ================= */
+  .dash-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
+  .dash-head h1{font-size:26px;margin-bottom:6px;}
+  .dash-head p{color:var(--gray-600);font-size:14px;}
+  .btn-pink{background:var(--pink);color:#fff;border:none;padding:12px 22px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;}
+  .btn-outline{background:#fff;border:1.5px solid var(--border);padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+
+  .gig-table{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:32px;}
+  .gt-row{display:grid;grid-template-columns:2.2fr .8fr .8fr .9fr .8fr 1fr;align-items:center;padding:16px 22px;border-bottom:1px solid var(--border);}
+  .gt-row:last-child{border-bottom:none;}
+  .gt-head{background:var(--bg-alt);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-400);font-weight:700;}
+  .gig-info{display:flex;gap:12px;align-items:center;}
+  .gig-thumb{width:52px;height:40px;border-radius:8px;background:var(--bg-alt);flex-shrink:0;}
+  .gig-info h4{font-size:14px;margin-bottom:2px;}
+  .gig-info .cat{font-size:12px;color:var(--gray-400);}
+  .status-pill{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:100px;}
+  .status-active{background:#DCFCE7;color:#166534;}
+  .status-paused{background:var(--bg-alt);color:var(--gray-600);}
+  .status-draft{background:#FEF3C7;color:#92400E;}
+  .row-actions{display:flex;gap:8px;}
+  .mini-btn{font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;}
+
+  .stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;}
+  .stat-card .val{font-family:'Manrope',sans-serif;font-weight:800;font-size:26px;}
+  .stat-card .lbl{font-size:12.5px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.04em;margin-top:4px;}
+  .stat-card .delta{font-size:12px;color:var(--green);font-weight:700;margin-top:6px;}
+
+  /* ================= CREATE / EDIT GIG ================= */
+  .create-head h1{font-size:26px;margin-bottom:6px;}
+  .create-head p{color:var(--gray-600);font-size:14px;margin-bottom:32px;}
+  .create-layout{display:grid;grid-template-columns:1fr 320px;gap:36px;align-items:start;}
+  .form-section{background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:20px;}
+  .form-section h3{font-size:16px;margin-bottom:18px;}
+  .hint{font-size:12px;color:var(--gray-400);margin-top:6px;}
+  .cat-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+  .cat-chip-sel{border:1.5px solid var(--border);border-radius:100px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;}
+  .cat-chip-sel.selected{background:var(--pink);color:#fff;border-color:var(--pink);}
+  .dropzone{border:1.5px dashed var(--border);border-radius:12px;padding:24px;text-align:center;cursor:pointer;background:var(--bg-alt);}
+  .dropzone.filled{border-style:solid;border-color:var(--pink);background:var(--pink-tint);}
+  .dz-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .dz-row .dropzone{padding:18px 8px;}
+  .tier-toggle{display:flex;gap:10px;margin-bottom:20px;}
+  .tier-btn{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:12px;text-align:center;font-weight:700;font-size:13.5px;cursor:pointer;background:#fff;}
+  .tier-btn.on{border-color:var(--pink);background:var(--pink-tint);color:var(--pink-dark);}
+
+  .preview-wrap{position:sticky;top:24px;}
+  .preview-label{font-size:12px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+  .preview-gig-card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 20px 44px -24px rgba(16,23,42,.2);}
+  .preview-gig-img{height:150px;background:linear-gradient(135deg,var(--pink-tint),var(--border));}
+  .preview-gig-body{padding:18px;}
+  .preview-gig-body h4{font-size:15px;margin-bottom:8px;line-height:1.3;}
+  .preview-seller{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gray-600);margin-bottom:12px;}
+  .preview-seller .av{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;}
+  .preview-gig-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:12px;}
+  .preview-gig-foot .lbl{font-size:11.5px;color:var(--gray-400);}
+  .preview-gig-foot .amt{font-weight:800;font-size:17px;}
+
+  .bottom-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:8px;}
+
+  /* ================= GIG DETAIL (client view) ================= */
+  .crumb{font-size:13px;color:var(--gray-400);margin-bottom:14px;}
+  .crumb span{color:var(--pink);font-weight:600;}
+  .detail-layout{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start;}
+  .detail-title{font-size:28px;font-weight:800;margin-bottom:14px;}
+  .seller-row{display:flex;align-items:center;gap:10px;margin-bottom:24px;font-size:14px;}
+  .seller-row .av{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
+  .gallery-main{height:340px;border-radius:16px;background:linear-gradient(135deg,var(--pink-tint),var(--border));margin-bottom:12px;}
+  .gallery-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:32px;}
+  .gallery-strip div{aspect-ratio:1.4;border-radius:10px;background:var(--bg-alt);border:1px solid var(--border);}
+
+  .side-sticky{position:sticky;top:24px;}
+  .price-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+  .price-card .amt{font-family:'Manrope',sans-serif;font-weight:800;font-size:28px;margin-bottom:14px;}
+  .price-row{display:flex;justify-content:space-between;font-size:13.5px;padding:8px 0;border-bottom:1px solid var(--border);}
+  .price-row:last-of-type{border-bottom:none;margin-bottom:16px;}
+  .escrow-tag{color:var(--green);font-weight:700;}
+
+  .about-block{margin-bottom:36px;}
+  .about-block h3{font-size:18px;margin-bottom:12px;}
+  .about-block p{color:var(--gray-600);font-size:14.5px;margin-bottom:14px;}
+
+  .pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:36px;}
+  .pkg-card{border:1.5px solid var(--border);border-radius:14px;padding:22px;}
+  .pkg-card.pop{border-color:var(--pink);position:relative;}
+  .pkg-card .tier{font-size:11.5px;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+  .pkg-card .price{font-family:'Manrope',sans-serif;font-weight:800;font-size:24px;margin-bottom:4px;}
+  .pkg-card .delivery{font-size:12.5px;color:var(--gray-600);margin-bottom:16px;}
+  .pkg-list{list-style:none;margin-bottom:18px;}
+  .pkg-list li{font-size:13px;margin-bottom:8px;display:flex;gap:8px;}
+  .pkg-list .tick{color:var(--green);font-weight:800;}
+
+  .review{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:16px;}
+  .review:last-child{border:none;margin:0;padding:0;}
+  .review .who{font-weight:700;font-size:13.5px;}
+  .review .stars{color:#F5A623;font-size:12.5px;margin:4px 0;}
+  .review p{font-size:13.5px;color:var(--gray-600);}
+
+  .view{display:none;} .view.active{display:block;}
+
+  @media(max-width:900px){
+    .create-layout,.detail-layout{grid-template-columns:1fr;}
+    .two-col,.three-col,.stat-cards,.pkg-grid,.dz-row{grid-template-columns:1fr;}
+    .gt-row{grid-template-columns:1.6fr .8fr .8fr;}
+    .gt-row span:nth-child(4),.gt-row span:nth-child(5){display:none;}
+    .gallery-strip{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="devtoggle-DO-NOT-BUILD">
+  <button class="active" onclick="showView('mygigs')">My Gigs</button>
+  <button onclick="showView('create')">Create Gig</button>
+  <button onclick="showView('detail')">Gig Detail</button>
+</div>
+<div class="devtoggle-label">⚠ Mockup nav only — do not implement</div>
+
+<div class="app-nav">
+  <div class="wrap">
+    <div class="logo"><div class="logo-mark">S</div>SkillNest</div>
+    <div class="app-nav-links"><a>Discover</a><a class="active">My Gigs</a><a>Orders</a><a>Messages</a></div>
+    <div class="avatar-sm">M</div>
+  </div>
+</div>
+
+<!-- ================= MY GIGS DASHBOARD ================= -->
+<div id="mygigs" class="view active">
+  <div class="wrap page">
+    <div class="dash-head">
+      <div><h1>My Gigs</h1><p>Four listings, two categories. Pause anything you can't take on right now.</p></div>
+      <button class="btn-pink" onclick="showView('create')">+ Create a Gig</button>
+    </div>
+
+    <div class="gig-table">
+      <div class="gt-row gt-head"><span>Gig</span><span>Impressions</span><span>Orders</span><span>Rating</span><span>Price</span><span>Status</span></div>
+      <div class="gt-row" onclick="showView('detail')" style="cursor:pointer;">
+        <div class="gig-info"><div class="gig-thumb"></div><div><h4>Complete brand identity & logo system</h4><div class="cat">Design</div></div></div>
+        <span>12,480</span><span>240</span><span>★ 4.9</span><span>$450</span>
+        <span><span class="status-pill status-active">Active</span></span>
+      </div>
+      <div class="gt-row">
+        <div class="gig-info"><div class="gig-thumb"></div><div><h4>Responsive landing page in React & Tailwind</h4><div class="cat">Development</div></div></div>
+        <span>9,210</span><span>112</span><span>★ 5.0</span><span>$890</span>
+        <span><span class="status-pill status-active">Active</span></span>
+      </div>
+      <div class="gt-row">
+        <div class="gig-info"><div class="gig-thumb"></div><div><h4>Product launch motion graphics & edits</h4><div class="cat">Video</div></div></div>
+        <span>4,380</span><span>76</span><span>★ 4.8</span><span>$620</span>
+        <span><span class="status-pill status-paused">Paused</span></span>
+      </div>
+      <div class="gt-row">
+        <div class="gig-info"><div class="gig-thumb"></div><div><h4>SaaS dashboard design, Figma to spec</h4><div class="cat">Design</div></div></div>
+        <span>—</span><span>—</span><span>—</span><span>$1,240</span>
+        <span><span class="status-pill status-draft">Draft</span></span>
+      </div>
+    </div>
+
+    <div class="stat-cards">
+      <div class="stat-card"><div class="val">33,790</div><div class="lbl">Impressions</div><div class="delta">+12% this week</div></div>
+      <div class="stat-card"><div class="val">3.4%</div><div class="lbl">Conversion</div><div class="delta">Category avg 2.1%</div></div>
+      <div class="stat-card"><div class="val">1h 12m</div><div class="lbl">Response Time</div><div class="delta">Top 10% of sellers</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CREATE / EDIT GIG ================= -->
+<div id="create" class="view">
+  <div class="wrap page">
+    <div class="create-head">
+      <h1>Create a Gig</h1>
+      <p>Clients scan gigs in about six seconds. Lead with the outcome, not the process.</p>
+    </div>
+
+    <div class="create-layout">
+      <div>
+        <div class="form-section">
+          <h3>Basic Info</h3>
+          <div class="field">
+            <label>Gig Title</label>
+            <input id="in-title" type="text" placeholder="I will design a complete brand identity system" oninput="sync()">
+            <div class="hint">Start with "I will…" — 80 characters max.</div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Category</label>
+              <select id="in-cat" onchange="sync()">
+                <option>Graphic Design</option><option>Web Design</option><option>Video Editing</option>
+                <option>Software Development</option><option>Copywriting</option><option>Digital Marketing</option>
+              </select>
+            </div>
+            <div class="field"><label>Subcategory</label><input type="text" placeholder="e.g. Brand identity"></div>
+          </div>
+          <div class="field"><label>Description</label><textarea placeholder="This is a full-service engagement, not a template drop…"></textarea></div>
+        </div>
+
+        <div class="form-section">
+          <h3>Pricing &amp; Delivery</h3>
+          <div class="tier-toggle">
+            <div class="tier-btn on" onclick="toggleTier(this)">Essential Only</div>
+            <div class="tier-btn" onclick="toggleTier(this)">+ Add 3 Package Tiers</div>
+          </div>
+          <div class="three-col">
+            <div class="field"><label>Starting Price (USD)</label><input id="in-price" type="text" placeholder="450" oninput="sync()"></div>
+            <div class="field"><label>Delivery Time</label>
+              <select><option>3 days</option><option>5 days</option><option>7 days</option><option>10 days</option></select>
+            </div>
+            <div class="field"><label>Revisions</label>
+              <select><option>1</option><option>2</option><option>3</option><option>Unlimited</option></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>Gallery</h3>
+          <div class="dz-row">
+            <div class="dropzone" onclick="this.classList.toggle('filled')">🖼️<br><small>Upload image</small></div>
+            <div class="dropzone" onclick="this.classList.toggle('filled')">🖼️<br><small>Upload image</small></div>
+            <div class="dropzone" onclick="this.classList.toggle('filled')">🎬<br><small>Upload video</small></div>
+          </div>
+          <div class="hint">First image becomes the card cover. Three minimum. Video optional — up to 60 seconds.</div>
+        </div>
+
+        <div class="form-section">
+          <h3>Tags</h3>
+          <input type="text" placeholder="logo, brand system, packaging">
+        </div>
+
+        <div class="bottom-actions">
+          <button class="btn-outline">Save Draft</button>
+          <button class="btn-pink">Publish Gig</button>
+        </div>
+      </div>
+
+      <div class="preview-wrap">
+        <div class="preview-label">Live Preview</div>
+        <div class="preview-gig-card">
+          <div class="preview-gig-img"></div>
+          <div class="preview-gig-body">
+            <h4 id="pv-title">I will design a complete brand identity system</h4>
+            <div class="preview-seller"><div class="av">M</div>Mira Vance · ★ 4.9 (212)</div>
+            <div class="preview-gig-foot"><span class="lbl">Starting at</span><span class="amt" id="pv-price">$450</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= GIG DETAIL (CLIENT VIEW) ================= -->
+<div id="detail" class="view">
+  <div class="wrap page">
+    <div class="crumb">Discover / <span>Design</span></div>
+    <h1 class="detail-title">Complete brand identity &amp; logo system</h1>
+    <div class="seller-row">
+      <div class="av">M</div>
+      <strong>Mira Vance</strong> <span style="color:var(--pink);">✓ Verified</span>
+      <span style="color:var(--gray-600);">★ 4.9 (212) · 240 orders completed</span>
+    </div>
+
+    <div class="detail-layout">
+      <div>
+        <div class="gallery-main"></div>
+        <div class="gallery-strip"><div></div><div></div><div></div><div></div></div>
+
+        <div class="about-block">
+          <h3>About this gig</h3>
+          <p>This is a full-service engagement, not a template drop. We start with a short written brief, agree the milestones, and work in the open — you see progress at every stage rather than one big reveal at the end.</p>
+          <p>Every deliverable is scoped in the milestone plan before work begins, so there are no surprise invoices and no scope creep arguments. Escrow releases only when you approve.</p>
+        </div>
+
+        <div class="about-block">
+          <h3>Packages</h3>
+          <div class="pkg-grid">
+            <div class="pkg-card"><div class="tier">Essential</div><div class="price">$450</div><div class="delivery">3-day delivery</div>
+              <ul class="pkg-list"><li><span class="tick">✓</span>1 concept</li><li><span class="tick">✓</span>2 revisions</li><li><span class="tick">✓</span>Source files</li></ul>
+              <button class="btn-outline" style="width:100%;">Select</button></div>
+            <div class="pkg-card pop"><div class="tier">Studio</div><div class="price">$990</div><div class="delivery">6-day delivery</div>
+              <ul class="pkg-list"><li><span class="tick">✓</span>3 concepts</li><li><span class="tick">✓</span>Unlimited revisions</li><li><span class="tick">✓</span>Brand guide</li></ul>
+              <button class="btn-pink" style="width:100%;">Select</button></div>
+            <div class="pkg-card"><div class="tier">Full System</div><div class="price">$1,800</div><div class="delivery">12-day delivery</div>
+              <ul class="pkg-list"><li><span class="tick">✓</span>Full identity</li><li><span class="tick">✓</span>Guidelines</li><li><span class="tick">✓</span>Social kit</li></ul>
+              <button class="btn-outline" style="width:100%;">Select</button></div>
+          </div>
+        </div>
+
+        <div class="about-block">
+          <h3>Reviews (212)</h3>
+          <div class="review"><div class="who">Hannah Lloyd</div><div class="stars">★★★★★</div><p>Mira reframed our whole positioning before touching a logo. The identity has held up through two product pivots.</p></div>
+          <div class="review"><div class="who">Marcus Reid</div><div class="stars">★★★★★</div><p>Clear milestones, zero chasing. Delivered a day early and the handover pack was genuinely useful.</p></div>
+        </div>
+      </div>
+
+      <div class="side-sticky">
+        <div class="price-card">
+          <div class="amt">$450</div>
+          <div class="price-row"><span>Delivery</span><strong>3 days</strong></div>
+          <div class="price-row"><span>Revisions</span><strong>2 included</strong></div>
+          <div class="price-row"><span>Escrow</span><strong class="escrow-tag">Milestone-protected</strong></div>
+          <button class="btn-pink" style="width:100%;margin-bottom:10px;">Continue ($450)</button>
+          <button class="btn-outline" style="width:100%;margin-bottom:10px;">Message Mira</button>
+          <div style="text-align:center;font-size:13px;color:var(--gray-600);cursor:pointer;">♡ Save to favourites</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showView(id){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.devtoggle-DO-NOT-BUILD button').forEach((b,i)=>{
+      const map = {mygigs:0, create:1, detail:2};
+      b.classList.toggle('active', i===map[id]);
+    });
+    window.scrollTo(0,0);
+  }
+  function toggleTier(el){
+    document.querySelectorAll('.tier-btn').forEach(b=>b.classList.remove('on'));
+    el.classList.add('on');
+  }
+  function sync(){
+    const title = document.getElementById('in-title').value || 'I will design a complete brand identity system';
+    const price = document.getElementById('in-price').value || '450';
+    document.getElementById('pv-title').textContent = title;
+    document.getElementById('pv-price').textContent = '$' + price;
+  }
+</script>
+
+</body>
+</html>

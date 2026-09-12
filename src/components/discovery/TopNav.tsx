@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'expo-router';
 const WEB_NAV_LINKS = [
   { label: 'Discover', href: '/home' },
   { label: 'Talent',   href: '/browse' },
+  { label: 'My Gigs',  href: '/my-gigs' },
   { label: 'Orders',   href: '/orders' },
   { label: 'Messages', href: '/messages' },
 ];
