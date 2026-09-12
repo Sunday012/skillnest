@@ -1,20 +1,33 @@
-export const CATEGORIES = [
-  { id: '1',  title: 'Graphic Design',       icon: '🎨', count: '2,410 pros' },
-  { id: '2',  title: 'Web Design',            icon: '🖥️', count: '1,240 pros' },
-  { id: '3',  title: 'Video Editing',         icon: '✂️', count: '870 pros'  },
-  { id: '4',  title: 'Software Development',  icon: '💻', count: '3,180 pros' },
-  { id: '5',  title: 'Digital Marketing',     icon: '📣', count: '1,090 pros' },
-  { id: '6',  title: 'Copywriting',           icon: '✍️', count: '980 pros'  },
-  { id: '7',  title: 'Photography',           icon: '📷', count: '760 pros'  },
-  { id: '8',  title: 'Motion Graphics',       icon: '🎬', count: '540 pros'  },
-  { id: '9',  title: 'UI / UX Design',        icon: '🎯', count: '1,620 pros' },
-  { id: '10', title: 'SEO & Analytics',       icon: '📊', count: '830 pros'  },
-  { id: '11', title: 'Brand Strategy',        icon: '💡', count: '410 pros'  },
-  { id: '12', title: 'Illustration',          icon: '🖌️', count: '690 pros'  },
-  { id: '13', title: 'Social Media',          icon: '📱', count: '1,150 pros' },
-  { id: '14', title: 'Product Management',    icon: '🗂️', count: '360 pros'  },
-  { id: '15', title: 'Data & AI',             icon: '🤖', count: '720 pros'  },
-];
+import { OFFICIAL_CATEGORIES } from './categories';
+
+/**
+ * CATEGORIES — the 15 official categories with mock pro-counts for display.
+ * Labels are sourced from OFFICIAL_CATEGORIES (single source of truth).
+ */
+const CATEGORY_COUNTS: Record<string, string> = {
+  'Videography':              '640 pros',
+  'Video Editing':            '870 pros',
+  'Photography':              '760 pros',
+  'Graphic Design':           '2,410 pros',
+  'Web Design':               '1,240 pros',
+  'Software Development':     '3,180 pros',
+  'Script Writing':           '320 pros',
+  'Copywriting':              '980 pros',
+  'UGC Creation':             '510 pros',
+  'Animation':                '540 pros',
+  'Voice Over':               '290 pros',
+  'Social Media Management':  '1,150 pros',
+  'Digital Marketing':        '1,090 pros',
+  'Virtual Assistance':       '820 pros',
+  'Other Digital Skills':     '430 pros',
+};
+
+export const CATEGORIES = OFFICIAL_CATEGORIES.map((c, i) => ({
+  id: String(i + 1),
+  title: c.label,
+  icon: c.icon,
+  count: CATEGORY_COUNTS[c.label] ?? '—',
+}));
 
 export const FEATURED_TALENT = [
   {
@@ -55,7 +68,7 @@ export const FEATURED_TALENT = [
     initial: 'P',
     isVerified: true,
     role: 'Product Designer — SaaS & Dashboards',
-    category: 'UI / UX Design',
+    category: 'Web Design',
     location: 'Bengaluru, IN',
     status: 'away',
     tags: ['Figma', 'Design Systems', 'Research'],

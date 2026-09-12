@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, ScrollView, TextInput, Pressable, Platform } from 'react-native';
-import { CATEGORIES, FEATURED_TALENT } from '../../src/constants/discoveryData';
+import { FEATURED_TALENT } from '../../src/constants/discoveryData';
+import { CATEGORY_LABELS } from '../../src/constants/categories';
 import { TalentCard } from '../../src/components/discovery/TalentCard';
 
-const FILTER_CATEGORIES = CATEGORIES.map(c => c.title);
+const FILTER_CATEGORIES = CATEGORY_LABELS;
 const MIN_RATE = 20;
 const MAX_RATE = 150;
 

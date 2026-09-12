@@ -7,25 +7,10 @@ import { CategoryGrid, CategoryOption } from '../../src/components/form/Category
 import { MultiSelectChip } from '../../src/components/form/MultiSelectChip';
 import { RadioCard } from '../../src/components/form/RadioCard';
 import { FileUploadDropzone } from '../../src/components/form/FileUploadDropzone';
+import { OFFICIAL_CATEGORIES } from '../../src/constants/categories';
 import { SKILLS_BY_CATEGORY } from '../../src/constants/skills';
 
-const CATEGORIES: CategoryOption[] = [
-  { icon: '🎥', label: 'Videography' },
-  { icon: '✂️', label: 'Video Editing' },
-  { icon: '📷', label: 'Photography' },
-  { icon: '🎨', label: 'Graphic Design' },
-  { icon: '🖥️', label: 'Web Design' },
-  { icon: '💻', label: 'Software Development' },
-  { icon: '✍️', label: 'Script Writing' },
-  { icon: '📝', label: 'Copywriting' },
-  { icon: '📱', label: 'UGC Creation' },
-  { icon: '🎬', label: 'Animation' },
-  { icon: '🎙️', label: 'Voice Over' },
-  { icon: '📣', label: 'Social Media Management' },
-  { icon: '📈', label: 'Digital Marketing' },
-  { icon: '🗂️', label: 'Virtual Assistance' },
-  { icon: '✨', label: 'Other Digital Skills' }
-];
+const CATEGORIES: CategoryOption[] = OFFICIAL_CATEGORIES;
 
 export default function FreelancerOnboarding() {
   const router = useRouter();

@@ -5,24 +5,9 @@ import { useRouter } from 'expo-router';
 import { WizardLayout } from '../../src/components/onboarding/WizardLayout';
 import { CategoryGrid, CategoryOption } from '../../src/components/form/CategoryGrid';
 import { HeroVisual } from '../../src/components/landing/HeroVisual';
+import { OFFICIAL_CATEGORIES } from '../../src/constants/categories';
 
-const CATEGORIES: CategoryOption[] = [
-  { icon: '🎥', label: 'Videography' },
-  { icon: '✂️', label: 'Video Editing' },
-  { icon: '📷', label: 'Photography' },
-  { icon: '🎨', label: 'Graphic Design' },
-  { icon: '🖥️', label: 'Web Design' },
-  { icon: '💻', label: 'Software Development' },
-  { icon: '✍️', label: 'Script Writing' },
-  { icon: '📝', label: 'Copywriting' },
-  { icon: '📱', label: 'UGC Creation' },
-  { icon: '🎬', label: 'Animation' },
-  { icon: '🎙️', label: 'Voice Over' },
-  { icon: '📣', label: 'Social Media Management' },
-  { icon: '📈', label: 'Digital Marketing' },
-  { icon: '🗂️', label: 'Virtual Assistance' },
-  { icon: '✨', label: 'Other Digital Skills' }
-];
+const CATEGORIES: CategoryOption[] = OFFICIAL_CATEGORIES;
 
 export default function ClientOnboarding() {
   const router = useRouter();

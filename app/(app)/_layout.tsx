@@ -1,9 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs } from 'expo-router';
 import { TopNav } from '../../src/components/discovery/TopNav';
-import { Text, Platform } from 'react-native';
+import { Text, Platform, useWindowDimensions } from 'react-native';
+
+const BREAKPOINT = 880;
+
+function useIsWide() {
+  const dims = useWindowDimensions();
+  const getWidth = () => {
+    if (Platform.OS === 'web' && typeof window !== 'undefined') {
+      return window.innerWidth;
+    }
+    return dims.width;
+  };
+
+  const [width, setWidth] = useState(getWidth);
+
+  useEffect(() => {
+    if (Platform.OS !== 'web') return;
+    setWidth(window.innerWidth);
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+
+  const currentWidth = Platform.OS === 'web' ? width : dims.width;
+  return currentWidth >= BREAKPOINT;
+}
 
 export default function AppLayout() {
+  const isWide = useIsWide();
   return (
     <>
       <TopNav />
@@ -12,8 +38,8 @@ export default function AppLayout() {
           headerShown: false,
           tabBarActiveTintColor: '#10172A',
           tabBarInactiveTintColor: '#5B6472',
-          tabBarStyle: Platform.OS === 'web'
-            ? { display: 'none' }  // Header nav handles web navigation
+          tabBarStyle: isWide
+            ? { display: 'none' }  // Wide: header nav handles navigation
             : {
                 borderTopColor: '#E7E9F1',
                 elevation: 0,       // Android shadow
