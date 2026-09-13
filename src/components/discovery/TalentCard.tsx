@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSaved } from '../../context/SavedContext';
 
 interface TalentCardProps {
   talent: any;
@@ -21,10 +22,27 @@ const STATUS_LABEL: Record<string, string> = {
 
 export function TalentCard({ talent, layout = 'grid' }: TalentCardProps) {
   const router = useRouter();
+  const { isTalentSaved, toggleSaveTalent } = useSaved();
   const isRow = layout === 'row';
+
+  const isSaved = isTalentSaved(talent.id);
 
   const handlePress = () => {
     router.push(`/talent/${talent.id}`);
+  };
+
+  const handleToggleSave = (e: any) => {
+    e?.stopPropagation?.();
+    toggleSaveTalent({
+      id: talent.id,
+      name: talent.name,
+      role: talent.role + (talent.location ? ` · ${talent.location}` : ''),
+      initial: talent.initial || talent.name?.[0] || 'T',
+      isVerified: !!talent.isVerified,
+      rating: talent.rating || 5.0,
+      reviews: talent.reviews || 0,
+      price: talent.price || 95,
+    });
   };
 
   const dotColor = STATUS_DOT[talent.status] ?? '#93A0B4';
@@ -52,10 +70,17 @@ export function TalentCard({ talent, layout = 'grid' }: TalentCardProps) {
 
         {/* Info */}
         <View className={`${isRow ? 'flex-1' : 'mt-3 mb-3'}`}>
-          <View className="flex-row items-center gap-1.5 flex-wrap">
-            <Text className="font-manrope-extraBold text-[15.5px] text-ink">{talent.name}</Text>
-            {talent.isVerified && <Text className="text-pink text-[12px]">✓</Text>}
-            {isRow && <StatusBadge />}
+          <View className="flex-row items-center justify-between">
+            <View className="flex-row items-center gap-1.5 flex-wrap flex-1">
+              <Text className="font-manrope-extraBold text-[15.5px] text-ink">{talent.name}</Text>
+              {talent.isVerified && <Text className="text-pink text-[12px]">✓</Text>}
+              {isRow && <StatusBadge />}
+            </View>
+            <Pressable onPress={handleToggleSave} hitSlop={8} style={{ padding: 4 }}>
+              <Text style={{ fontSize: 18, color: isSaved ? '#EC1257' : '#93A0B4' }}>
+                {isSaved ? '♥' : '♡'}
+              </Text>
+            </Pressable>
           </View>
           <Text className="text-[12.5px] text-gray-body mt-1">{talent.role} · {talent.location}</Text>
 

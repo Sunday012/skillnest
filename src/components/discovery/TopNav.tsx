@@ -118,10 +118,10 @@ export function TopNav() {
             position: 'relative',
           }}
         >
-          <Pressable>
+          <Pressable onPress={() => router.push('/saved')}>
             <Text className="text-[17px] text-gray-body">♡</Text>
           </Pressable>
-          <Pressable className="relative">
+          <Pressable className="relative" onPress={() => router.push('/notifications')}>
             <Text className="text-[17px]">🔔</Text>
             <View className="absolute -top-[3px] -right-[4px] w-[7px] h-[7px] rounded-full bg-pink" />
           </Pressable>

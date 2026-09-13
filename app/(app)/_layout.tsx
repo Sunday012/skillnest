@@ -98,6 +98,18 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
+          name="notifications"
+          options={{
+            href: null, // Hidden from bottom tab bar — accessible via TopNav bell icon
+          }}
+        />
+        <Tabs.Screen
+          name="saved"
+          options={{
+            href: null, // Hidden from bottom tab bar — accessible via TopNav heart icon
+          }}
+        />
+        <Tabs.Screen
           name="my-gigs"
           options={{
             href: null, // Hidden from bottom tab bar — accessible via TopNav / Account menu

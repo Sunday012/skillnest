@@ -16,6 +16,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import '../global.css';
 
+import { SavedProvider } from '../src/context/SavedContext';
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -40,7 +42,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <SavedProvider>
       <StatusBar style="dark" />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
@@ -48,6 +50,6 @@ export default function RootLayout() {
         <Stack.Screen name="onboarding" />
         <Stack.Screen name="(app)" />
       </Stack>
-    </>
+    </SavedProvider>
   );
 }

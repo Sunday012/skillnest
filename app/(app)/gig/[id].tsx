@@ -3,12 +3,27 @@ import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { getGigById } from '../../../src/constants/sellingData';
 import { PackageCard } from '../../../src/components/selling/PackageCard';
+import { useSaved } from '../../../src/context/SavedContext';
 
 export default function GigDetailScreen() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const { gig, isOwner } = getGigById(id || '1');
+  const { isGigSaved, toggleSaveGig } = useSaved();
+
+  const isSaved = isGigSaved(gig.id);
+
+  const handleToggleSave = () => {
+    toggleSaveGig({
+      id: gig.id,
+      title: gig.title,
+      sellerName: gig.sellerName,
+      sellerRating: gig.sellerRating || 5.0,
+      price: gig.price,
+      deliveryTime: gig.deliveryTime || '3 days',
+    });
+  };
 
   return (
     <ScrollView className="flex-1 bg-bg-alt" contentContainerStyle={{ paddingBottom: 64 }}>
@@ -143,8 +158,10 @@ export default function GigDetailScreen() {
                   <Pressable style={styles.btnOutline}>
                     <Text style={styles.btnOutlineText}>Message {gig.sellerName}</Text>
                   </Pressable>
-                  <Pressable style={styles.favBtn}>
-                    <Text style={styles.favText}>♡ Save to favourites</Text>
+                  <Pressable style={styles.favBtn} onPress={handleToggleSave}>
+                    <Text style={[styles.favText, isSaved && { color: '#EC1257', fontFamily: 'Inter_700Bold' }]}>
+                      {isSaved ? '♥ Saved to favourites' : '♡ Save to favourites'}
+                    </Text>
                   </Pressable>
                 </>
               )}

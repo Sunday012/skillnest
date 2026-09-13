@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Phase 7: Communication & Utility (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --white:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* ===== NOTE FOR ANTIGRAVITY: everything inside .devtoggle-DO-NOT-BUILD is preview
+     tooling for this mockup only. Do not implement it in the app. ===== */
+  .devtoggle-DO-NOT-BUILD{position:fixed;top:14px;right:14px;z-index:200;background:var(--navy);
+    border-radius:100px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .devtoggle-DO-NOT-BUILD button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:12px;padding:7px 12px;border-radius:100px;cursor:pointer;white-space:nowrap;}
+  .devtoggle-DO-NOT-BUILD button.active{background:var(--pink);color:#fff;}
+  .devtoggle-label{position:fixed;top:52px;right:14px;z-index:200;font-size:11px;color:#B91C1C;font-weight:700;
+    font-family:'Inter',sans-serif;background:#FEF2F2;padding:4px 10px;border-radius:6px;border:1px solid #FCA5A5;}
+
+  .app-nav{background:#fff;border-bottom:1px solid var(--border);}
+  .app-nav .wrap{display:flex;align-items:center;gap:24px;height:72px;}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;}
+  .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;}
+  .app-nav-links{display:flex;gap:24px;font-weight:600;font-size:14.5px;color:var(--gray-600);margin-left:16px;}
+  .app-nav-links a.active{color:var(--ink);border-bottom:2px solid var(--pink);padding-bottom:24px;}
+  .avatar-sm{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:auto;}
+
+  .page{padding:32px 0 64px;}
+  .page h1{font-size:26px;margin-bottom:6px;}
+  .page-sub{color:var(--gray-600);font-size:14px;margin-bottom:24px;}
+
+  /* ================= MESSAGING ================= */
+  .msg-layout{display:grid;grid-template-columns:320px 1fr;height:600px;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+  .conv-list{border-right:1px solid var(--border);overflow-y:auto;}
+  .conv-item{display:flex;gap:12px;padding:16px 18px;border-bottom:1px solid var(--border);cursor:pointer;}
+  .conv-item.active{background:var(--pink-tint);}
+  .conv-item .av{width:40px;height:40px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .conv-body{flex:1;min-width:0;}
+  .conv-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+  .conv-top h4{font-size:14px;}
+  .conv-top .time{font-size:11.5px;color:var(--gray-400);}
+  .conv-snippet{font-size:12.5px;color:var(--gray-600);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .unread-badge{background:var(--pink);color:#fff;font-size:10.5px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+  .thread{display:flex;flex-direction:column;height:100%;}
+  .thread-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+  .thread-head .av{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
+  .thread-head h4{font-size:15px;}
+  .thread-head .role{font-size:12px;color:var(--gray-600);}
+  .thread-body{flex:1;padding:22px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;}
+  .bubble-row{display:flex;}
+  .bubble-row.me{justify-content:flex-end;}
+  .bubble{max-width:60%;padding:12px 16px;border-radius:14px;font-size:13.5px;}
+  .bubble-row:not(.me) .bubble{background:var(--bg-alt);border-bottom-left-radius:4px;}
+  .bubble-row.me .bubble{background:var(--navy);color:#fff;border-bottom-right-radius:4px;}
+  .bubble-time{font-size:11px;color:var(--gray-400);margin-top:4px;}
+  .thread-input{display:flex;gap:10px;padding:16px 22px;border-top:1px solid var(--border);}
+  .thread-input input{flex:1;border:1.5px solid var(--border);border-radius:100px;padding:12px 18px;font-size:13.5px;outline:none;}
+  .thread-input input:focus{border-color:var(--pink);}
+  .send-btn{background:var(--pink);color:#fff;border:none;border-radius:100px;padding:12px 22px;font-weight:700;font-size:13.5px;cursor:pointer;}
+
+  /* ================= NOTIFICATIONS ================= */
+  .notif-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px;}
+  .notif-head .mark{color:var(--pink);font-weight:700;font-size:13.5px;cursor:pointer;}
+  .filter-row{display:flex;gap:8px;margin-bottom:20px;}
+  .filter-pill{padding:9px 18px;border-radius:100px;font-size:13.5px;font-weight:700;cursor:pointer;background:#fff;border:1.5px solid var(--border);}
+  .filter-pill.on{background:var(--pink);color:#fff;border-color:var(--pink);}
+  .notif-list{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+  .notif-item{display:flex;gap:14px;padding:18px 22px;border-bottom:1px solid var(--border);align-items:flex-start;}
+  .notif-item:last-child{border-bottom:none;}
+  .notif-ic{width:34px;height:34px;border-radius:50%;background:var(--bg-alt);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+  .notif-body{flex:1;}
+  .notif-body h4{font-size:14px;margin-bottom:3px;}
+  .notif-body p{font-size:13px;color:var(--gray-600);}
+  .notif-time{font-size:12px;color:var(--gray-400);text-align:right;flex-shrink:0;}
+  .notif-dot{width:7px;height:7px;border-radius:50%;background:var(--pink);margin-top:4px;margin-left:auto;}
+
+  /* ================= SAVED / FAVORITES ================= */
+  .save-tabs{display:flex;gap:8px;margin-bottom:24px;}
+  .save-tab{padding:10px 18px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;color:var(--gray-600);}
+  .save-tab.on{background:var(--navy);color:#fff;}
+  .saved-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .saved-gig-card{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;}
+  .saved-gig-img{height:130px;background:linear-gradient(135deg,var(--pink-tint),var(--border));}
+  .heart-btn{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);
+    display:flex;align-items:center;justify-content:center;color:var(--pink);cursor:pointer;}
+  .saved-gig-body{padding:16px;}
+  .saved-gig-body .seller{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--gray-600);margin-bottom:8px;}
+  .saved-gig-body .seller .av{width:20px;height:20px;border-radius:50%;background:var(--navy);color:#fff;font-size:9px;display:flex;align-items:center;justify-content:center;}
+  .saved-gig-body h4{font-size:14.5px;margin-bottom:8px;line-height:1.3;}
+  .saved-gig-foot{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--gray-600);border-top:1px solid var(--border);padding-top:10px;}
+  .saved-gig-foot .amt{font-weight:800;font-size:15px;color:var(--ink);}
+
+  .saved-talent-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;}
+  .saved-talent-card .av-lg{width:48px;height:48px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .saved-talent-card h4{font-size:15px;margin-bottom:2px;}
+  .saved-talent-card .role{font-size:12.5px;color:var(--gray-600);margin-bottom:10px;}
+  .saved-talent-card .foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:12px;font-size:13px;}
+
+  .empty-state{background:#fff;border:1px dashed var(--border);border-radius:14px;padding:48px;text-align:center;color:var(--gray-600);font-size:14px;}
+
+  .view{display:none;} .view.active{display:block;}
+  .sub-view{display:none;} .sub-view.active{display:grid;}
+
+  @media(max-width:900px){
+    .msg-layout{grid-template-columns:1fr;height:auto;}
+    .conv-list{max-height:280px;}
+    .saved-grid{grid-template-columns:1fr;}
+    .thread{height:480px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="devtoggle-DO-NOT-BUILD">
+  <button class="active" onclick="showView('messages')">Messages</button>
+  <button onclick="showView('notifs')">Notifications</button>
+  <button onclick="showView('saved')">Saved</button>
+</div>
+<div class="devtoggle-label">⚠ Mockup nav only — do not implement</div>
+
+<div class="app-nav">
+  <div class="wrap">
+    <div class="logo"><div class="logo-mark">S</div>SkillNest</div>
+    <div class="app-nav-links"><a>Discover</a><a>Talent</a><a>Orders</a><a class="active">Messages</a></div>
+    <div class="avatar-sm">M</div>
+  </div>
+</div>
+
+<!-- ================= MESSAGING ================= -->
+<div id="messages" class="view active">
+  <div class="wrap page">
+    <h1>Messages</h1>
+    <div class="msg-layout">
+      <div class="conv-list">
+        <div class="conv-item active">
+          <div class="av">M</div>
+          <div class="conv-body">
+            <div class="conv-top"><h4>Mira Vance</h4><span class="time">09:42</span></div>
+            <div class="conv-snippet">Concepts are uploaded — take a look when you can.</div>
+          </div>
+          <div class="unread-badge">2</div>
+        </div>
+        <div class="conv-item">
+          <div class="av">D</div>
+          <div class="conv-body">
+            <div class="conv-top"><h4>Devon Park</h4><span class="time">Yesterday</span></div>
+            <div class="conv-snippet">Deployed the staging build, link in the...</div>
+          </div>
+        </div>
+        <div class="conv-item">
+          <div class="av">A</div>
+          <div class="conv-body">
+            <div class="conv-top"><h4>Aria Sol</h4><span class="time">Mon</span></div>
+            <div class="conv-snippet">I've responded to the dispute...</div>
+          </div>
+          <div class="unread-badge">1</div>
+        </div>
+        <div class="conv-item">
+          <div class="av">T</div>
+          <div class="conv-body">
+            <div class="conv-top"><h4>Theo Lang</h4><span class="time">Jul 12</span></div>
+            <div class="conv-snippet">Appreciate the review — was a fun one.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="thread">
+        <div class="thread-head"><div class="av">M</div><div><h4>Mira Vance</h4><div class="role">Brand Designer & Identity Systems</div></div></div>
+        <div class="thread-body">
+          <div class="bubble-row"><div><div class="bubble">Morning! Starting on the second milestone today.</div><div class="bubble-time">08:12</div></div></div>
+          <div class="bubble-row me"><div><div class="bubble">Perfect. Any blockers from the discovery notes?</div><div class="bubble-time" style="text-align:right;">08:20</div></div></div>
+          <div class="bubble-row"><div><div class="bubble">None — the positioning doc was unusually clear, which helps a lot.</div><div class="bubble-time">08:24</div></div></div>
+          <div class="bubble-row"><div><div class="bubble">Concepts are uploaded — take a look when you can.</div><div class="bubble-time">09:42</div></div></div>
+        </div>
+        <div class="thread-input"><input type="text" placeholder="Write a message…"><button class="send-btn">Send</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= NOTIFICATIONS ================= -->
+<div id="notifs" class="view">
+  <div class="wrap page">
+    <div class="notif-head"><div><h1>Notifications</h1><p class="page-sub" style="margin:0;">2 unread of 4</p></div><span class="mark">Mark all as read</span></div>
+    <div class="filter-row">
+      <div class="filter-pill on">All</div><div class="filter-pill">Orders</div>
+      <div class="filter-pill">Payouts</div><div class="filter-pill">System</div>
+    </div>
+    <div class="notif-list">
+      <div class="notif-item">
+        <div class="notif-ic">💬</div>
+        <div class="notif-body"><h4>Milestone delivered</h4><p>Mira Vance delivered "Primary logo concepts" on order SN-4821.</p></div>
+        <div><div class="notif-time">12 min ago</div><div class="notif-dot"></div></div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-ic">📋</div>
+        <div class="notif-body"><h4>New proposal</h4><p>Priya Nair applied to "Rebrand for a specialty coffee roaster".</p></div>
+        <div><div class="notif-time">2 hours ago</div><div class="notif-dot"></div></div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-ic">💰</div>
+        <div class="notif-body"><h4>Payout sent</h4><p>$1,240.00 is on the way to your bank account ending 4417.</p></div>
+        <div class="notif-time">Yesterday</div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-ic">✓</div>
+        <div class="notif-body"><h4>Identity verified</h4><p>Your KYC check passed. The verified badge is now on your profile.</p></div>
+        <div class="notif-time">3 days ago</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SAVED / FAVORITES ================= -->
+<div id="saved" class="view">
+  <div class="wrap page">
+    <div class="notif-head"><h1>Saved</h1><span class="mark" onclick="clearSaved()">Clear all</span></div>
+    <div class="save-tabs">
+      <div class="save-tab on" onclick="showSaveTab('gigs', this)">Saved Gigs (4)</div>
+      <div class="save-tab" onclick="showSaveTab('talent', this)">Saved Talent (2)</div>
+    </div>
+
+    <div id="savedGigs" class="saved-grid sub-view" style="display:grid;">
+      <div class="saved-gig-card">
+        <div class="saved-gig-img"></div><div class="heart-btn">♥</div>
+        <div class="saved-gig-body">
+          <div class="seller"><div class="av">M</div>Mira Vance <span style="color:var(--pink);">✓</span></div>
+          <h4>Complete brand identity & logo system</h4>
+          <div class="saved-gig-foot"><span>★ 4.9 (212)</span><span class="amt">$450</span></div>
+        </div>
+      </div>
+      <div class="saved-gig-card">
+        <div class="saved-gig-img"></div><div class="heart-btn">♥</div>
+        <div class="saved-gig-body">
+          <div class="seller"><div class="av">D</div>Devon Park <span style="color:var(--pink);">✓</span></div>
+          <h4>Responsive landing page in React & Tailwind</h4>
+          <div class="saved-gig-foot"><span>★ 5.0 (98)</span><span class="amt">$890</span></div>
+        </div>
+      </div>
+      <div class="saved-gig-card">
+        <div class="saved-gig-img"></div><div class="heart-btn">♥</div>
+        <div class="saved-gig-body">
+          <div class="seller"><div class="av">A</div>Aria Sol <span style="color:var(--pink);">✓</span></div>
+          <h4>Product launch motion graphics & edits</h4>
+          <div class="saved-gig-foot"><span>★ 4.8 (164)</span><span class="amt">$620</span></div>
+        </div>
+      </div>
+      <div class="saved-gig-card">
+        <div class="saved-gig-img"></div><div class="heart-btn">♥</div>
+        <div class="saved-gig-body">
+          <div class="seller"><div class="av">P</div>Priya Nair <span style="color:var(--pink);">✓</span></div>
+          <h4>SaaS dashboard design, Figma to spec</h4>
+          <div class="saved-gig-foot"><span>★ 4.9 (131)</span><span class="amt">$1,240</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="savedTalent" class="saved-grid sub-view" style="display:none;">
+      <div class="saved-talent-card">
+        <div class="heart-btn" style="position:absolute;top:16px;right:16px;">♥</div>
+        <div class="av-lg">J</div>
+        <h4>Jonas Weber <span style="color:var(--pink);font-size:12px;">✓</span></h4>
+        <div class="role">Data & AI Engineer · Zürich, CH</div>
+        <div class="foot"><span>★ 4.8 (54)</span><span style="font-weight:800;">$130/hr</span></div>
+      </div>
+      <div class="saved-talent-card">
+        <div class="heart-btn" style="position:absolute;top:16px;right:16px;">♥</div>
+        <div class="av-lg">T</div>
+        <h4>Theo Lang <span style="color:var(--pink);font-size:12px;">✓</span></h4>
+        <div class="role">Copywriter & Content Strategist</div>
+        <div class="foot"><span>★ 4.7 (76)</span><span style="font-weight:800;">$95/hr</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showView(id){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.devtoggle-DO-NOT-BUILD button').forEach((b,i)=>{
+      const map = {messages:0, notifs:1, saved:2};
+      b.classList.toggle('active', i===map[id]);
+    });
+    window.scrollTo(0,0);
+  }
+  function showSaveTab(tab, el){
+    document.querySelectorAll('.save-tab').forEach(t=>t.classList.remove('on'));
+    el.classList.add('on');
+    document.getElementById('savedGigs').style.display = tab==='gigs' ? 'grid' : 'none';
+    document.getElementById('savedTalent').style.display = tab==='talent' ? 'grid' : 'none';
+  }
+  function clearSaved(){
+    document.getElementById('savedGigs').innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Nothing saved yet — tap the heart on any gig or talent profile to keep it here.</div>';
+    document.getElementById('savedTalent').innerHTML = '<div class="empty-state" style="grid-column:1/-1;">Nothing saved yet — tap the heart on any gig or talent profile to keep it here.</div>';
+  }
+</script>
+
+</body>
+</html>
