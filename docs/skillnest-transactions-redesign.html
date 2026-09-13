@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Phase 6: Transactions (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --amber:#D97706; --amber-tint:#FEF3C7;
+    --red:#DC2626; --red-tint:#FEE2E2; --white:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+  input,textarea{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;
+    font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);background:#fff;outline:none;}
+  input:focus,textarea:focus{border-color:var(--pink);}
+  textarea{resize:vertical;min-height:90px;}
+  .field{margin-bottom:18px;}
+
+  /* ===== NOTE FOR ANTIGRAVITY: everything inside .devtoggle-DO-NOT-BUILD is preview
+     tooling for this mockup only. Do not implement it in the app. ===== */
+  .devtoggle-DO-NOT-BUILD{position:fixed;top:14px;right:14px;z-index:200;background:var(--navy);
+    border-radius:100px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .devtoggle-DO-NOT-BUILD button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:12px;padding:7px 12px;border-radius:100px;cursor:pointer;white-space:nowrap;}
+  .devtoggle-DO-NOT-BUILD button.active{background:var(--pink);color:#fff;}
+  .devtoggle-label{position:fixed;top:52px;right:14px;z-index:200;font-size:11px;color:#B91C1C;font-weight:700;
+    font-family:'Inter',sans-serif;background:#FEF2F2;padding:4px 10px;border-radius:6px;border:1px solid #FCA5A5;}
+
+  .app-nav{background:#fff;border-bottom:1px solid var(--border);}
+  .app-nav .wrap{max-width:1180px;display:flex;align-items:center;gap:24px;height:72px;}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;}
+  .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;}
+  .app-nav-links{display:flex;gap:24px;font-weight:600;font-size:14.5px;color:var(--gray-600);margin-left:16px;}
+  .app-nav-links a.active{color:var(--ink);border-bottom:2px solid var(--pink);padding-bottom:24px;}
+  .avatar-sm{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:auto;}
+
+  .page{padding:36px 0 64px;}
+  .btn-pink{background:var(--pink);color:#fff;border:none;padding:12px 22px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;}
+  .btn-outline{background:#fff;border:1.5px solid var(--border);padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .btn-red-text{color:var(--red);font-weight:700;font-size:13.5px;cursor:pointer;}
+
+  /* ================= ORDERS LIST ================= */
+  .orders-head h1{font-size:26px;margin-bottom:16px;}
+  .filter-row{display:flex;gap:8px;margin-bottom:24px;}
+  .filter-pill{padding:9px 18px;border-radius:100px;font-size:13.5px;font-weight:700;cursor:pointer;background:#fff;border:1.5px solid var(--border);}
+  .filter-pill.on{background:var(--pink);color:#fff;border-color:var(--pink);}
+  .order-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;cursor:pointer;}
+  .order-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .order-meta{font-size:12.5px;color:var(--gray-400);}
+  .order-card h4{font-size:17px;margin:6px 0 10px;}
+  .order-people{display:flex;align-items:center;gap:8px;font-size:13.5px;margin-bottom:16px;}
+  .order-people .av{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .status-pill{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:100px;}
+  .status-progress{background:var(--pink-tint);color:var(--pink-dark);}
+  .status-delivered{background:#DBEAFE;color:#1E40AF;}
+  .status-disputed{background:var(--amber-tint);color:var(--amber);}
+  .status-approved{background:#DCFCE7;color:#166534;}
+  .order-amt{font-family:'Manrope',sans-serif;font-weight:800;font-size:18px;text-align:right;}
+  .progress-line{display:flex;justify-content:space-between;font-size:12.5px;color:var(--gray-600);margin-bottom:6px;}
+  .progress-track{height:6px;background:var(--bg-alt);border-radius:100px;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--pink);border-radius:100px;}
+
+  /* ================= ORDER DETAIL ================= */
+  .crumb{font-size:13px;color:var(--gray-400);margin-bottom:14px;}
+  .crumb span{color:var(--pink);font-weight:600;}
+  .detail-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+  .detail-top h1{font-size:24px;}
+  .detail-sub{font-size:13.5px;color:var(--gray-600);margin-bottom:28px;}
+  .order-layout{display:grid;grid-template-columns:1fr 300px;gap:36px;align-items:start;}
+
+  .timeline-head h3{font-size:18px;margin-bottom:4px;}
+  .timeline-head p{font-size:13px;color:var(--gray-600);margin-bottom:20px;}
+  .m-item{display:flex;gap:16px;margin-bottom:0;}
+  .m-line{display:flex;flex-direction:column;align-items:center;}
+  .m-dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;}
+  .m-dot.done{background:var(--green);color:#fff;}
+  .m-dot.pending{background:var(--pink);color:#fff;}
+  .m-dot.disputed{background:var(--amber);color:#fff;}
+  .m-dot.future{background:var(--bg-alt);color:var(--gray-400);border:1.5px solid var(--border);}
+  .m-connector{width:2px;flex:1;background:var(--border);margin:4px 0;min-height:36px;}
+  .m-body{padding-bottom:28px;flex:1;}
+  .m-body-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+  .m-body h4{font-size:15.5px;}
+  .m-body .desc{font-size:13px;color:var(--gray-400);margin-bottom:8px;}
+  .m-amt{font-family:'Manrope',sans-serif;font-weight:800;font-size:16px;}
+  .m-note{font-size:12.5px;padding:8px 12px;border-radius:8px;margin-top:8px;}
+  .m-note.released{background:#F0FDF4;color:var(--green);}
+  .m-note.frozen{background:var(--amber-tint);color:var(--amber);}
+  .m-actions{display:flex;gap:10px;margin-top:12px;}
+  .mini-btn{font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;}
+
+  .summary-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;position:sticky;top:24px;margin-bottom:20px;}
+  .summary-card h4{font-size:15px;margin-bottom:16px;}
+  .s-row{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;border-bottom:1px solid var(--border);}
+  .s-row:last-of-type{border-bottom:none;}
+  .s-row.total strong{font-size:17px;}
+
+  .review-box{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:28px;}
+  .review-box h3{font-size:17px;margin-bottom:4px;}
+  .review-box p{font-size:13px;color:var(--gray-600);margin-bottom:16px;}
+  .stars-input{font-size:22px;color:var(--border);margin-bottom:14px;letter-spacing:4px;cursor:pointer;}
+  .stars-input span.on{color:#F5A623;}
+
+  /* ================= CHECKOUT ================= */
+  .checkout-layout{display:grid;grid-template-columns:1fr 340px;gap:36px;align-items:start;}
+  .co-section{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;}
+  .co-section h3{font-size:15.5px;margin-bottom:16px;}
+  .pay-method{display:flex;align-items:center;gap:12px;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer;}
+  .pay-method.selected{border-color:var(--pink);background:var(--pink-tint);}
+  .pay-method .radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;}
+  .pay-method.selected .radio{border-color:var(--pink);background:radial-gradient(var(--pink) 40%, transparent 44%);}
+  .escrow-note{display:flex;gap:10px;background:var(--pink-tint);border-radius:10px;padding:14px;font-size:12.5px;color:var(--pink-dark);margin-top:6px;}
+
+  .co-summary{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;position:sticky;top:24px;}
+  .co-summary h4{font-size:15px;margin-bottom:16px;}
+  .co-item{display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid var(--border);}
+  .co-total{display:flex;justify-content:space-between;margin:16px 0;}
+  .co-total strong{font-size:20px;}
+
+  /* ================= CONFIRMATION ================= */
+  .confirm-wrap{max-width:480px;margin:80px auto;text-align:center;}
+  .confirm-check{width:76px;height:76px;border-radius:50%;background:var(--green);color:#fff;font-size:34px;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
+  .confirm-wrap h1{font-size:26px;margin-bottom:12px;}
+  .confirm-wrap p{color:var(--gray-600);font-size:15px;margin-bottom:8px;}
+  .confirm-id{font-size:13px;color:var(--gray-400);margin-bottom:32px;}
+  .confirm-actions{display:flex;gap:12px;justify-content:center;}
+
+  .view{display:none;} .view.active{display:block;}
+
+  @media(max-width:900px){
+    .order-layout,.checkout-layout{grid-template-columns:1fr;}
+    .order-top,.detail-top{flex-direction:column;gap:8px;}
+    .order-amt{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<div class="devtoggle-DO-NOT-BUILD">
+  <button class="active" onclick="showView('list')">Orders</button>
+  <button onclick="showView('detail')">Order Detail</button>
+  <button onclick="showView('checkout')">Checkout</button>
+  <button onclick="showView('confirm')">Confirmation</button>
+</div>
+<div class="devtoggle-label">⚠ Mockup nav only — do not implement</div>
+
+<div class="app-nav">
+  <div class="wrap">
+    <div class="logo"><div class="logo-mark">S</div>SkillNest</div>
+    <div class="app-nav-links"><a>Discover</a><a>Talent</a><a class="active">Orders</a><a>Messages</a></div>
+    <div class="avatar-sm">M</div>
+  </div>
+</div>
+
+<!-- ================= ORDERS LIST ================= -->
+<div id="list" class="view active">
+  <div class="wrap page">
+    <div class="orders-head"><h1>My Orders</h1><p style="color:var(--gray-600);font-size:14px;margin-bottom:20px;">Every order is milestone-funded — nothing releases without approval.</p></div>
+    <div class="filter-row">
+      <div class="filter-pill on">All</div><div class="filter-pill">In Progress</div>
+      <div class="filter-pill">Delivered</div><div class="filter-pill">Disputed</div>
+    </div>
+
+    <div class="order-card" onclick="showView('detail')">
+      <div class="order-top">
+        <div><div class="order-meta">SN-4821 · Placed 12 Aug 2026</div><h4>Complete brand identity & logo system</h4></div>
+        <div><span class="status-pill status-progress">In Progress</span><div class="order-amt">$1,000</div></div>
+      </div>
+      <div class="order-people"><div class="av">M</div>Mira Vance <span style="color:var(--pink);">✓ KYC</span></div>
+      <div class="progress-line"><span>1 of 3 milestones approved</span><span>33%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:33%;"></div></div>
+    </div>
+
+    <div class="order-card">
+      <div class="order-top">
+        <div><div class="order-meta">SN-4790 · Placed 04 Aug 2026</div><h4>Responsive landing page in React & Tailwind</h4></div>
+        <div><span class="status-pill status-delivered">Delivered</span><div class="order-amt">$1,780</div></div>
+      </div>
+      <div class="order-people"><div class="av">D</div>Devon Park <span style="color:var(--pink);">✓ KYC</span></div>
+      <div class="progress-line"><span>1 of 3 milestones approved</span><span>33%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:33%;"></div></div>
+    </div>
+
+    <div class="order-card">
+      <div class="order-top">
+        <div><div class="order-meta">SN-4712 · Placed 21 Jul 2026</div><h4>Product launch motion graphics & edits</h4></div>
+        <div><span class="status-pill status-disputed">Disputed</span><div class="order-amt">$620</div></div>
+      </div>
+      <div class="order-people"><div class="av">A</div>Aria Sol <span style="color:var(--pink);">✓ KYC</span></div>
+      <div class="progress-line"><span>1 of 2 milestones approved</span><span>50%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:50%;"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ORDER DETAIL ================= -->
+<div id="detail" class="view">
+  <div class="wrap page">
+    <div class="crumb" onclick="showView('list')" style="cursor:pointer;">My Orders / <span>SN-4821</span></div>
+    <div class="detail-top">
+      <h1>Complete brand identity & logo system</h1>
+      <div style="text-align:right;"><span class="status-pill status-progress">In Progress</span><div class="order-amt">$1,000</div></div>
+    </div>
+    <div class="detail-sub">Mira Vance ✓ Verified · Placed 12 Aug 2026 · Due 02 Sep 2026</div>
+
+    <div class="order-layout">
+      <div>
+        <div class="timeline-head"><h3>Milestone Timeline</h3><p>Funds release per milestone, only on your approval.</p></div>
+
+        <div class="m-item">
+          <div class="m-line"><div class="m-dot done">✓</div><div class="m-connector"></div></div>
+          <div class="m-body">
+            <div class="m-body-top"><h4>Discovery & strategy session</h4><span class="m-amt">$200</span></div>
+            <div class="desc">Positioning doc and creative direction</div>
+            <div class="m-note released">✓ Released to Mira.</div>
+          </div>
+        </div>
+
+        <div class="m-item">
+          <div class="m-line"><div class="m-dot pending">2</div><div class="m-connector"></div></div>
+          <div class="m-body">
+            <div class="m-body-top"><h4>Primary logo concepts</h4><span class="m-amt">$400</span></div>
+            <div class="desc">3 initial directions delivered for review</div>
+            <div class="m-note frozen">🔔 Delivered — awaiting your review.</div>
+            <div class="m-actions">
+              <button class="mini-btn" style="background:var(--pink);color:#fff;border-color:var(--pink);">Approve & Release</button>
+              <button class="mini-btn">Request Revision</button>
+              <span class="btn-red-text" style="align-self:center;">Open a dispute</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="m-item">
+          <div class="m-line"><div class="m-dot future">3</div></div>
+          <div class="m-body">
+            <div class="m-body-top"><h4>Final files & handover</h4><span class="m-amt">$400</span></div>
+            <div class="desc">Full identity system, guidelines, source files</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="summary-card">
+          <h4>Order Summary</h4>
+          <div class="s-row"><span>Order ID</span><strong>SN-4821</strong></div>
+          <div class="s-row"><span>Milestones</span><strong>3</strong></div>
+          <div class="s-row"><span>Released</span><strong style="color:var(--green);">$200</strong></div>
+          <div class="s-row total"><span>Total</span><strong>$1,000</strong></div>
+          <button class="btn-outline" style="width:100%;margin-top:14px;">Message Mira</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CHECKOUT ================= -->
+<div id="checkout" class="view">
+  <div class="wrap page">
+    <h1 style="font-size:26px;margin-bottom:24px;">Checkout</h1>
+    <div class="checkout-layout">
+      <div>
+        <div class="co-section">
+          <h3>Payment Method</h3>
+          <div class="pay-method selected"><div class="radio"></div>💳 Credit or Debit Card</div>
+          <div class="pay-method"><div class="radio"></div>🏦 Bank Transfer</div>
+          <div class="pay-method"><div class="radio"></div>👛 SkillNest Wallet — $0.00 available</div>
+
+          <div class="field" style="margin-top:20px;"><label>Card Number</label><input type="text" placeholder="4242 4242 4242 4242"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="field"><label>Expiry</label><input type="text" placeholder="MM / YY"></div>
+            <div class="field"><label>CVC</label><input type="text" placeholder="123"></div>
+          </div>
+
+          <div class="escrow-note">🔒 Your payment isn't released to the freelancer immediately — it's held in escrow and only pays out per milestone, once you approve.</div>
+        </div>
+      </div>
+
+      <div class="co-summary">
+        <h4>Order Summary</h4>
+        <div class="co-item"><span>Complete brand identity & logo system</span></div>
+        <div class="co-item"><span>Discovery & strategy session</span><span>$200</span></div>
+        <div class="co-item"><span>Primary logo concepts</span><span>$400</span></div>
+        <div class="co-item"><span>Final files & handover</span><span>$400</span></div>
+        <div class="co-item"><span>SkillNest fee (5%)</span><span>$50</span></div>
+        <div class="co-total"><span>Total due</span><strong>$1,050</strong></div>
+        <button class="btn-pink" style="width:100%;" onclick="showView('confirm')">Pay & Fund Escrow</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CONFIRMATION ================= -->
+<div id="confirm" class="view">
+  <div class="wrap">
+    <div class="confirm-wrap">
+      <div class="confirm-check">✓</div>
+      <h1>Payment Successful</h1>
+      <p>$1,050 has been placed in escrow for <strong>Complete brand identity & logo system</strong>.</p>
+      <div class="confirm-id">Order ID: SN-4822</div>
+      <div class="confirm-actions">
+        <button class="btn-outline">Back to Discover</button>
+        <button class="btn-pink" onclick="showView('detail')">View Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showView(id){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.devtoggle-DO-NOT-BUILD button').forEach((b,i)=>{
+      const map = {list:0, detail:1, checkout:2, confirm:3};
+      b.classList.toggle('active', i===map[id]);
+    });
+    window.scrollTo(0,0);
+  }
+</script>
+
+</body>
+</html>

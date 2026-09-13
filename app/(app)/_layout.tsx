@@ -66,10 +66,28 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="orders"
+          name="orders/index"
           options={{
             title: 'Orders',
             tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>📋</Text>,
+          }}
+        />
+        <Tabs.Screen
+          name="orders/checkout"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="orders/confirmation"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="orders/[id]"
+          options={{
+            href: null,
           }}
         />
         <Tabs.Screen

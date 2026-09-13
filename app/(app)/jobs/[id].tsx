@@ -36,12 +36,18 @@ export default function JobProposalsScreen() {
 
   const handleConfirmAction = () => {
     if (!confirmModal) return;
-    const { proposalId, action } = confirmModal;
+    const { proposalId, action, freelancerName } = confirmModal;
     setStatuses(prev => ({
       ...prev,
       [proposalId]: action === 'accept' ? 'accepted' : 'declined',
     }));
     setConfirmModal(null);
+
+    if (action === 'accept') {
+      router.push(
+        `/orders/checkout?orderId=SN-4823&title=${encodeURIComponent(job.title)}&price=2900&sellerName=${encodeURIComponent(freelancerName)}` as any
+      );
+    }
   };
 
   return (

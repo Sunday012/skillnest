@@ -130,7 +130,14 @@ export default function GigDetailScreen() {
                 </>
               ) : (
                 <>
-                  <Pressable style={styles.btnPink}>
+                  <Pressable
+                    style={styles.btnPink}
+                    onPress={() =>
+                      router.push(
+                        `/orders/checkout?orderId=SN-4822&title=${encodeURIComponent(gig.title)}&price=${gig.price}&sellerName=${encodeURIComponent(gig.sellerName)}` as any
+                      )
+                    }
+                  >
                     <Text style={styles.btnPinkText}>Continue (${gig.price})</Text>
                   </Pressable>
                   <Pressable style={styles.btnOutline}>
