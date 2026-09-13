@@ -151,6 +151,12 @@ export default function AppLayout() {
             href: null, // Gig detail page — hidden from tab bar
           }}
         />
+        <Tabs.Screen
+          name="settings"
+          options={{
+            href: null, // Settings page — hidden from tab bar, accessible via TopNav / Account menu
+          }}
+        />
       </Tabs>
     </>
   );

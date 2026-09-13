@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import '../global.css';
 
 import { SavedProvider } from '../src/context/SavedContext';
+import { UserProvider } from '../src/context/UserContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,14 +43,16 @@ export default function RootLayout() {
   }
 
   return (
-    <SavedProvider>
-      <StatusBar style="dark" />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen name="onboarding" />
-        <Stack.Screen name="(app)" />
-      </Stack>
-    </SavedProvider>
+    <UserProvider>
+      <SavedProvider>
+        <StatusBar style="dark" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="onboarding" />
+          <Stack.Screen name="(app)" />
+        </Stack>
+      </SavedProvider>
+    </UserProvider>
   );
 }

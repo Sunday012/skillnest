@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Phase 8: Profile & Account Settings (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --red:#DC2626; --red-tint:#FEE2E2; --white:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+  input,textarea,select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;
+    font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);background:#fff;outline:none;}
+  input:focus,textarea:focus{border-color:var(--pink);}
+  textarea{resize:vertical;min-height:90px;}
+  .field{margin-bottom:20px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+  /* ===== NOTE FOR ANTIGRAVITY: everything inside .devtoggle-DO-NOT-BUILD is preview
+     tooling for this mockup only. Do not implement it in the app. ===== */
+  .devtoggle-DO-NOT-BUILD{position:fixed;top:14px;right:14px;z-index:200;background:var(--navy);
+    border-radius:100px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);flex-wrap:wrap;max-width:280px;}
+  .devtoggle-DO-NOT-BUILD button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:11px;padding:6px 10px;border-radius:100px;cursor:pointer;white-space:nowrap;}
+  .devtoggle-DO-NOT-BUILD button.active{background:var(--pink);color:#fff;}
+  .devtoggle-label{position:fixed;top:76px;right:14px;z-index:200;font-size:11px;color:#B91C1C;font-weight:700;
+    font-family:'Inter',sans-serif;background:#FEF2F2;padding:4px 10px;border-radius:6px;border:1px solid #FCA5A5;}
+
+  .app-nav{background:#fff;border-bottom:1px solid var(--border);}
+  .app-nav .wrap{max-width:1180px;display:flex;align-items:center;gap:24px;height:72px;}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;}
+  .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;}
+  .app-nav-links{display:flex;gap:24px;font-weight:600;font-size:14.5px;color:var(--gray-600);margin-left:16px;}
+  .avatar-sm{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:auto;}
+
+  .page{padding:32px 0 64px;}
+  .btn-pink{background:var(--pink);color:#fff;border:none;padding:12px 22px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;}
+  .btn-outline{background:#fff;border:1.5px solid var(--border);padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .btn-red{background:var(--red);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+  .btn-red-outline{background:#fff;border:1.5px solid var(--red-tint);color:var(--red);padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+
+  .profile-header{display:flex;align-items:center;gap:18px;margin-bottom:32px;}
+  .avatar-lg{width:74px;height:74px;border-radius:50%;background:var(--navy);color:#fff;font-size:26px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;}
+  .avatar-edit{position:absolute;bottom:-2px;right:-2px;width:26px;height:26px;border-radius:50%;background:var(--pink);
+    color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+  .profile-header h1{font-size:22px;margin-bottom:4px;}
+  .profile-header .email{font-size:13.5px;color:var(--gray-600);}
+  .role-pill{display:inline-block;background:var(--pink-tint);color:var(--pink-dark);font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:100px;margin-top:6px;}
+
+  .settings-layout{display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:start;}
+  .settings-nav{background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px;position:sticky;top:24px;}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;font-size:14px;font-weight:600;
+    color:var(--gray-600);cursor:pointer;margin-bottom:2px;}
+  .nav-item.on{background:var(--pink-tint);color:var(--pink-dark);}
+  .nav-item.danger{color:var(--red);}
+
+  .settings-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:20px;}
+  .settings-card h3{font-size:17px;margin-bottom:6px;}
+  .settings-card .desc{font-size:13px;color:var(--gray-600);margin-bottom:22px;}
+
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);}
+  .toggle-row:last-child{border-bottom:none;}
+  .toggle-row .t-label{font-size:14px;font-weight:600;}
+  .toggle-row .t-sub{font-size:12.5px;color:var(--gray-400);}
+  .toggle{width:40px;height:23px;border-radius:100px;background:var(--border);position:relative;cursor:pointer;flex-shrink:0;}
+  .toggle.on{background:var(--pink);}
+  .toggle .knob{width:17px;height:17px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left .15s ease;}
+  .toggle.on .knob{left:20px;}
+
+  .radio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:8px;}
+  .radio-card{border:1.5px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;background:#fff;}
+  .radio-card.selected{border-color:var(--pink);background:var(--pink-tint);}
+  .radio-card h4{font-size:14px;margin-bottom:3px;}
+  .radio-card p{font-size:12px;color:var(--gray-600);}
+  .dot-status{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;}
+  .dot-available{background:var(--green);} .dot-busy{background:#F5A623;} .dot-away{background:#94A3B8;}
+
+  .kyc-banner{display:flex;gap:12px;align-items:center;background:#F0FDF4;border-radius:12px;padding:16px;margin-bottom:8px;}
+  .kyc-banner h4{font-size:13.5px;color:#166534;margin-bottom:2px;}
+  .kyc-banner p{font-size:12px;color:var(--gray-600);}
+
+  .earn-stat{display:flex;justify-content:space-between;background:var(--navy);color:#fff;border-radius:12px;padding:18px 22px;margin-bottom:22px;}
+  .earn-stat .val{font-family:'Manrope',sans-serif;font-weight:800;font-size:24px;}
+  .earn-stat .lbl{font-size:12px;color:var(--gray-400);}
+
+  .session-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:13.5px;}
+  .session-row:last-child{border-bottom:none;}
+  .session-row .device{font-weight:600;}
+  .session-row .meta{font-size:12px;color:var(--gray-400);}
+
+  .danger-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);}
+  .danger-row:last-child{border-bottom:none;}
+  .danger-row h4{font-size:14.5px;margin-bottom:3px;}
+  .danger-row p{font-size:12.5px;color:var(--gray-600);}
+
+  .content-panel{display:none;} .content-panel.active{display:block;}
+
+  @media(max-width:880px){
+    .settings-layout{grid-template-columns:1fr;}
+    .settings-nav{position:static;display:flex;overflow-x:auto;gap:6px;padding:8px;}
+    .nav-item{white-space:nowrap;margin-bottom:0;}
+    .two-col,.radio-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="devtoggle-DO-NOT-BUILD">
+  <button class="active" onclick="showPanel('profile')">Profile</button>
+  <button onclick="showPanel('security')">Security</button>
+  <button onclick="showPanel('notifs')">Notifications</button>
+  <button onclick="showPanel('payments')">Payments</button>
+  <button onclick="showPanel('availability')">Availability</button>
+  <button onclick="showPanel('danger')">Danger Zone</button>
+</div>
+<div class="devtoggle-label">⚠ Mockup nav only — do not implement</div>
+
+<div class="app-nav">
+  <div class="wrap">
+    <div class="logo"><div class="logo-mark">S</div>SkillNest</div>
+    <div class="app-nav-links"><a>Discover</a><a>Talent</a><a>Orders</a><a>Messages</a></div>
+    <div class="avatar-sm">M</div>
+  </div>
+</div>
+
+<div class="wrap page">
+  <div class="profile-header">
+    <div class="avatar-lg">M<div class="avatar-edit">✎</div></div>
+    <div>
+      <h1>Mira Vance</h1>
+      <div class="email">mira.vance@studio.com</div>
+      <span class="role-pill">Freelancer</span>
+    </div>
+  </div>
+
+  <div class="settings-layout">
+    <div class="settings-nav">
+      <div class="nav-item on" onclick="showPanel('profile', this)">👤 Profile Info</div>
+      <div class="nav-item" onclick="showPanel('security', this)">🔒 Security</div>
+      <div class="nav-item" onclick="showPanel('notifs', this)">🔔 Notifications</div>
+      <div class="nav-item" onclick="showPanel('payments', this)">💳 Payments & Payouts</div>
+      <div class="nav-item" onclick="showPanel('availability', this)">🟢 Availability</div>
+      <div class="nav-item danger" onclick="showPanel('danger', this)">⚠ Danger Zone</div>
+    </div>
+
+    <div>
+      <!-- PROFILE INFO -->
+      <div id="profile" class="content-panel active">
+        <div class="settings-card">
+          <h3>Profile Info</h3>
+          <div class="desc">This is what clients see on your public profile.</div>
+          <div class="two-col">
+            <div class="field"><label>Display Name</label><input type="text" value="Mira Vance"></div>
+            <div class="field"><label>Location</label><input type="text" value="Lisbon, PT"></div>
+          </div>
+          <div class="field"><label>Professional Headline</label><input type="text" value="Brand Designer & Identity Systems"></div>
+          <div class="field"><label>Bio</label><textarea>I build identity systems for founders who care about longevity over trends.</textarea></div>
+          <div class="two-col">
+            <div class="field"><label>Email</label><input type="text" value="mira.vance@studio.com"></div>
+            <div class="field"><label>Phone</label><input type="text" placeholder="Optional"></div>
+          </div>
+          <button class="btn-pink">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- SECURITY -->
+      <div id="security" class="content-panel">
+        <div class="settings-card">
+          <h3>Change Password</h3>
+          <div class="desc">Use at least 8 characters, including a number.</div>
+          <div class="field"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
+          <div class="two-col">
+            <div class="field"><label>New Password</label><input type="password" placeholder="••••••••"></div>
+            <div class="field"><label>Confirm New Password</label><input type="password" placeholder="••••••••"></div>
+          </div>
+          <button class="btn-pink">Update Password</button>
+        </div>
+        <div class="settings-card">
+          <h3>Two-Factor Authentication</h3>
+          <div class="toggle-row"><div><div class="t-label">Require a code at login</div><div class="t-sub">Coming soon</div></div><div class="toggle"><div class="knob"></div></div></div>
+        </div>
+        <div class="settings-card">
+          <h3>Active Sessions</h3>
+          <div class="session-row"><div><div class="device">MacBook Pro · Chrome</div><div class="meta">Lisbon, PT · Active now</div></div><span class="btn-red-outline" style="padding:6px 12px;font-size:12px;">This device</span></div>
+          <div class="session-row"><div><div class="device">iPhone 15 · SkillNest App</div><div class="meta">Lisbon, PT · 2 hours ago</div></div><span class="btn-outline" style="padding:6px 12px;font-size:12px;">Log out</span></div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div id="notifs" class="content-panel">
+        <div class="settings-card">
+          <h3>Email Notifications</h3>
+          <div class="toggle-row"><div><div class="t-label">Order updates</div><div class="t-sub">Milestone deliveries, approvals, disputes</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+          <div class="toggle-row"><div><div class="t-label">New messages</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+          <div class="toggle-row"><div><div class="t-label">New proposals</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+          <div class="toggle-row"><div><div class="t-label">Marketing & tips</div></div><div class="toggle" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+        </div>
+        <div class="settings-card">
+          <h3>Push Notifications</h3>
+          <div class="toggle-row"><div><div class="t-label">Milestone approvals</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+          <div class="toggle-row"><div><div class="t-label">Messages</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div>
+        </div>
+      </div>
+
+      <!-- PAYMENTS & PAYOUTS -->
+      <div id="payments" class="content-panel">
+        <div class="earn-stat"><div><div class="lbl">Total Earnings</div><div class="val">$14,280</div></div><div style="text-align:right;"><div class="lbl">This Month</div><div class="val">$1,860</div></div></div>
+        <div class="settings-card">
+          <h3>Payout Method</h3>
+          <div class="radio-grid">
+            <div class="radio-card selected"><h4>🏦 Bank Transfer</h4><p>2–3 business days</p></div>
+            <div class="radio-card"><h4>💳 PayPal</h4><p>Instant</p></div>
+            <div class="radio-card"><h4>🌐 Wise</h4><p>1–2 business days</p></div>
+          </div>
+          <div class="two-col" style="margin-top:16px;">
+            <div class="field"><label>Account Holder</label><input type="text" value="Mira Vance"></div>
+            <div class="field"><label>IBAN</label><input type="text" value="PT50 •••• •••• 4417"></div>
+          </div>
+          <button class="btn-pink">Save Payout Info</button>
+        </div>
+        <div class="settings-card">
+          <div class="kyc-banner"><span style="font-size:18px;">✓</span><div><h4>Identity Verified</h4><p>Your KYC check passed on 12 Aug 2026.</p></div></div>
+        </div>
+      </div>
+
+      <!-- AVAILABILITY -->
+      <div id="availability" class="content-panel">
+        <div class="settings-card">
+          <h3>Availability Status</h3>
+          <div class="desc">This shows on your profile and talent cards across the marketplace.</div>
+          <div class="radio-grid">
+            <div class="radio-card selected"><h4><span class="dot-status dot-available"></span>Available</h4><p>Ready for new work</p></div>
+            <div class="radio-card"><h4><span class="dot-status dot-busy"></span>Busy</h4><p>Limited capacity</p></div>
+            <div class="radio-card"><h4><span class="dot-status dot-away"></span>Not Available</h4><p>Not taking work</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DANGER ZONE -->
+      <div id="danger" class="content-panel">
+        <div class="settings-card">
+          <h3 style="color:var(--red);">Danger Zone</h3>
+          <div class="danger-row"><div><h4>Log Out</h4><p>End your session on this device.</p></div><button class="btn-outline">Log Out</button></div>
+          <div class="danger-row"><div><h4>Deactivate Account</h4><p>Hide your profile temporarily. You can reactivate anytime.</p></div><button class="btn-red-outline">Deactivate</button></div>
+          <div class="danger-row"><div><h4>Delete Account</h4><p>Permanently delete your account and all data. This can't be undone.</p></div><button class="btn-red">Delete Account</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showPanel(id, el){
+    document.querySelectorAll('.content-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.settings-nav .nav-item').forEach(n=>n.classList.remove('on'));
+    if(el) el.classList.add('on');
+    document.querySelectorAll('.devtoggle-DO-NOT-BUILD button').forEach((b,i)=>{
+      const map = {profile:0, security:1, notifs:2, payments:3, availability:4, danger:5};
+      b.classList.toggle('active', i===map[id]);
+    });
+  }
+</script>
+
+</body>
+</html>

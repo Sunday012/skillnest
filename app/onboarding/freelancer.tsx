@@ -9,31 +9,51 @@ import { RadioCard } from '../../src/components/form/RadioCard';
 import { FileUploadDropzone } from '../../src/components/form/FileUploadDropzone';
 import { OFFICIAL_CATEGORIES } from '../../src/constants/categories';
 import { SKILLS_BY_CATEGORY } from '../../src/constants/skills';
+import { useUser, AvailabilityStatus, PayoutMethod } from '../../src/context/UserContext';
 
 const CATEGORIES: CategoryOption[] = OFFICIAL_CATEGORIES;
 
 export default function FreelancerOnboarding() {
   const router = useRouter();
+  const { user, updateProfile, setAvailabilityStatus, updatePayoutInfo } = useUser();
   const [step, setStep] = useState(1);
   const totalSteps = 4;
 
-  // Form State
-  const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
-  const [headline, setHeadline] = useState('');
-  const [bio, setBio] = useState('');
-  const [status, setStatus] = useState('Available');
+  // Form State — default name to signup name in UserContext
+  const [name, setName] = useState(user.name || '');
+  const [location, setLocation] = useState(user.location || '');
+  const [headline, setHeadline] = useState(user.headline || '');
+  const [bio, setBio] = useState(user.bio || '');
+  const [status, setStatus] = useState<AvailabilityStatus>(user.availabilityStatus || 'Available');
   
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [hourlyRate, setHourlyRate] = useState('');
 
-  const [payoutMethod, setPayoutMethod] = useState('Bank Transfer');
-  const [accountName, setAccountName] = useState('');
-  const [accountNumber, setAccountNumber] = useState('');
-  const [taxCountry, setTaxCountry] = useState('');
+  const [payoutMethod, setPayoutMethod] = useState<PayoutMethod>(user.payoutMethod || 'Bank Transfer');
+  const [accountName, setAccountName] = useState(user.accountHolder || user.name || '');
+  const [accountNumber, setAccountNumber] = useState(user.iban || '');
+  const [taxCountry, setTaxCountry] = useState(user.taxCountry || '');
 
   const handleNext = () => {
+    // Save step data to UserContext as we progress
+    if (step === 1) {
+      updateProfile({
+        name: name || user.name,
+        location: location || user.location,
+        headline: headline || user.headline,
+        bio: bio || user.bio,
+      });
+      setAvailabilityStatus(status);
+    } else if (step === 4) {
+      updatePayoutInfo({
+        payoutMethod,
+        accountHolder: accountName || name,
+        iban: accountNumber,
+        taxCountry,
+      });
+    }
+
     if (step < totalSteps) {
       setStep(step + 1);
     } else {

@@ -3,10 +3,24 @@ import { Button } from '../../src/components/Button';
 import { Input } from '../../src/components/Input';
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
+import { useUser } from '../../src/context/UserContext';
 
 export default function SignupScreen() {
   const router = useRouter();
+  const { signupUser } = useUser();
   const [role, setRole] = useState<'client' | 'freelancer'>('client');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSignup = () => {
+    signupUser({
+      name: fullName || 'Mira Vance',
+      email: email || 'mira.vance@studio.com',
+      role: role === 'freelancer' ? 'Freelancer' : 'Client',
+    });
+    router.push(`/onboarding/${role}`);
+  };
 
   return (
     <KeyboardAvoidingView 
@@ -45,6 +59,8 @@ export default function SignupScreen() {
           <Input 
             label="Full Name" 
             placeholder="Ada Lovelace" 
+            value={fullName}
+            onChangeText={setFullName}
           />
           
           <Input 
@@ -52,19 +68,21 @@ export default function SignupScreen() {
             placeholder="you@example.com" 
             keyboardType="email-address"
             autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
           />
           
           <Input 
             label="Password" 
             placeholder="••••••••" 
             secureTextEntry 
+            value={password}
+            onChangeText={setPassword}
           />
           
           <Button 
             title="Create Account" 
-            onPress={() => {
-                            router.push(`/onboarding/${role}`);
-            }} 
+            onPress={handleSignup} 
             className="mb-6 mt-2" 
           />
           

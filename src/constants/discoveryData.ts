@@ -78,6 +78,23 @@ export const FEATURED_TALENT = [
     about: 'Dense interfaces made calm. I specialise in data-heavy products.',
     completion: 98,
   },
+  {
+    id: '4',
+    name: 'Kaito Tanaka',
+    initial: 'K',
+    isVerified: false,
+    kycStatus: 'pending_review',
+    role: '3D Animator & Motion Designer',
+    category: 'Animation',
+    location: 'Tokyo, JP',
+    status: 'available',
+    tags: ['Blender', 'Cinema 4D', 'Unreal Engine'],
+    rating: 0,
+    reviews: 0,
+    price: 90,
+    about: 'Recent onboarding applicant — submitted portfolio and passport ID verification for review.',
+    completion: 0,
+  },
 ];
 
 export const LATEST_JOBS = [

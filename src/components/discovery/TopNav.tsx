@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, Platform, StyleSheet, useWindowDimensions } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
+import { useUser } from '../../context/UserContext';
 
 const WEB_NAV_LINKS = [
   { label: 'Discover', href: '/home' },
@@ -41,12 +42,15 @@ export function TopNav() {
   const router = useRouter();
   const pathname = usePathname();
   const isWide = useBreakpoint();
+  const { user } = useUser();
   const [showMenu, setShowMenu] = useState(false);
 
   const navigateTo = (path: string) => {
     setShowMenu(false);
     router.push(path as any);
   };
+
+  const userInitial = user.name ? user.name.trim()[0].toUpperCase() : 'M';
 
   return (
     <View className="bg-white border-b border-border z-50">
@@ -131,14 +135,19 @@ export function TopNav() {
             onPress={() => setShowMenu(!showMenu)}
             className="w-[32px] h-[32px] rounded-full bg-navy items-center justify-center cursor-pointer"
           >
-            <Text className="text-white text-[12px] font-inter-bold">M</Text>
+            <Text className="text-white text-[12px] font-inter-bold">{userInitial}</Text>
           </Pressable>
 
           {/* Account Menu Popover */}
           {showMenu && (
             <View style={styles.menuPopover}>
-              <Text style={styles.menuHeader}>Mira Vance (Client / Seller)</Text>
+              <Text style={styles.menuHeader}>{user.name || 'User'} ({user.role})</Text>
               
+              <Pressable style={styles.menuItem} onPress={() => navigateTo('/settings')}>
+                <Text style={styles.menuItemIcon}>⚙️</Text>
+                <Text style={styles.menuItemText}>Account Settings</Text>
+              </Pressable>
+
               <Pressable style={styles.menuItem} onPress={() => navigateTo('/jobs')}>
                 <Text style={styles.menuItemIcon}>📋</Text>
                 <Text style={styles.menuItemText}>My Jobs (Client)</Text>
