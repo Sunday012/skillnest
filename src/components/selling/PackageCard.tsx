@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 20,
     backgroundColor: '#FFFFFF',
-    justify: 'space-between',
+    justifyContent: 'space-between',
   },
   cardPopular: {
     borderColor: '#EC1257',

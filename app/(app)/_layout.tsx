@@ -66,13 +66,6 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="my-gigs"
-          options={{
-            title: 'My Gigs',
-            tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>💼</Text>,
-          }}
-        />
-        <Tabs.Screen
           name="orders"
           options={{
             title: 'Orders',
@@ -84,6 +77,30 @@ export default function AppLayout() {
           options={{
             title: 'Messages',
             tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>💬</Text>,
+          }}
+        />
+        <Tabs.Screen
+          name="my-gigs"
+          options={{
+            href: null, // Hidden from bottom tab bar — accessible via TopNav / Account menu
+          }}
+        />
+        <Tabs.Screen
+          name="jobs/index"
+          options={{
+            href: null, // Hidden from bottom tab bar — accessible via TopNav / Account menu
+          }}
+        />
+        <Tabs.Screen
+          name="jobs/create"
+          options={{
+            href: null, // Hidden from bottom tab bar
+          }}
+        />
+        <Tabs.Screen
+          name="jobs/[id]"
+          options={{
+            href: null, // Hidden from bottom tab bar
           }}
         />
         <Tabs.Screen

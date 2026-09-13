@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillNest — Phase 5: Client Buying Side (UI Reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1220; --pink:#EC1257; --pink-dark:#C10E48; --pink-tint:#FDE8EF;
+    --ink:#10172A; --gray-600:#5B6472; --gray-400:#93A0B4; --bg-alt:#F6F7FB;
+    --border:#E7E9F1; --green:#17A34A; --white:#FFFFFF; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--bg-alt);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Manrope',sans-serif;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:7px;}
+  input,textarea,select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;
+    font-family:'Inter',sans-serif;font-size:14.5px;color:var(--ink);background:#fff;outline:none;}
+  input:focus,textarea:focus,select:focus{border-color:var(--pink);}
+  textarea{resize:vertical;min-height:110px;}
+  .field{margin-bottom:20px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+  /* ===== NOTE FOR ANTIGRAVITY: everything inside .devtoggle-DO-NOT-BUILD is preview
+     tooling for this mockup only. Do not implement it in the app. ===== */
+  .devtoggle-DO-NOT-BUILD{position:fixed;top:14px;right:14px;z-index:200;background:var(--navy);
+    border-radius:100px;padding:6px;display:flex;gap:4px;box-shadow:0 10px 24px -8px rgba(0,0,0,.35);}
+  .devtoggle-DO-NOT-BUILD button{border:none;background:transparent;color:var(--gray-400);font-family:'Inter',sans-serif;
+    font-weight:700;font-size:12px;padding:7px 12px;border-radius:100px;cursor:pointer;white-space:nowrap;}
+  .devtoggle-DO-NOT-BUILD button.active{background:var(--pink);color:#fff;}
+  .devtoggle-label{position:fixed;top:52px;right:14px;z-index:200;font-size:11px;color:#B91C1C;font-weight:700;
+    font-family:'Inter',sans-serif;background:#FEF2F2;padding:4px 10px;border-radius:6px;border:1px solid #FCA5A5;}
+
+  .app-nav{background:#fff;border-bottom:1px solid var(--border);}
+  .app-nav .wrap{display:flex;align-items:center;gap:24px;height:72px;}
+  .logo{display:flex;align-items:center;gap:9px;font-family:'Manrope',sans-serif;font-weight:800;font-size:19px;}
+  .logo-mark{width:32px;height:32px;border-radius:9px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;}
+  .app-nav-links{display:flex;gap:24px;font-weight:600;font-size:14.5px;color:var(--gray-600);margin-left:16px;}
+  .app-nav-links a.active{color:var(--ink);border-bottom:2px solid var(--pink);padding-bottom:24px;}
+  .avatar-sm{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:auto;}
+
+  .page{padding:36px 0 64px;}
+  .btn-pink{background:var(--pink);color:#fff;border:none;padding:12px 22px;border-radius:10px;font-weight:700;font-size:14.5px;cursor:pointer;}
+  .btn-outline{background:#fff;border:1.5px solid var(--border);padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;}
+
+  /* ================= POST A JOB ================= */
+  .post-head h1{font-size:26px;margin-bottom:6px;}
+  .post-head p{color:var(--gray-600);font-size:14px;margin-bottom:32px;}
+  .post-layout{display:grid;grid-template-columns:1fr 320px;gap:36px;align-items:start;}
+  .form-section{background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px;margin-bottom:20px;}
+  .form-section h3{font-size:16px;margin-bottom:18px;}
+  .hint{font-size:12px;color:var(--gray-400);margin-top:6px;}
+  .dropzone{border:1.5px dashed var(--border);border-radius:12px;padding:28px;text-align:center;cursor:pointer;background:var(--bg-alt);font-size:13.5px;color:var(--gray-600);}
+
+  .tips-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:20px;}
+  .tips-card h4{font-size:14px;margin-bottom:14px;}
+  .tips-card ul{list-style:none;}
+  .tips-card li{display:flex;gap:9px;font-size:13px;color:var(--gray-600);margin-bottom:12px;}
+  .tips-card .tick{color:var(--pink);font-weight:800;}
+
+  .milestone-box{background:var(--navy);border-radius:16px;padding:22px;color:#fff;position:sticky;top:24px;}
+  .milestone-box h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--gray-400);margin-bottom:16px;}
+  .m-row{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);}
+  .m-row:last-of-type{border-bottom:none;}
+  .m-total{display:flex;justify-content:space-between;align-items:center;margin:18px 0;}
+  .m-total .lbl{font-size:12.5px;color:var(--gray-400);}
+  .m-total .amt{font-family:'Manrope',sans-serif;font-weight:800;font-size:26px;}
+
+  .milestone-builder{background:#fff;border:1px solid var(--border);border-radius:14px;padding:26px;}
+  .m-input-row{display:grid;grid-template-columns:28px 1fr 110px 24px;gap:10px;align-items:center;margin-bottom:12px;}
+  .m-num{width:28px;height:28px;border-radius:50%;background:var(--bg-alt);color:var(--gray-600);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+  .m-input-row input{padding:10px 12px;font-size:13.5px;}
+  .m-remove{color:var(--gray-400);cursor:pointer;text-align:center;}
+  .add-milestone{color:var(--pink);font-weight:700;font-size:13.5px;cursor:pointer;display:inline-block;margin-top:8px;}
+
+  /* ================= MY JOBS (LIST) ================= */
+  .jobs-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;}
+  .jobs-head h1{font-size:26px;margin-bottom:6px;}
+  .jobs-head p{color:var(--gray-600);font-size:14px;}
+  .job-post-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;margin-bottom:16px;
+    display:flex;justify-content:space-between;align-items:flex-start;cursor:pointer;}
+  .job-post-card .meta-top{font-size:12.5px;color:var(--gray-400);margin-bottom:8px;}
+  .job-post-card h4{font-size:17px;margin-bottom:8px;}
+  .job-post-card p{font-size:13.5px;color:var(--gray-600);max-width:560px;margin-bottom:14px;}
+  .job-post-card .proposals{font-size:13px;font-weight:700;}
+  .job-post-right{text-align:right;flex-shrink:0;padding-left:20px;}
+  .status-pill{display:inline-block;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:100px;margin-bottom:10px;}
+  .status-active{background:#DCFCE7;color:#166534;}
+  .status-progress{background:var(--pink-tint);color:var(--pink-dark);}
+  .status-draft{background:#FEF3C7;color:#92400E;}
+  .job-budget{font-family:'Manrope',sans-serif;font-weight:800;font-size:18px;}
+
+  /* ================= PROPOSALS DETAIL ================= */
+  .crumb{font-size:13px;color:var(--gray-400);margin-bottom:14px;}
+  .crumb span{color:var(--pink);font-weight:600;}
+  .prop-job-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:28px;
+    display:flex;justify-content:space-between;align-items:flex-start;}
+  .prop-job-card h2{font-size:20px;margin-bottom:8px;}
+  .prop-job-card p{font-size:13.5px;color:var(--gray-600);max-width:600px;}
+  .prop-count{font-size:14px;font-weight:700;margin-bottom:18px;}
+  .proposal-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;display:flex;gap:16px;}
+  .p-avatar{width:46px;height:46px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .p-body{flex:1;}
+  .p-name-row{display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+  .p-name-row h4{font-size:15px;}
+  .p-role{font-size:12.5px;color:var(--gray-600);margin-bottom:10px;}
+  .p-body p{font-size:13.5px;color:var(--gray-600);margin-bottom:14px;}
+  .p-actions{display:flex;gap:10px;}
+  .mini-btn{font-size:12.5px;font-weight:700;padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;}
+  .p-right{text-align:right;flex-shrink:0;}
+  .p-right .bid{font-family:'Manrope',sans-serif;font-weight:800;font-size:18px;margin-bottom:4px;}
+  .p-right .delivery{font-size:12px;color:var(--gray-400);}
+
+  .empty-state{background:#fff;border:1px dashed var(--border);border-radius:14px;padding:40px;text-align:center;color:var(--gray-600);font-size:14px;}
+
+  .view{display:none;} .view.active{display:block;}
+
+  @media(max-width:900px){
+    .post-layout{grid-template-columns:1fr;}
+    .two-col{grid-template-columns:1fr;}
+    .job-post-card{flex-direction:column;}
+    .job-post-right{text-align:left;padding-left:0;margin-top:12px;}
+    .m-input-row{grid-template-columns:24px 1fr;grid-template-areas:"num title" "amt remove";}
+  }
+</style>
+</head>
+<body>
+
+<div class="devtoggle-DO-NOT-BUILD">
+  <button class="active" onclick="showView('post')">Post Job</button>
+  <button onclick="showView('list')">My Jobs</button>
+  <button onclick="showView('proposals')">Proposals</button>
+</div>
+<div class="devtoggle-label">⚠ Mockup nav only — do not implement</div>
+
+<div class="app-nav">
+  <div class="wrap">
+    <div class="logo"><div class="logo-mark">S</div>SkillNest</div>
+    <div class="app-nav-links"><a>Discover</a><a class="active">My Jobs</a><a>Orders</a><a>Messages</a></div>
+    <div class="avatar-sm">M</div>
+  </div>
+</div>
+
+<!-- ================= POST A JOB ================= -->
+<div id="post" class="view active">
+  <div class="wrap page">
+    <div class="post-head">
+      <h1>Post a Job</h1>
+      <p>Write the brief, then break the budget into milestones. Freelancers bid against the plan, not a vague number.</p>
+    </div>
+
+    <div class="post-layout">
+      <div>
+        <div class="form-section">
+          <h3>Job Details</h3>
+          <div class="field">
+            <label>Job Title</label>
+            <input type="text" placeholder="Rebrand for a specialty coffee roaster">
+            <div class="hint">Be specific — "Rebrand for a specialty coffee roaster" beats "Need a logo".</div>
+          </div>
+          <div class="two-col">
+            <div class="field"><label>Category</label>
+              <select><option>Graphic Design</option><option>Web Design</option><option>Video Editing</option><option>Software Development</option></select>
+            </div>
+            <div class="field"><label>Experience Level</label>
+              <select><option>Entry</option><option>Intermediate</option><option>Expert</option></select>
+            </div>
+          </div>
+          <div class="field"><label>Description</label><textarea placeholder="Context, deliverables, and what success looks like."></textarea></div>
+          <div class="two-col">
+            <div class="field"><label>Timeline</label><select><option>Less than 1 month</option><option>1–3 months</option><option>3+ months</option></select></div>
+            <div class="field"><label>Location Preference</label><input type="text" placeholder="Anywhere"></div>
+          </div>
+          <div class="field"><label>Skills Required</label><input type="text" placeholder="Brand identity, packaging, art direction"></div>
+          <div class="field"><label>Attachments</label><div class="dropzone">⬆ Drop briefs, references, or brand files</div></div>
+        </div>
+
+        <div class="milestone-builder">
+          <h3 style="margin-bottom:6px;">Milestone Builder</h3>
+          <p class="hint" style="margin-bottom:18px;">Add stages and amounts — the budget totals as you type.</p>
+
+          <div class="m-input-row"><div class="m-num">1</div><input type="text" value="Discovery & strategy session"><input type="text" value="$600"><div class="m-remove">✕</div></div>
+          <div class="m-input-row"><div class="m-num">2</div><input type="text" value="Concept directions"><input type="text" value="$1400"><div class="m-remove">✕</div></div>
+          <div class="m-input-row"><div class="m-num">3</div><input type="text" value="Final files & handover"><input type="text" value="$900"><div class="m-remove">✕</div></div>
+          <span class="add-milestone">+ Add milestone</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="tips-card">
+          <h4>Before You Post</h4>
+          <ul>
+            <li><span class="tick">✓</span>Jobs with milestones get 3× more proposals.</li>
+            <li><span class="tick">✓</span>Escrow funds are refundable until a milestone is approved.</li>
+            <li><span class="tick">✓</span>You can invite specific freelancers after posting.</li>
+          </ul>
+        </div>
+        <div class="milestone-box">
+          <h4>Project Budget</h4>
+          <div class="m-row"><span>Milestones (3)</span><span>$2,900</span></div>
+          <div class="m-row"><span>SkillNest fee (5%)</span><span>$145</span></div>
+          <div class="m-total"><span class="lbl">Held in escrow</span><span class="amt">$3,045</span></div>
+          <button class="btn-pink" style="width:100%;margin-bottom:10px;">Post & Invite Bids</button>
+          <div style="text-align:center;font-size:13px;color:var(--gray-400);cursor:pointer;">Save as draft</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MY JOBS (LIST) ================= -->
+<div id="list" class="view">
+  <div class="wrap page">
+    <div class="jobs-head">
+      <div><h1>My Jobs</h1><p>Posted briefs and the proposals they've attracted.</p></div>
+      <button class="btn-pink" onclick="showView('post')">+ Post a Job</button>
+    </div>
+
+    <div class="job-post-card" onclick="showView('proposals')">
+      <div>
+        <div class="meta-top">JB-201 · Design · Posted 3 days ago</div>
+        <h4>Rebrand for a specialty coffee roaster</h4>
+        <p>Full identity refresh: wordmark, packaging system, and a short brand guide. Existing palette can evolve but should stay warm.</p>
+        <div class="proposals">14 proposals received</div>
+      </div>
+      <div class="job-post-right">
+        <span class="status-pill status-active">Active</span>
+        <div class="job-budget">$3,400</div>
+      </div>
+    </div>
+
+    <div class="job-post-card">
+      <div>
+        <div class="meta-top">JB-198 · Development · Posted 1 week ago</div>
+        <h4>Marketing site build — 6 pages, React</h4>
+        <p>Design is finished in Figma. Need a clean React implementation with CMS-ready content structure.</p>
+        <div class="proposals">22 proposals received</div>
+      </div>
+      <div class="job-post-right">
+        <span class="status-pill status-progress">In Progress</span>
+        <div class="job-budget">$5,200</div>
+      </div>
+    </div>
+
+    <div class="job-post-card">
+      <div>
+        <div class="meta-top">JB-190 · Video · Posted 2 weeks ago</div>
+        <h4>Quarterly product launch film</h4>
+        <p>Not yet published — finish the brief and milestone budget to post this job.</p>
+        <div class="proposals">0 proposals received</div>
+      </div>
+      <div class="job-post-right">
+        <span class="status-pill status-draft">Draft</span>
+        <div class="job-budget">$2,800</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PROPOSALS DETAIL ================= -->
+<div id="proposals" class="view">
+  <div class="wrap page">
+    <div class="crumb" onclick="showView('list')" style="cursor:pointer;">My Jobs / <span>JB-201</span></div>
+
+    <div class="prop-job-card">
+      <div>
+        <h2>Rebrand for a specialty coffee roaster</h2>
+        <p>Full identity refresh: wordmark, packaging system, and a short brand guide. Existing palette can evolve but should stay warm.</p>
+      </div>
+      <div style="text-align:right;">
+        <span class="status-pill status-active">Active</span>
+        <div class="job-budget">$3,400</div>
+      </div>
+    </div>
+
+    <div class="prop-count">14 freelancers applied to this job</div>
+
+    <div class="proposal-card">
+      <div class="p-avatar">M</div>
+      <div class="p-body">
+        <div class="p-name-row"><h4>Mira Vance</h4><span style="color:var(--pink);font-size:12px;">✓ Verified</span></div>
+        <div class="p-role">Brand Designer & Identity Systems · ★ 4.9 (212)</div>
+        <p>"I'd start with a short positioning session before touching the logo — happy to walk through my process on a call."</p>
+        <div class="p-actions"><button class="mini-btn">View Profile</button><button class="mini-btn" style="background:var(--pink);color:#fff;border-color:var(--pink);">Accept Proposal</button></div>
+      </div>
+      <div class="p-right"><div class="bid">$3,200</div><div class="delivery">10-day delivery</div></div>
+    </div>
+
+    <div class="proposal-card">
+      <div class="p-avatar">P</div>
+      <div class="p-body">
+        <div class="p-name-row"><h4>Priya Nair</h4><span style="color:var(--pink);font-size:12px;">✓ Verified</span></div>
+        <div class="p-role">Product Designer — SaaS & Dashboards · ★ 4.9 (131)</div>
+        <p>"Dense interfaces made calm is my specialty, but I've done a fair bit of packaging work too — portfolio linked."</p>
+        <div class="p-actions"><button class="mini-btn">View Profile</button><button class="mini-btn" style="background:var(--pink);color:#fff;border-color:var(--pink);">Accept Proposal</button></div>
+      </div>
+      <div class="p-right"><div class="bid">$3,400</div><div class="delivery">14-day delivery</div></div>
+    </div>
+
+    <div class="empty-state" style="margin-top:24px;">Showing 2 of 14 proposals — full pagination pattern TBD in a later phase.</div>
+  </div>
+</div>
+
+<script>
+  function showView(id){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.devtoggle-DO-NOT-BUILD button').forEach((b,i)=>{
+      const map = {post:0, list:1, proposals:2};
+      b.classList.toggle('active', i===map[id]);
+    });
+    window.scrollTo(0,0);
+  }
+</script>
+
+</body>
+</html>

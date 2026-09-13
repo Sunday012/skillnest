@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { getGigById, REVIEWS } from '../../../src/constants/sellingData';
+import { getGigById } from '../../../src/constants/sellingData';
 import { PackageCard } from '../../../src/components/selling/PackageCard';
 
 export default function GigDetailScreen() {

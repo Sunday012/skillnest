@@ -6,6 +6,7 @@ const WEB_NAV_LINKS = [
   { label: 'Discover', href: '/home' },
   { label: 'Talent',   href: '/browse' },
   { label: 'My Gigs',  href: '/my-gigs' },
+  { label: 'My Jobs',  href: '/jobs' },
   { label: 'Orders',   href: '/orders' },
   { label: 'Messages', href: '/messages' },
 ];
@@ -40,6 +41,12 @@ export function TopNav() {
   const router = useRouter();
   const pathname = usePathname();
   const isWide = useBreakpoint();
+  const [showMenu, setShowMenu] = useState(false);
+
+  const navigateTo = (path: string) => {
+    setShowMenu(false);
+    router.push(path as any);
+  };
 
   return (
     <View className="bg-white border-b border-border z-50">
@@ -56,14 +63,14 @@ export function TopNav() {
         }}
       >
         {/* Logo */}
-        <View className="flex-row items-center gap-[8px] shrink-0">
+        <Pressable onPress={() => router.push('/home')} className="flex-row items-center gap-[8px] shrink-0">
           <View className="w-[32px] h-[32px] rounded-[9px] bg-pink items-center justify-center">
             <Text className="text-white font-manrope-extraBold text-[14px]">S</Text>
           </View>
           <Text className="font-manrope-extraBold text-[18px] text-ink">SkillNest</Text>
-        </View>
+        </Pressable>
 
-        {/* Search pill — flex-1 absorbs space, pill itself capped at 420px (wide) / 280px (narrow) */}
+        {/* Search pill */}
         <View className="flex-1 items-center">
           <View
             style={{ maxWidth: isWide ? 420 : 280, width: '100%' }}
@@ -84,7 +91,7 @@ export function TopNav() {
         {isWide && (
           <View style={styles.navLinks}>
             {WEB_NAV_LINKS.map(({ label, href }) => {
-              const isActive = pathname === href;
+              const isActive = pathname === href || (href === '/jobs' && pathname.startsWith('/jobs'));
               return (
                 <Pressable
                   key={label}
@@ -108,6 +115,7 @@ export function TopNav() {
             alignItems: 'center',
             gap: isWide ? 18 : 10,
             flexShrink: 0,
+            position: 'relative',
           }}
         >
           <Pressable>
@@ -117,9 +125,43 @@ export function TopNav() {
             <Text className="text-[17px]">🔔</Text>
             <View className="absolute -top-[3px] -right-[4px] w-[7px] h-[7px] rounded-full bg-pink" />
           </Pressable>
-          <View className="w-[32px] h-[32px] rounded-full bg-navy items-center justify-center">
+
+          {/* Avatar with Dropdown Toggle */}
+          <Pressable
+            onPress={() => setShowMenu(!showMenu)}
+            className="w-[32px] h-[32px] rounded-full bg-navy items-center justify-center cursor-pointer"
+          >
             <Text className="text-white text-[12px] font-inter-bold">M</Text>
-          </View>
+          </Pressable>
+
+          {/* Account Menu Popover */}
+          {showMenu && (
+            <View style={styles.menuPopover}>
+              <Text style={styles.menuHeader}>Mira Vance (Client / Seller)</Text>
+              
+              <Pressable style={styles.menuItem} onPress={() => navigateTo('/jobs')}>
+                <Text style={styles.menuItemIcon}>📋</Text>
+                <Text style={styles.menuItemText}>My Jobs (Client)</Text>
+              </Pressable>
+
+              <Pressable style={styles.menuItem} onPress={() => navigateTo('/my-gigs')}>
+                <Text style={styles.menuItemIcon}>💼</Text>
+                <Text style={styles.menuItemText}>My Gigs (Freelancer)</Text>
+              </Pressable>
+
+              <View style={styles.menuDivider} />
+
+              <Pressable style={styles.menuItem} onPress={() => navigateTo('/jobs/create')}>
+                <Text style={styles.menuItemIcon}>➕</Text>
+                <Text style={styles.menuItemText}>Post a Job</Text>
+              </Pressable>
+
+              <Pressable style={styles.menuItem} onPress={() => navigateTo('/gigs/create')}>
+                <Text style={styles.menuItemIcon}>✨</Text>
+                <Text style={styles.menuItemText}>Create a Gig</Text>
+              </Pressable>
+            </View>
+          )}
         </View>
 
       </View>
@@ -156,6 +198,54 @@ const styles = StyleSheet.create({
     height: 2,
     borderRadius: 2,
     backgroundColor: '#EC1257',
+  },
+  menuPopover: {
+    position: 'absolute',
+    top: 42,
+    right: 0,
+    width: 220,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#E7E9F1',
+    padding: 10,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    zIndex: 100,
+  },
+  menuHeader: {
+    fontSize: 11,
+    fontFamily: 'Inter_700Bold',
+    color: '#93A0B4',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    marginBottom: 4,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 9,
+    borderRadius: 8,
+  },
+  menuItemIcon: {
+    fontSize: 14,
+  },
+  menuItemText: {
+    fontSize: 13.5,
+    fontFamily: 'Inter_600SemiBold',
+    color: '#10172A',
+  },
+  menuDivider: {
+    height: 1,
+    backgroundColor: '#E7E9F1',
+    marginVertical: 6,
   },
 });
 

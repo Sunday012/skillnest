@@ -50,7 +50,7 @@ export function GigTableRow({ gig, onPress, isHeader }: GigTableRowProps) {
 
   return (
     <Pressable style={styles.row} onPress={onPress}>
-      <View style={[styles.cell, styles.gigCell]}>
+      <View style={styles.gigCell}>
         <View style={styles.gigInfo}>
           <View style={styles.thumb} />
           <View style={styles.textWrap}>
@@ -63,7 +63,7 @@ export function GigTableRow({ gig, onPress, isHeader }: GigTableRowProps) {
       <Text style={[styles.cell, styles.numCell, styles.hideMobile]}>{gig.orders || '—'}</Text>
       <Text style={[styles.cell, styles.numCell, styles.hideMobile]}>{gig.rating}</Text>
       <Text style={[styles.cell, styles.numCell, styles.priceText]}>${gig.price}</Text>
-      <View style={[styles.cell, styles.statusCell]}>
+      <View style={styles.statusCell}>
         <View style={[styles.statusPill, getStatusStyle(gig.status)]}>
           <Text style={[styles.statusText, getStatusTextStyle(gig.status)]}>{gig.status}</Text>
         </View>
