@@ -19,6 +19,8 @@ import '../global.css';
 import { SavedProvider } from '../src/context/SavedContext';
 import { UserProvider } from '../src/context/UserContext';
 
+import { AdminAuthProvider } from '../src/context/AdminAuthContext';
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -45,13 +47,16 @@ export default function RootLayout() {
   return (
     <UserProvider>
       <SavedProvider>
-        <StatusBar style="dark" />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="onboarding" />
-          <Stack.Screen name="(app)" />
-        </Stack>
+        <AdminAuthProvider>
+          <StatusBar style="dark" />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="onboarding" />
+            <Stack.Screen name="(app)" />
+            <Stack.Screen name="admin" />
+          </Stack>
+        </AdminAuthProvider>
       </SavedProvider>
     </UserProvider>
   );
