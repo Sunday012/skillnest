@@ -4,6 +4,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { getGigById } from '../../../src/constants/sellingData';
 import { PackageCard } from '../../../src/components/selling/PackageCard';
 import { useSaved } from '../../../src/context/SavedContext';
+import { AppIcon } from '../../../src/components/AppIcon';
 
 export default function GigDetailScreen() {
   const router = useRouter();
@@ -159,9 +160,12 @@ export default function GigDetailScreen() {
                     <Text style={styles.btnOutlineText}>Message {gig.sellerName}</Text>
                   </Pressable>
                   <Pressable style={styles.favBtn} onPress={handleToggleSave}>
-                    <Text style={[styles.favText, isSaved && { color: '#EC1257', fontFamily: 'Inter_700Bold' }]}>
-                      {isSaved ? '♥ Saved to favourites' : '♡ Save to favourites'}
-                    </Text>
+                    <View style={styles.favContent}>
+                      <AppIcon name={isSaved ? 'heart' : 'heart-outline'} size={17} color={isSaved ? '#EC1257' : '#5B6472'} />
+                      <Text style={[styles.favText, isSaved && { color: '#EC1257', fontFamily: 'Inter_700Bold' }]}>
+                        {isSaved ? 'Saved to favourites' : 'Save to favourites'}
+                      </Text>
+                    </View>
                   </Pressable>
                 </>
               )}
@@ -371,6 +375,11 @@ const styles = StyleSheet.create({
   favBtn: {
     alignItems: 'center',
     marginTop: 6,
+  },
+  favContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
   },
   favText: {
     fontSize: 13,

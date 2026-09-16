@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSaved, SavedGig, SavedTalent } from '../../src/context/SavedContext';
+import { AppIcon } from '../../src/components/AppIcon';
 
 export default function SavedScreen() {
   const router = useRouter();
@@ -77,7 +78,7 @@ export default function SavedScreen() {
           <View style={styles.listSection}>
             {savedGigs.length === 0 ? (
               <View style={styles.emptyCard}>
-                <Text style={styles.emptyIcon}>♡</Text>
+                <AppIcon name="heart-outline" size={34} color="#93A0B4" />
                 <Text style={styles.emptyTitle}>No saved gigs yet</Text>
                 <Text style={styles.emptySubtitle}>
                   Bookmark packages while browsing to compare services later.
@@ -102,7 +103,7 @@ export default function SavedScreen() {
                         hitSlop={8}
                         style={{ padding: 4 }}
                       >
-                        <Text style={{ fontSize: 18, color: '#EC1257' }}>♥</Text>
+                        <AppIcon name="heart" size={19} color="#EC1257" />
                       </Pressable>
                     </View>
 
@@ -132,7 +133,7 @@ export default function SavedScreen() {
           <View style={styles.listSection}>
             {savedTalents.length === 0 ? (
               <View style={styles.emptyCard}>
-                <Text style={styles.emptyIcon}>♡</Text>
+                <AppIcon name="heart-outline" size={34} color="#93A0B4" />
                 <Text style={styles.emptyTitle}>No saved talent yet</Text>
                 <Text style={styles.emptySubtitle}>
                   Save talent profiles to build your roster for upcoming projects.
@@ -155,7 +156,7 @@ export default function SavedScreen() {
                     <View style={styles.talentMeta}>
                       <View style={styles.talentNameRow}>
                         <Text style={styles.talentName}>{talent.name}</Text>
-                        {talent.isVerified && <Text style={styles.verifiedTag}>✓</Text>}
+                        {talent.isVerified && <AppIcon name="checkmark-circle" size={14} color="#EC1257" />}
                       </View>
                       <Text style={styles.talentRole}>{talent.role}</Text>
                       <Text style={styles.talentStats}>
@@ -168,7 +169,7 @@ export default function SavedScreen() {
                       hitSlop={8}
                       style={{ padding: 4 }}
                     >
-                      <Text style={{ fontSize: 18, color: '#EC1257' }}>♥</Text>
+                      <AppIcon name="heart" size={19} color="#EC1257" />
                     </Pressable>
                   </View>
 

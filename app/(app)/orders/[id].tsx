@@ -60,19 +60,19 @@ export default function OrderDetailScreen() {
           return {
             ...m,
             status: 'done',
-            note: `✓ Released to ${initialOrder.freelancerName.split(' ')[0]}.`,
+            note: `Released to ${initialOrder.freelancerName.split(' ')[0]}.`,
           };
         } else if (action === 'revision') {
           return {
             ...m,
             status: 'pending',
-            note: `🔄 Revision requested — awaiting freelancer update.`,
+            note: `Revision requested - awaiting freelancer update.`,
           };
         } else if (action === 'dispute') {
           return {
             ...m,
             status: 'disputed',
-            note: `⚠️ Under dispute review by SkillNest support.`,
+            note: `Under dispute review by SkillNest support.`,
           };
         }
 

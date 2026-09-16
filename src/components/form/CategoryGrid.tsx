@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
+import { AppIcon, type AppIconName } from '../AppIcon';
 
 export interface CategoryOption {
-  icon: string;
+  icon: AppIconName;
   label: string;
 }
 
@@ -48,11 +49,9 @@ export function CategoryGrid({ options, selected, onChange, singleSelect = false
                 </View>
               )}
               
-              <Text 
-                className="text-[24px] mb-2 leading-none"
-              >
-                {option.icon}
-              </Text>
+              <View className="mb-2">
+                <AppIcon name={option.icon} size={25} color={isSelected ? '#EC1257' : '#5B6472'} />
+              </View>
               <Text 
                 className="text-[12.5px] font-semibold text-ink text-center leading-tight w-full"
                 style={{ flexShrink: 1 }}

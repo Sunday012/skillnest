@@ -6,6 +6,7 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
+import { AppIcon } from '../../src/components/AppIcon';
 import { MOCK_NOTIFICATIONS, NotificationItem } from '../../src/constants/notificationsData';
 
 type FilterType = 'All' | 'Orders' | 'Payouts' | 'System';
@@ -91,7 +92,7 @@ export default function NotificationsScreen() {
                 style={[styles.notifCard, item.isUnread && styles.notifCardUnread]}
               >
                 <View style={styles.iconBox}>
-                  <Text style={styles.iconText}>{item.icon}</Text>
+                  <AppIcon name={item.icon} size={20} color="#EC1257" />
                 </View>
 
                 <View style={styles.notifBody}>
@@ -242,9 +243,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F7FB',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  iconText: {
-    fontSize: 18,
   },
   notifBody: {
     flex: 1,

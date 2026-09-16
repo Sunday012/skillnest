@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs } from 'expo-router';
 import { TopNav } from '../../src/components/discovery/TopNav';
-import { Text, Platform, useWindowDimensions } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
+import { AppIcon } from '../../src/components/AppIcon';
 
 const BREAKPOINT = 880;
 
@@ -55,21 +56,21 @@ export default function AppLayout() {
           name="home"
           options={{
             title: 'Home',
-            tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🏠</Text>,
+            tabBarIcon: ({ color }) => <AppIcon name="home-outline" size={20} color={color} />,
           }}
         />
         <Tabs.Screen
           name="browse"
           options={{
             title: 'Talent',
-            tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🔎</Text>,
+            tabBarIcon: ({ color }) => <AppIcon name="compass-outline" size={20} color={color} />,
           }}
         />
         <Tabs.Screen
           name="orders/index"
           options={{
             title: 'Orders',
-            tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>📋</Text>,
+            tabBarIcon: ({ color }) => <AppIcon name="receipt-outline" size={20} color={color} />,
           }}
         />
         <Tabs.Screen
@@ -94,7 +95,7 @@ export default function AppLayout() {
           name="messages"
           options={{
             title: 'Messages',
-            tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>💬</Text>,
+            tabBarIcon: ({ color }) => <AppIcon name="chatbubbles-outline" size={20} color={color} />,
           }}
         />
         <Tabs.Screen

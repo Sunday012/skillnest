@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSaved } from '../../context/SavedContext';
+import { AppIcon } from '../AppIcon';
 
 interface TalentCardProps {
   talent: any;
@@ -73,13 +74,11 @@ export function TalentCard({ talent, layout = 'grid' }: TalentCardProps) {
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center gap-1.5 flex-wrap flex-1">
               <Text className="font-manrope-extraBold text-[15.5px] text-ink">{talent.name}</Text>
-              {talent.isVerified && <Text className="text-pink text-[12px]">✓</Text>}
+              {talent.isVerified && <AppIcon name="checkmark-circle" size={14} color="#EC1257" />}
               {isRow && <StatusBadge />}
             </View>
             <Pressable onPress={handleToggleSave} hitSlop={8} style={{ padding: 4 }}>
-              <Text style={{ fontSize: 18, color: isSaved ? '#EC1257' : '#93A0B4' }}>
-                {isSaved ? '♥' : '♡'}
-              </Text>
+              <AppIcon name={isSaved ? 'heart' : 'heart-outline'} size={19} color={isSaved ? '#EC1257' : '#93A0B4'} />
             </Pressable>
           </View>
           <Text className="text-[12.5px] text-gray-body mt-1">{talent.role} · {talent.location}</Text>
@@ -165,4 +164,3 @@ const styles = StyleSheet.create({
   },
   tagText: { color: '#C10E48', fontSize: 11, fontFamily: 'Inter_600SemiBold' },
 });
-

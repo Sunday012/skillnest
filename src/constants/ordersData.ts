@@ -55,7 +55,7 @@ export const MOCK_ORDERS: OrderItem[] = [
         description: '3 initial directions delivered for review',
         amount: 400,
         status: 'pending',
-        note: '🔔 Delivered — awaiting your review.',
+        note: 'Delivered - awaiting your review.',
       },
       {
         id: 'm-3',
@@ -88,7 +88,7 @@ export const MOCK_ORDERS: OrderItem[] = [
         description: 'Positioning doc and creative direction',
         amount: 200,
         status: 'pending',
-        note: '🔔 Funded in escrow — work in progress.',
+        note: 'Funded in escrow - work in progress.',
       },
       {
         id: 'm-202',
@@ -129,7 +129,7 @@ export const MOCK_ORDERS: OrderItem[] = [
         description: 'Brand positioning and roast profile packaging review',
         amount: 600,
         status: 'pending',
-        note: '🔔 Funded in escrow — work in progress.',
+        note: 'Funded in escrow - work in progress.',
       },
       {
         id: 'm-302',
@@ -222,7 +222,7 @@ export const MOCK_ORDERS: OrderItem[] = [
         description: 'Delivered 30s cut with original audio stems',
         amount: 400,
         status: 'disputed',
-        note: '⚠️ Under review by SkillNest support.',
+        note: 'Under review by SkillNest support.',
       },
     ],
   },

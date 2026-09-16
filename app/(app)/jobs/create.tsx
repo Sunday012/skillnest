@@ -110,7 +110,7 @@ export default function PostJobScreen() {
                     >
                       {OFFICIAL_CATEGORIES.map(c => (
                         <option key={c.label} value={c.label}>
-                          {c.icon} {c.label}
+                          {c.label}
                         </option>
                       ))}
                     </select>

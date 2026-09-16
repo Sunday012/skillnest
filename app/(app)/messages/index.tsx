@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MOCK_CONVERSATIONS, ConversationItem, MessageBubble } from '../../../src/constants/messagingData';
+import { AppIcon } from '../../../src/components/AppIcon';
 
 const BREAKPOINT = 880;
 
@@ -101,7 +102,9 @@ export default function MessagesIndexScreen() {
 
             {/* Search Bar */}
             <View style={styles.searchContainer}>
-              <Text style={styles.searchIcon}>🔍</Text>
+              <View style={styles.searchIcon}>
+                <AppIcon name="search-outline" size={17} color="#93A0B4" />
+              </View>
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search messages or people..."
@@ -273,7 +276,6 @@ const styles = StyleSheet.create({
     borderColor: '#E7E9F1',
   },
   searchIcon: {
-    fontSize: 14,
     marginRight: 8,
   },
   searchInput: {

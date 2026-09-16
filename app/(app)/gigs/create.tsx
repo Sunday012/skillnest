@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TextInput, Pressable, StyleSheet, Platform } fr
 import { useRouter } from 'expo-router';
 import { OFFICIAL_CATEGORIES } from '../../../src/constants/categories';
 import { LivePreviewCard } from '../../../src/components/selling/LivePreviewCard';
+import { AppIcon } from '../../../src/components/AppIcon';
 
 export default function CreateGigScreen() {
   const router = useRouter();
@@ -68,7 +69,7 @@ export default function CreateGigScreen() {
                       style={styles.webSelect as any}
                     >
                       {OFFICIAL_CATEGORIES.map(c => (
-                        <option key={c.label} value={c.label}>{c.icon} {c.label}</option>
+                        <option key={c.label} value={c.label}>{c.label}</option>
                       ))}
                     </select>
                   ) : (
@@ -186,9 +187,9 @@ export default function CreateGigScreen() {
                     style={[styles.dropzone, filled && styles.dropzoneFilled]}
                     onPress={() => toggleDropzone(idx)}
                   >
-                    <Text style={styles.dzIcon}>{idx === 2 ? '🎬' : '🖼️'}</Text>
+                    <AppIcon name={idx === 2 ? 'film-outline' : 'image-outline'} size={24} color={filled ? '#EC1257' : '#93A0B4'} />
                     <Text style={styles.dzText}>
-                      {filled ? '✓ Uploaded' : idx === 2 ? 'Upload video' : 'Upload image'}
+                      {filled ? 'Uploaded' : idx === 2 ? 'Upload video' : 'Upload image'}
                     </Text>
                   </Pressable>
                 ))}

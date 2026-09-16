@@ -5,6 +5,7 @@ import { CATEGORIES, FEATURED_TALENT, LATEST_JOBS } from '../../src/constants/di
 import { TalentCard } from '../../src/components/discovery/TalentCard';
 import { CategoryChip } from '../../src/components/discovery/CategoryChip';
 import { JobCard } from '../../src/components/discovery/JobCard';
+import { AppIcon } from '../../src/components/AppIcon';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -24,7 +25,9 @@ export default function HomeScreen() {
             onPress={() => router.push('/(app)/browse')}
           >
             <View>
-              <Text className="text-[26px] mb-3.5">🔎</Text>
+              <View className="mb-3.5">
+                <AppIcon name="search-outline" size={28} color="#FFFFFF" />
+              </View>
               <Text className="text-white font-manrope-bold text-[22px] mb-1.5">Find Talent</Text>
               <Text className="text-white/80 text-[14px] max-w-[280px]">I need someone to do a job — browse vetted freelancers by category.</Text>
             </View>
@@ -33,7 +36,9 @@ export default function HomeScreen() {
 
           <Pressable className="flex-1 bg-pink-tint rounded-[18px] p-8 min-h-[170px] justify-between">
             <View>
-              <Text className="text-[26px] mb-3.5">💼</Text>
+              <View className="mb-3.5">
+                <AppIcon name="briefcase-outline" size={28} color="#10172A" />
+              </View>
               <Text className="text-ink font-manrope-bold text-[22px] mb-1.5">Find Work</Text>
               <Text className="text-ink/80 text-[14px] max-w-[280px]">I have a skill and I'm looking for opportunities — browse open jobs.</Text>
             </View>

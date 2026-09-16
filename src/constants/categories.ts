@@ -1,3 +1,5 @@
+import type { AppIconName } from '../components/AppIcon';
+
 /**
  * Official SkillNest category taxonomy — 15 categories.
  * Source of truth: docs/app-arrangement.md §3
@@ -7,25 +9,25 @@
  */
 export interface Category {
   label: string;
-  icon: string;
+  icon: AppIconName;
 }
 
 export const OFFICIAL_CATEGORIES: Category[] = [
-  { icon: '🎥', label: 'Videography' },
-  { icon: '✂️', label: 'Video Editing' },
-  { icon: '📷', label: 'Photography' },
-  { icon: '🎨', label: 'Graphic Design' },
-  { icon: '🖥️', label: 'Web Design' },
-  { icon: '💻', label: 'Software Development' },
-  { icon: '✍️', label: 'Script Writing' },
-  { icon: '📝', label: 'Copywriting' },
-  { icon: '📱', label: 'UGC Creation' },
-  { icon: '🎬', label: 'Animation' },
-  { icon: '🎙️', label: 'Voice Over' },
-  { icon: '📣', label: 'Social Media Management' },
-  { icon: '📈', label: 'Digital Marketing' },
-  { icon: '🗂️', label: 'Virtual Assistance' },
-  { icon: '✨', label: 'Other Digital Skills' },
+  { icon: 'videocam-outline', label: 'Videography' },
+  { icon: 'cut-outline', label: 'Video Editing' },
+  { icon: 'camera-outline', label: 'Photography' },
+  { icon: 'color-palette-outline', label: 'Graphic Design' },
+  { icon: 'desktop-outline', label: 'Web Design' },
+  { icon: 'code-slash-outline', label: 'Software Development' },
+  { icon: 'create-outline', label: 'Script Writing' },
+  { icon: 'document-text-outline', label: 'Copywriting' },
+  { icon: 'phone-portrait-outline', label: 'UGC Creation' },
+  { icon: 'film-outline', label: 'Animation' },
+  { icon: 'mic-outline', label: 'Voice Over' },
+  { icon: 'megaphone-outline', label: 'Social Media Management' },
+  { icon: 'trending-up-outline', label: 'Digital Marketing' },
+  { icon: 'folder-open-outline', label: 'Virtual Assistance' },
+  { icon: 'sparkles-outline', label: 'Other Digital Skills' },
 ];
 
 /** Flat array of just the label strings — handy for filter lists */

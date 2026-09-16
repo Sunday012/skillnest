@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { AppIcon, type AppIconName } from '../AppIcon';
 
 interface RadioCardProps {
   title: string;
@@ -7,9 +8,10 @@ interface RadioCardProps {
   isSelected: boolean;
   onSelect: () => void;
   className?: string;
+  icon?: AppIconName;
 }
 
-export function RadioCard({ title, description, isSelected, onSelect, className = '' }: RadioCardProps) {
+export function RadioCard({ title, description, isSelected, onSelect, className = '', icon }: RadioCardProps) {
   return (
     <Pressable
       onPress={onSelect}
@@ -20,9 +22,12 @@ export function RadioCard({ title, description, isSelected, onSelect, className 
     >
       <View className="flex-row items-center justify-between">
         <View className="flex-1 min-w-0 pr-4">
-          <Text className={`font-bold text-[15px] mb-1 ${isSelected ? 'text-pink-dark' : 'text-ink'}`}>
-            {title}
-          </Text>
+          <View className="flex-row items-center gap-2 mb-1">
+            {icon && <AppIcon name={icon} size={17} color={isSelected ? '#C10E48' : '#5B6472'} />}
+            <Text className={`font-bold text-[15px] ${isSelected ? 'text-pink-dark' : 'text-ink'}`}>
+              {title}
+            </Text>
+          </View>
           {description && (
             <Text className="text-sm text-gray-body leading-snug">
               {description}

@@ -10,6 +10,7 @@ import { RoadmapItem } from '../src/components/landing/RoadmapItem';
 import { HeroVisual } from '../src/components/landing/HeroVisual';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { AppIcon } from '../src/components/AppIcon';
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,8 +20,14 @@ export default function LandingPage() {
       {/* Utility Bar */}
       <View className="bg-navy px-6 py-2 flex-row justify-between items-center">
         <View className="flex-row items-center gap-5 hidden md:flex">
-          <Text className="text-gray-muted text-[13px]">🌍 Trusted in 45+ countries</Text>
-          <Text className="text-gray-muted text-[13px]">🔒 Escrow-protected payments</Text>
+          <View className="flex-row items-center gap-1.5">
+            <AppIcon name="globe-outline" size={14} color="#93A0B4" />
+            <Text className="text-gray-muted text-[13px]">Trusted in 45+ countries</Text>
+          </View>
+          <View className="flex-row items-center gap-1.5">
+            <AppIcon name="lock-closed-outline" size={14} color="#93A0B4" />
+            <Text className="text-gray-muted text-[13px]">Escrow-protected payments</Text>
+          </View>
         </View>
         <View className="flex-row gap-5">
           <Text className="text-gray-muted text-[13px]">Become a Seller</Text>
@@ -91,7 +98,8 @@ export default function LandingPage() {
         <View className="max-w-[1180px] mx-auto px-6 pt-[88px] w-full flex-col md:flex-row gap-10 items-center overflow-hidden">
           <View className="flex-1 items-start">
             <View className="bg-pink-tint rounded-full px-4 py-2 flex-row items-center gap-2 mb-6">
-              <Text className="text-pink-dark font-bold text-[14px]">⭐ Rated 4.9 by 12,000+ professionals</Text>
+              <AppIcon name="star" size={15} color="#C10E48" />
+              <Text className="text-pink-dark font-bold text-[14px]">Rated 4.9 by 12,000+ professionals</Text>
             </View>
             <Text className="font-manrope font-extrabold text-[38px] md:text-[56px] leading-[1.06] text-ink mb-5">
               Hire skilled hands.{'\n'}
@@ -159,19 +167,19 @@ export default function LandingPage() {
           <View className="flex-col md:flex-row gap-6">
             <ProcessCard 
               number="01" 
-              icon="📝" 
+              icon="document-text-outline" 
               title="Post or Browse" 
               description="Describe the job you need done, or explore ready-made gigs from vetted specialists across every category."
             />
             <ProcessCard 
               number="02" 
-              icon="💰" 
+              icon="cash-outline" 
               title="Fund the Milestone" 
               description="Break the budget into stages. Funds sit in escrow — not with us, not with the freelancer — until you approve."
             />
             <ProcessCard 
               number="03" 
-              icon="✅" 
+              icon="checkmark-circle-outline" 
               title="Approve & Release" 
               description="Review each delivery against the brief. Payment releases the moment you're satisfied, milestone by milestone."
             />
@@ -233,19 +241,25 @@ export default function LandingPage() {
           </View>
           <View className="flex-col md:flex-row gap-6">
             <View className="bg-white border border-border rounded-[14px] p-[30px] flex-1 min-w-[280px]">
-              <Text className="text-[26px] mb-4">💻</Text>
+              <View className="mb-4">
+                <AppIcon name="laptop-outline" size={28} color="#EC1257" />
+              </View>
               <Text className="font-manrope font-extrabold text-[19px] text-ink mb-2">Web App</Text>
               <Text className="text-[14.5px] text-gray-body mb-4">Full marketplace access from any browser. Post jobs, browse talent, and manage orders — no downloads required.</Text>
               <Text className="text-[14px] font-bold text-pink">Learn more →</Text>
             </View>
             <View className="bg-white border border-border rounded-[14px] p-[30px] flex-1 min-w-[280px]">
-              <Text className="text-[26px] mb-4">📱</Text>
+              <View className="mb-4">
+                <AppIcon name="phone-portrait-outline" size={28} color="#EC1257" />
+              </View>
               <Text className="font-manrope font-extrabold text-[19px] text-ink mb-2">Mobile Apps</Text>
               <Text className="text-[14.5px] text-gray-body mb-4">iOS and Android apps built for on-the-go work — chat, deliver, and get paid without opening a laptop.</Text>
               <Text className="text-[14px] font-bold text-pink">Learn more →</Text>
             </View>
             <View className="bg-white border border-border rounded-[14px] p-[30px] flex-1 min-w-[280px]">
-              <Text className="text-[26px] mb-4">💬</Text>
+              <View className="mb-4">
+                <AppIcon name="chatbubbles-outline" size={28} color="#EC1257" />
+              </View>
               <Text className="font-manrope font-extrabold text-[19px] text-ink mb-2">Real-Time Messaging</Text>
               <Text className="text-[14.5px] text-gray-body mb-4">Discuss scope, share files, and stay aligned with clients or freelancers in one running conversation per order.</Text>
               <Text className="text-[14px] font-bold text-pink">Learn more →</Text>
@@ -325,11 +339,17 @@ export default function LandingPage() {
         <View className="bg-navy py-[56px]">
           <View className="max-w-[1180px] mx-auto px-6 w-full flex-col md:flex-row gap-10">
             <View className="flex-1">
-              <Text className="font-bold text-[17px] text-white mb-2.5">🔒 Escrow Protection</Text>
+              <View className="flex-row items-center gap-2 mb-2.5">
+                <AppIcon name="lock-closed-outline" size={18} color="#FFFFFF" />
+                <Text className="font-bold text-[17px] text-white">Escrow Protection</Text>
+              </View>
               <Text className="text-[14.5px] text-gray-muted leading-relaxed">Funds are held securely until you approve each milestone, so payment always matches delivered work — never before, never blind.</Text>
             </View>
             <View className="flex-1">
-              <Text className="font-bold text-[17px] text-white mb-2.5">🛡 Verified Professionals</Text>
+              <View className="flex-row items-center gap-2 mb-2.5">
+                <AppIcon name="shield-checkmark-outline" size={18} color="#FFFFFF" />
+                <Text className="font-bold text-[17px] text-white">Verified Professionals</Text>
+              </View>
               <Text className="text-[14.5px] text-gray-muted leading-relaxed">Every freelancer completes identity verification before earning the verified badge, so you know exactly who you're working with.</Text>
             </View>
           </View>

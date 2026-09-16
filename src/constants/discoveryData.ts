@@ -125,12 +125,12 @@ export const LATEST_JOBS = [
 ];
 
 export const PORTFOLIO_ITEMS = [
-  { id: '1', type: 'image', icon: '🖼️' },
-  { id: '2', type: 'video', icon: '🎬', duration: '0:42' },
-  { id: '3', type: 'image', icon: '🖼️' },
-  { id: '4', type: 'image', icon: '🖼️' },
-  { id: '5', type: 'image', icon: '🖼️' },
-  { id: '6', type: 'video', icon: '🎬', duration: '1:05' },
+  { id: '1', type: 'image', icon: 'image-outline' },
+  { id: '2', type: 'video', icon: 'film-outline', duration: '0:42' },
+  { id: '3', type: 'image', icon: 'image-outline' },
+  { id: '4', type: 'image', icon: 'image-outline' },
+  { id: '5', type: 'image', icon: 'image-outline' },
+  { id: '6', type: 'video', icon: 'film-outline', duration: '1:05' },
 ];
 
 export const REVIEWS = [

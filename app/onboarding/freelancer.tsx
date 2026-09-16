@@ -10,6 +10,7 @@ import { FileUploadDropzone } from '../../src/components/form/FileUploadDropzone
 import { OFFICIAL_CATEGORIES } from '../../src/constants/categories';
 import { SKILLS_BY_CATEGORY } from '../../src/constants/skills';
 import { useUser, AvailabilityStatus, PayoutMethod } from '../../src/context/UserContext';
+import { AppIcon } from '../../src/components/AppIcon';
 
 const CATEGORIES: CategoryOption[] = OFFICIAL_CATEGORIES;
 
@@ -118,10 +119,10 @@ export default function FreelancerOnboarding() {
       {step === 3 && (
         <View className="flex-row gap-1.5 mt-3">
           <View className="flex-1 aspect-square rounded-lg bg-bg-alt border border-dashed border-border items-center justify-center">
-            <Text className="text-lg">🖼️</Text>
+            <AppIcon name="image-outline" size={20} color="#93A0B4" />
           </View>
           <View className="flex-1 aspect-square rounded-lg bg-bg-alt border border-dashed border-border items-center justify-center">
-            <Text className="text-lg">🎬</Text>
+            <AppIcon name="film-outline" size={20} color="#93A0B4" />
           </View>
           <View className="flex-1 aspect-square rounded-lg bg-bg-alt border border-dashed border-border items-center justify-center">
             <Text className="text-gray-muted text-lg">+</Text>
@@ -326,7 +327,7 @@ export default function FreelancerOnboarding() {
         <Text className="text-[15px] text-gray-body mb-8">Set up how you'll get paid once orders start coming in.</Text>
 
         <View className="flex-row items-start bg-pink-tint rounded-xl p-4 mb-7 gap-3">
-          <Text className="text-lg">🛡️</Text>
+          <AppIcon name="shield-checkmark-outline" size={20} color="#EC1257" />
           <View className="flex-1">
             <Text className="font-bold text-[13.5px] text-ink mb-1">Identity verification unlocks payouts and the verified badge</Text>
             <Text className="text-[12.5px] text-gray-body">This is a mocked step for now — no real KYC integration yet.</Text>
@@ -338,7 +339,8 @@ export default function FreelancerOnboarding() {
           <View className="flex-col lg:flex-row gap-3 w-full">
             <View className="flex-1">
               <RadioCard 
-                title="🏦 Bank Transfer"
+                title="Bank Transfer"
+                icon="business-outline"
                 description="2–3 business days"
                 isSelected={payoutMethod === 'Bank Transfer'}
                 onSelect={() => setPayoutMethod('Bank Transfer')}
@@ -347,7 +349,8 @@ export default function FreelancerOnboarding() {
             </View>
             <View className="flex-1">
               <RadioCard 
-                title="💳 PayPal"
+                title="PayPal"
+                icon="card-outline"
                 description="Instant"
                 isSelected={payoutMethod === 'PayPal'}
                 onSelect={() => setPayoutMethod('PayPal')}
@@ -356,7 +359,8 @@ export default function FreelancerOnboarding() {
             </View>
             <View className="flex-1">
               <RadioCard 
-                title="🌐 Wise"
+                title="Wise"
+                icon="globe-outline"
                 description="1–2 business days"
                 isSelected={payoutMethod === 'Wise'}
                 onSelect={() => setPayoutMethod('Wise')}

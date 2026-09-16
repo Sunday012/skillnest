@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { FEATURED_TALENT, PORTFOLIO_ITEMS, REVIEWS } from '../../../src/constants/discoveryData';
 import { PortfolioItem } from '../../../src/components/discovery/PortfolioItem';
+import { AppIcon } from '../../../src/components/AppIcon';
 
 export default function TalentProfileScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -113,13 +114,16 @@ export default function TalentProfileScreen() {
 
               <View className="flex-row flex-wrap gap-2.5">
                 <Pressable className="flex-row items-center gap-1.5 bg-bg-alt border border-border px-3.5 py-2 rounded-full">
-                  <Text className="text-[13px] font-inter-semiBold">▶ YouTube</Text>
+                  <AppIcon name="logo-youtube" size={15} color="#EC1257" />
+                  <Text className="text-[13px] font-inter-semiBold">YouTube</Text>
                 </Pressable>
                 <Pressable className="flex-row items-center gap-1.5 bg-bg-alt border border-border px-3.5 py-2 rounded-full">
-                  <Text className="text-[13px] font-inter-semiBold">🎨 Behance</Text>
+                  <AppIcon name="color-palette-outline" size={15} color="#EC1257" />
+                  <Text className="text-[13px] font-inter-semiBold">Behance</Text>
                 </Pressable>
                 <Pressable className="flex-row items-center gap-1.5 bg-bg-alt border border-border px-3.5 py-2 rounded-full">
-                  <Text className="text-[13px] font-inter-semiBold">🌐 Portfolio Site</Text>
+                  <AppIcon name="globe-outline" size={15} color="#EC1257" />
+                  <Text className="text-[13px] font-inter-semiBold">Portfolio Site</Text>
                 </Pressable>
               </View>
             </View>

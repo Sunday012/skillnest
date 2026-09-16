@@ -6,6 +6,7 @@ import { WizardLayout } from '../../src/components/onboarding/WizardLayout';
 import { CategoryGrid, CategoryOption } from '../../src/components/form/CategoryGrid';
 import { HeroVisual } from '../../src/components/landing/HeroVisual';
 import { OFFICIAL_CATEGORIES } from '../../src/constants/categories';
+import { AppIcon } from '../../src/components/AppIcon';
 
 const CATEGORIES: CategoryOption[] = OFFICIAL_CATEGORIES;
 
@@ -37,7 +38,8 @@ export default function ClientOnboarding() {
     <View className="flex-col md:flex-row gap-10 md:gap-14 items-center">
       <View className="flex-1">
         <View className="self-start bg-pink-tint px-4 py-2 rounded-full flex-row items-center gap-2 mb-5">
-          <Text className="text-pink-dark font-bold text-[13px]">👋 You're in</Text>
+          <AppIcon name="hand-left-outline" size={16} color="#C10E48" />
+          <Text className="text-pink-dark font-bold text-[13px]">You're in</Text>
         </View>
         <Text className="font-manrope font-extrabold text-[30px] md:text-[40px] leading-[1.12] text-ink mb-4">
           Welcome to <Text className="text-pink">SkillNest.</Text>
@@ -49,7 +51,7 @@ export default function ClientOnboarding() {
         <View className="flex-col gap-5">
           <View className="flex-row items-start gap-3.5">
             <View className="w-[38px] h-[38px] rounded-[10px] bg-pink-tint items-center justify-center">
-              <Text className="text-[17px]">📝</Text>
+              <AppIcon name="document-text-outline" size={18} color="#EC1257" />
             </View>
             <View className="flex-1">
               <Text className="font-bold text-[15.5px] text-ink mb-0.5">Post a job in minutes</Text>
@@ -59,7 +61,7 @@ export default function ClientOnboarding() {
 
           <View className="flex-row items-start gap-3.5">
             <View className="w-[38px] h-[38px] rounded-[10px] bg-pink-tint items-center justify-center">
-              <Text className="text-[17px]">🔒</Text>
+              <AppIcon name="lock-closed-outline" size={18} color="#EC1257" />
             </View>
             <View className="flex-1">
               <Text className="font-bold text-[15.5px] text-ink mb-0.5">Escrow-protected payments</Text>
@@ -69,7 +71,7 @@ export default function ClientOnboarding() {
 
           <View className="flex-row items-start gap-3.5">
             <View className="w-[38px] h-[38px] rounded-[10px] bg-pink-tint items-center justify-center">
-              <Text className="text-[17px]">✅</Text>
+              <AppIcon name="checkmark-circle-outline" size={18} color="#EC1257" />
             </View>
             <View className="flex-1">
               <Text className="font-bold text-[15.5px] text-ink mb-0.5">Verified freelancers only</Text>

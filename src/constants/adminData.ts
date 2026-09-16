@@ -1,3 +1,4 @@
+import type { AppIconName } from '../components/AppIcon';
 import { FEATURED_TALENT } from './discoveryData';
 import { MOCK_ORDERS } from './ordersData';
 
@@ -92,11 +93,11 @@ export const INITIAL_ADMIN_STATS = {
   pendingApprovalsDelta: 'Oldest: 2 days',
 };
 
-export const RECENT_ACTIVITIES = [
-  { id: '1', icon: '👤', text: 'New freelancer signup — Kaito Tanaka', time: '12m' },
-  { id: '2', icon: '⚠️', text: 'Dispute opened on SN-4712', time: '1h' },
-  { id: '3', icon: '🚩', text: 'Gig flagged for review — "Quick logo $5"', time: '3h' },
-  { id: '4', icon: '💰', text: 'Payout batch processed — $18,200', time: 'Yesterday' },
+export const RECENT_ACTIVITIES: { id: string; icon: AppIconName; text: string; time: string }[] = [
+  { id: '1', icon: 'person-add-outline', text: 'New freelancer signup — Kaito Tanaka', time: '12m' },
+  { id: '2', icon: 'warning-outline', text: 'Dispute opened on SN-4712', time: '1h' },
+  { id: '3', icon: 'flag-outline', text: 'Gig flagged for review — "Quick logo $5"', time: '3h' },
+  { id: '4', icon: 'cash-outline', text: 'Payout batch processed — $18,200', time: 'Yesterday' },
 ];
 
 export const INITIAL_ADMIN_USERS: AdminUserItem[] = [

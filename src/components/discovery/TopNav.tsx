@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Pressable, Platform, StyleSheet, useWindowDimensions } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { useUser } from '../../context/UserContext';
+import { AppIcon, type AppIconName } from '../AppIcon';
 
 const WEB_NAV_LINKS = [
   { label: 'Discover', href: '/home' },
@@ -10,6 +11,14 @@ const WEB_NAV_LINKS = [
   { label: 'My Jobs',  href: '/jobs' },
   { label: 'Orders',   href: '/orders' },
   { label: 'Messages', href: '/messages' },
+];
+
+const MENU_ITEMS: { label: string; href: string; icon: AppIconName }[] = [
+  { label: 'Account Settings', href: '/settings', icon: 'settings-outline' },
+  { label: 'My Jobs (Client)', href: '/jobs', icon: 'clipboard-outline' },
+  { label: 'My Gigs (Freelancer)', href: '/my-gigs', icon: 'briefcase-outline' },
+  { label: 'Post a Job', href: '/jobs/create', icon: 'add-circle-outline' },
+  { label: 'Create a Gig', href: '/gigs/create', icon: 'sparkles-outline' },
 ];
 
 const BREAKPOINT = 880;
@@ -80,7 +89,7 @@ export function TopNav() {
             style={{ maxWidth: isWide ? 420 : 280, width: '100%' }}
             className="flex-row items-center gap-2 bg-bg-alt rounded-full py-[8px] px-3.5"
           >
-            <Text className="text-[13px]">🔍</Text>
+            <AppIcon name="search-outline" size={15} color="#93A0B4" />
             <TextInput
               placeholder={isWide ? "Search gigs, talent, or skills…" : "Search…"}
               className="flex-1 text-[13px] text-gray-muted p-0"
@@ -123,10 +132,10 @@ export function TopNav() {
           }}
         >
           <Pressable onPress={() => router.push('/saved')}>
-            <Text className="text-[17px] text-gray-body">♡</Text>
+            <AppIcon name="heart-outline" size={20} color="#5B6472" />
           </Pressable>
           <Pressable className="relative" onPress={() => router.push('/notifications')}>
-            <Text className="text-[17px]">🔔</Text>
+            <AppIcon name="notifications-outline" size={20} color="#5B6472" />
             <View className="absolute -top-[3px] -right-[4px] w-[7px] h-[7px] rounded-full bg-pink" />
           </Pressable>
 
@@ -143,32 +152,25 @@ export function TopNav() {
             <View style={styles.menuPopover}>
               <Text style={styles.menuHeader}>{user.name || 'User'} ({user.role})</Text>
               
-              <Pressable style={styles.menuItem} onPress={() => navigateTo('/settings')}>
-                <Text style={styles.menuItemIcon}>⚙️</Text>
-                <Text style={styles.menuItemText}>Account Settings</Text>
-              </Pressable>
-
-              <Pressable style={styles.menuItem} onPress={() => navigateTo('/jobs')}>
-                <Text style={styles.menuItemIcon}>📋</Text>
-                <Text style={styles.menuItemText}>My Jobs (Client)</Text>
-              </Pressable>
-
-              <Pressable style={styles.menuItem} onPress={() => navigateTo('/my-gigs')}>
-                <Text style={styles.menuItemIcon}>💼</Text>
-                <Text style={styles.menuItemText}>My Gigs (Freelancer)</Text>
-              </Pressable>
+              {MENU_ITEMS.slice(0, 3).map((item) => (
+                <Pressable key={item.href} style={styles.menuItem} onPress={() => navigateTo(item.href)}>
+                  <View style={styles.menuItemIcon}>
+                    <AppIcon name={item.icon} size={16} color="#5B6472" />
+                  </View>
+                  <Text style={styles.menuItemText}>{item.label}</Text>
+                </Pressable>
+              ))}
 
               <View style={styles.menuDivider} />
 
-              <Pressable style={styles.menuItem} onPress={() => navigateTo('/jobs/create')}>
-                <Text style={styles.menuItemIcon}>➕</Text>
-                <Text style={styles.menuItemText}>Post a Job</Text>
-              </Pressable>
-
-              <Pressable style={styles.menuItem} onPress={() => navigateTo('/gigs/create')}>
-                <Text style={styles.menuItemIcon}>✨</Text>
-                <Text style={styles.menuItemText}>Create a Gig</Text>
-              </Pressable>
+              {MENU_ITEMS.slice(3).map((item) => (
+                <Pressable key={item.href} style={styles.menuItem} onPress={() => navigateTo(item.href)}>
+                  <View style={styles.menuItemIcon}>
+                    <AppIcon name={item.icon} size={16} color="#5B6472" />
+                  </View>
+                  <Text style={styles.menuItemText}>{item.label}</Text>
+                </Pressable>
+              ))}
             </View>
           )}
         </View>
@@ -244,7 +246,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   menuItemIcon: {
-    fontSize: 14,
+    width: 20,
+    alignItems: 'center',
   },
   menuItemText: {
     fontSize: 13.5,
@@ -257,6 +260,5 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
 });
-
 
 

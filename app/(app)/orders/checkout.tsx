@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TextInput, Pressable, StyleSheet } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { AppIcon } from '../../../src/components/AppIcon';
 
 export default function CheckoutScreen() {
   const router = useRouter();
@@ -42,7 +43,8 @@ export default function CheckoutScreen() {
                 onPress={() => setPaymentMethod('card')}
               >
                 <View style={[styles.radio, paymentMethod === 'card' && styles.radioSelected]} />
-                <Text style={styles.payMethodText}>💳 Credit or Debit Card</Text>
+                <AppIcon name="card-outline" size={18} color="#5B6472" />
+                <Text style={styles.payMethodText}>Credit or Debit Card</Text>
               </Pressable>
 
               {/* Bank Transfer */}
@@ -51,7 +53,8 @@ export default function CheckoutScreen() {
                 onPress={() => setPaymentMethod('bank')}
               >
                 <View style={[styles.radio, paymentMethod === 'bank' && styles.radioSelected]} />
-                <Text style={styles.payMethodText}>🏦 Bank Transfer</Text>
+                <AppIcon name="business-outline" size={18} color="#5B6472" />
+                <Text style={styles.payMethodText}>Bank Transfer</Text>
               </Pressable>
 
               {/* Wallet */}
@@ -60,7 +63,8 @@ export default function CheckoutScreen() {
                 onPress={() => setPaymentMethod('wallet')}
               >
                 <View style={[styles.radio, paymentMethod === 'wallet' && styles.radioSelected]} />
-                <Text style={styles.payMethodText}>👛 SkillNest Wallet — $0.00 available</Text>
+                <AppIcon name="wallet-outline" size={18} color="#5B6472" />
+                <Text style={styles.payMethodText}>SkillNest Wallet - $0.00 available</Text>
               </Pressable>
 
               {/* Card Inputs */}
@@ -107,8 +111,9 @@ export default function CheckoutScreen() {
 
               {/* Escrow Notice */}
               <View style={styles.escrowNote}>
+                <AppIcon name="lock-closed-outline" size={18} color="#EC1257" />
                 <Text style={styles.escrowNoteText}>
-                  🔒 Your payment isn't released to the freelancer immediately — it's held in escrow and only pays out per milestone, once you approve.
+                  Your payment isn't released to the freelancer immediately - it's held in escrow and only pays out per milestone, once you approve.
                 </Text>
               </View>
 
@@ -260,12 +265,16 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   escrowNote: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
     backgroundColor: '#FDE8EF',
     borderRadius: 10,
     padding: 14,
     marginTop: 12,
   },
   escrowNoteText: {
+    flex: 1,
     fontSize: 12.5,
     color: '#C10E48',
     fontFamily: 'Inter_500Medium',

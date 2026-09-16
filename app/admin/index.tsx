@@ -32,8 +32,19 @@ import {
   DisputeEvidenceModal,
   ActionConfirmModal,
 } from '../../src/components/admin/AdminModals';
+import { AppIcon, type AppIconName } from '../../src/components/AppIcon';
 
 type AdminTab = 'dashboard' | 'users' | 'approvals' | 'disputes' | 'transactions' | 'revenue' | 'moderation';
+
+const ADMIN_TABS: { id: AdminTab; label: string; icon: AppIconName }[] = [
+  { id: 'dashboard', label: 'Dashboard', icon: 'stats-chart-outline' },
+  { id: 'users', label: 'Users', icon: 'people-outline' },
+  { id: 'approvals', label: 'Approvals', icon: 'checkmark-circle-outline' },
+  { id: 'disputes', label: 'Disputes', icon: 'warning-outline' },
+  { id: 'transactions', label: 'Transactions', icon: 'card-outline' },
+  { id: 'revenue', label: 'Revenue', icon: 'trending-up-outline' },
+  { id: 'moderation', label: 'Moderation', icon: 'flag-outline' },
+];
 
 export default function AdminDashboardScreen() {
   const router = useRouter();
@@ -190,83 +201,37 @@ export default function AdminDashboardScreen() {
           style={isWide ? styles.sbListVertical : styles.sbListHorizontal}
           contentContainerStyle={!isWide && styles.sbHorizontalContent}
         >
-          <TouchableOpacity
-            style={[styles.sbItem, activeTab === 'dashboard' && styles.sbItemActive]}
-            onPress={() => setActiveTab('dashboard')}
-          >
-            <Text style={[styles.sbItemText, activeTab === 'dashboard' && styles.sbItemTextActive]}>
-              📊 Dashboard
-            </Text>
-          </TouchableOpacity>
+          {ADMIN_TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            const count =
+              tab.id === 'approvals'
+                ? pendingApprovalsCount
+                : tab.id === 'disputes'
+                  ? openDisputesCount
+                  : tab.id === 'moderation'
+                    ? pendingModerationsCount
+                    : 0;
 
-          <TouchableOpacity
-            style={[styles.sbItem, activeTab === 'users' && styles.sbItemActive]}
-            onPress={() => setActiveTab('users')}
-          >
-            <Text style={[styles.sbItemText, activeTab === 'users' && styles.sbItemTextActive]}>
-              👥 Users
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.sbItem, activeTab === 'approvals' && styles.sbItemActive]}
-            onPress={() => setActiveTab('approvals')}
-          >
-            <Text style={[styles.sbItemText, activeTab === 'approvals' && styles.sbItemTextActive]}>
-              ✅ Approvals
-            </Text>
-            {pendingApprovalsCount > 0 && (
-              <View style={styles.sbBadge}>
-                <Text style={styles.sbBadgeText}>{pendingApprovalsCount}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.sbItem, activeTab === 'disputes' && styles.sbItemActive]}
-            onPress={() => setActiveTab('disputes')}
-          >
-            <Text style={[styles.sbItemText, activeTab === 'disputes' && styles.sbItemTextActive]}>
-              ⚠️ Disputes
-            </Text>
-            {openDisputesCount > 0 && (
-              <View style={styles.sbBadge}>
-                <Text style={styles.sbBadgeText}>{openDisputesCount}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.sbItem, activeTab === 'transactions' && styles.sbItemActive]}
-            onPress={() => setActiveTab('transactions')}
-          >
-            <Text style={[styles.sbItemText, activeTab === 'transactions' && styles.sbItemTextActive]}>
-              💳 Transactions
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.sbItem, activeTab === 'revenue' && styles.sbItemActive]}
-            onPress={() => setActiveTab('revenue')}
-          >
-            <Text style={[styles.sbItemText, activeTab === 'revenue' && styles.sbItemTextActive]}>
-              📈 Revenue
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.sbItem, activeTab === 'moderation' && styles.sbItemActive]}
-            onPress={() => setActiveTab('moderation')}
-          >
-            <Text style={[styles.sbItemText, activeTab === 'moderation' && styles.sbItemTextActive]}>
-              🚩 Moderation
-            </Text>
-            {pendingModerationsCount > 0 && (
-              <View style={styles.sbBadge}>
-                <Text style={styles.sbBadgeText}>{pendingModerationsCount}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
+            return (
+              <TouchableOpacity
+                key={tab.id}
+                style={[styles.sbItem, isActive && styles.sbItemActive]}
+                onPress={() => setActiveTab(tab.id)}
+              >
+                <View style={styles.sbItemLabel}>
+                  <AppIcon name={tab.icon} size={17} color={isActive ? '#EC1257' : '#5B6472'} />
+                  <Text style={[styles.sbItemText, isActive && styles.sbItemTextActive]}>
+                    {tab.label}
+                  </Text>
+                </View>
+                {count > 0 && (
+                  <View style={styles.sbBadge}>
+                    <Text style={styles.sbBadgeText}>{count}</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            );
+          })}
         </ScrollView>
 
         {isWide && (
@@ -345,7 +310,7 @@ export default function AdminDashboardScreen() {
                 {RECENT_ACTIVITIES.map(act => (
                   <View key={act.id} style={styles.activityRow}>
                     <View style={styles.activityIc}>
-                      <Text style={{ fontSize: 14 }}>{act.icon}</Text>
+                      <AppIcon name={act.icon} size={16} color="#EC1257" />
                     </View>
                     <Text style={styles.activityText}>{act.text}</Text>
                     <Text style={styles.activityTime}>{act.time}</Text>
@@ -509,7 +474,7 @@ export default function AdminDashboardScreen() {
             {disputes.map(d => (
               <View key={d.id} style={styles.queueCard}>
                 <View style={[styles.queueAv, { backgroundColor: '#EC1257' }]}>
-                  <Text style={styles.queueAvText}>⚖️</Text>
+                  <AppIcon name="scale-outline" size={22} color="#FFFFFF" />
                 </View>
                 <View style={styles.queueBody}>
                   <View style={styles.queueTitleRow}>
@@ -698,7 +663,7 @@ export default function AdminDashboardScreen() {
             {moderations.map(mod => (
               <View key={mod.id} style={styles.queueCard}>
                 <View style={[styles.queueAv, { backgroundColor: '#D97706' }]}>
-                  <Text style={styles.queueAvText}>🚩</Text>
+                  <AppIcon name="flag-outline" size={22} color="#FFFFFF" />
                 </View>
                 <View style={styles.queueBody}>
                   <View style={styles.queueTitleRow}>
@@ -840,6 +805,11 @@ const styles = StyleSheet.create({
   },
   sbItemActive: {
     backgroundColor: 'rgba(236,18,87,0.16)',
+  },
+  sbItemLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 9,
   },
   sbItemText: {
     color: '#93A0B4',

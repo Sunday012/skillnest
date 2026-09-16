@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAdminAuth } from '../../src/context/AdminAuthContext';
+import { AppIcon } from '../../src/components/AppIcon';
 
 export default function AdminLoginScreen() {
   const router = useRouter();
@@ -58,8 +59,9 @@ export default function AdminLoginScreen() {
         </TouchableOpacity>
 
         <View style={styles.noteBox}>
+          <AppIcon name="lock-closed-outline" size={17} color="#B8C2D6" />
           <Text style={styles.noteText}>
-            🔒 This portal is for authorized SkillNest staff only. Unauthorized access attempts are logged.
+            This portal is for authorized SkillNest staff only. Unauthorized access attempts are logged.
           </Text>
         </View>
 
@@ -154,12 +156,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   noteBox: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
     backgroundColor: 'rgba(236,18,87,0.1)',
     borderRadius: 10,
     padding: 12,
     marginTop: 22,
   },
   noteText: {
+    flex: 1,
     color: 'rgba(255,255,255,0.75)',
     fontFamily: 'Inter_400Regular',
     fontSize: 12,

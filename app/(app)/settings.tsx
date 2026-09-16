@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useUser, AvailabilityStatus, PayoutMethod } from '../../src/context/UserContext';
+import { AppIcon, type AppIconName } from '../../src/components/AppIcon';
 
 const BREAKPOINT = 880;
 
@@ -137,13 +138,13 @@ export default function AccountSettingsScreen() {
     }
   };
 
-  const navItems: { id: SettingsPanel; label: string; icon: string; danger?: boolean }[] = [
-    { id: 'profile', label: 'Profile Info', icon: '👤' },
-    { id: 'security', label: 'Security', icon: '🔒' },
-    { id: 'notifs', label: 'Notifications', icon: '🔔' },
-    { id: 'payments', label: 'Payments & Payouts', icon: '💳' },
-    { id: 'availability', label: 'Availability', icon: '🟢' },
-    { id: 'danger', label: 'Danger Zone', icon: '⚠', danger: true },
+  const navItems: { id: SettingsPanel; label: string; icon: AppIconName; danger?: boolean }[] = [
+    { id: 'profile', label: 'Profile Info', icon: 'person-outline' },
+    { id: 'security', label: 'Security', icon: 'lock-closed-outline' },
+    { id: 'notifs', label: 'Notifications', icon: 'notifications-outline' },
+    { id: 'payments', label: 'Payments & Payouts', icon: 'card-outline' },
+    { id: 'availability', label: 'Availability', icon: 'radio-button-on-outline' },
+    { id: 'danger', label: 'Danger Zone', icon: 'warning-outline', danger: true },
   ];
 
   return (
@@ -155,7 +156,7 @@ export default function AccountSettingsScreen() {
           <View style={styles.avatarLg}>
             <Text style={styles.avatarText}>{getInitials(user.name || name)}</Text>
             <View style={styles.avatarEdit}>
-              <Text style={{ color: '#FFFFFF', fontSize: 11, fontWeight: 'bold' }}>✎</Text>
+              <AppIcon name="create-outline" size={12} color="#FFFFFF" />
             </View>
           </View>
           <View style={{ flex: 1 }}>
@@ -191,7 +192,13 @@ export default function AccountSettingsScreen() {
                         item.danger && isActive && styles.navItemDangerActive,
                       ]}
                     >
-                      <Text style={styles.navIcon}>{item.icon}</Text>
+                      <View style={styles.navIcon}>
+                        <AppIcon
+                          name={item.icon}
+                          size={16}
+                          color={item.danger ? '#DC2626' : isActive ? '#EC1257' : '#5B6472'}
+                        />
+                      </View>
                       <Text
                         style={[
                           styles.navLabelHorizontal,
@@ -221,7 +228,13 @@ export default function AccountSettingsScreen() {
                       item.danger && isActive && styles.navItemDangerActive,
                     ]}
                   >
-                    <Text style={styles.navIcon}>{item.icon}</Text>
+                    <View style={styles.navIcon}>
+                      <AppIcon
+                        name={item.icon}
+                        size={16}
+                        color={item.danger ? '#DC2626' : isActive ? '#EC1257' : '#5B6472'}
+                      />
+                    </View>
                     <Text
                       style={[
                         styles.navLabel,
@@ -546,7 +559,10 @@ export default function AccountSettingsScreen() {
                       ]}
                       onPress={() => updatePayoutInfo({ payoutMethod: 'Bank Transfer' })}
                     >
-                      <Text style={styles.radioTitle}>🏦 Bank Transfer</Text>
+                      <View style={styles.radioTitleRow}>
+                        <AppIcon name="business-outline" size={17} color="#5B6472" />
+                        <Text style={styles.radioTitle}>Bank Transfer</Text>
+                      </View>
                       <Text style={styles.radioSub}>2–3 business days</Text>
                     </Pressable>
 
@@ -557,7 +573,10 @@ export default function AccountSettingsScreen() {
                       ]}
                       onPress={() => updatePayoutInfo({ payoutMethod: 'PayPal' })}
                     >
-                      <Text style={styles.radioTitle}>💳 PayPal</Text>
+                      <View style={styles.radioTitleRow}>
+                        <AppIcon name="card-outline" size={17} color="#5B6472" />
+                        <Text style={styles.radioTitle}>PayPal</Text>
+                      </View>
                       <Text style={styles.radioSub}>Instant</Text>
                     </Pressable>
 
@@ -568,7 +587,10 @@ export default function AccountSettingsScreen() {
                       ]}
                       onPress={() => updatePayoutInfo({ payoutMethod: 'Wise' })}
                     >
-                      <Text style={styles.radioTitle}>🌐 Wise</Text>
+                      <View style={styles.radioTitleRow}>
+                        <AppIcon name="globe-outline" size={17} color="#5B6472" />
+                        <Text style={styles.radioTitle}>Wise</Text>
+                      </View>
                       <Text style={styles.radioSub}>1–2 business days</Text>
                     </Pressable>
                   </View>
@@ -898,7 +920,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FEE2E2',
   },
   navIcon: {
-    fontSize: 14,
+    width: 18,
+    alignItems: 'center',
   },
   navLabel: {
     fontSize: 14,
@@ -1163,11 +1186,16 @@ const styles = StyleSheet.create({
     borderColor: '#EC1257',
     backgroundColor: '#FDE8EF',
   },
+  radioTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 7,
+    marginBottom: 3,
+  },
   radioTitle: {
     fontSize: 14,
     fontFamily: 'Manrope_700Bold',
     color: '#10172A',
-    marginBottom: 3,
   },
   radioSub: {
     fontSize: 12,

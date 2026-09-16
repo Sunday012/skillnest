@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet, ScrollView, TextInput } from 'react-native';
 import { AdminApprovalItem, AdminDisputeItem } from '../../constants/adminData';
+import { AppIcon, type AppIconName } from '../AppIcon';
+
+function SectionHeader({ icon, title }: { icon: AppIconName; title: string }) {
+  return (
+    <View style={styles.sectionHeaderRow}>
+      <AppIcon name={icon} size={17} color="#EC1257" />
+      <Text style={styles.sectionHeader}>{title}</Text>
+    </View>
+  );
+}
 
 interface DocumentModalProps {
   visible: boolean;
@@ -20,7 +30,7 @@ export const DocumentViewerModal: React.FC<DocumentModalProps> = ({ visible, ite
 
           <ScrollView style={styles.modalBody}>
             <View style={styles.section}>
-              <Text style={styles.sectionHeader}>🆔 Identity Verification Document</Text>
+              <SectionHeader icon="id-card-outline" title="Identity Verification Document" />
               <View style={styles.docItem}>
                 <Text style={styles.docName}>{item.documents.idFileName}</Text>
                 <Text style={styles.docMeta}>Type: {item.documents.idType} · Status: Verified Genuine</Text>
@@ -28,7 +38,7 @@ export const DocumentViewerModal: React.FC<DocumentModalProps> = ({ visible, ite
             </View>
 
             <View style={styles.section}>
-              <Text style={styles.sectionHeader}>📁 Submitted Portfolio Samples ({item.documents.portfolioCount})</Text>
+              <SectionHeader icon="folder-open-outline" title={`Submitted Portfolio Samples (${item.documents.portfolioCount})`} />
               {item.documents.samples.map((sample, i) => (
                 <View key={i} style={styles.docItem}>
                   <Text style={styles.docName}>Sample #{i + 1}: {sample}</Text>
@@ -126,13 +136,13 @@ export const DisputeEvidenceModal: React.FC<DisputeModalProps> = ({ visible, dis
 
           <ScrollView style={[styles.modalBody, { maxHeight: 320 }]}>
             <View style={styles.section}>
-              <Text style={styles.sectionHeader}>📋 Milestone & Issue</Text>
+              <SectionHeader icon="clipboard-outline" title="Milestone & Issue" />
               <Text style={styles.bodyText}>Milestone: {dispute.milestoneTitle}</Text>
               <Text style={styles.bodyText}>{dispute.disputeReason}</Text>
             </View>
 
             <View style={styles.section}>
-              <Text style={styles.sectionHeader}>💬 Order Message History</Text>
+              <SectionHeader icon="chatbubbles-outline" title="Order Message History" />
               {dispute.chatHistory.map((chat, idx) => (
                 <View key={idx} style={styles.chatBubble}>
                   <Text style={styles.chatSender}>{chat.sender} <Text style={styles.chatTime}>· {chat.time}</Text></Text>
@@ -264,11 +274,16 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 16,
   },
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
+  },
   sectionHeader: {
     fontFamily: 'Inter_600SemiBold',
     fontSize: 13,
     color: '#10172A',
-    marginBottom: 8,
   },
   docItem: {
     backgroundColor: '#F6F7FB',
