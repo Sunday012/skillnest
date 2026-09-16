@@ -38,7 +38,46 @@ export function AuthShell({ eyebrow, title, subtitle, children }: AuthShellProps
         contentContainerClassName="min-h-screen justify-center px-4 py-8 md:px-8 lg:px-10"
         showsVerticalScrollIndicator={false}
       >
-        <View className="mx-auto w-full max-w-[1120px] overflow-hidden rounded-[28px] border border-border bg-white shadow-sm md:min-h-[700px] md:flex-row">
+        <View className="mx-auto w-full max-w-[430px] overflow-hidden rounded-[30px] bg-navy shadow-sm md:hidden">
+          <ImageBackground
+            source={{ uri: AUTH_IMAGE }}
+            resizeMode="cover"
+            className="justify-end p-5"
+            style={{ minHeight: 760 }}
+          >
+            <LinearGradient
+              colors={[
+                'rgba(11,18,32,0.1)',
+                'rgba(11,18,32,0.38)',
+                'rgba(11,18,32,0.86)',
+              ]}
+              className="absolute inset-0"
+            />
+
+            <View className="relative z-10 mb-10">
+              <BrandMark inverse />
+              <View className="mt-8 self-start rounded-full border border-white/20 bg-white/15 px-4 py-2">
+                <Text className="text-[12.5px] font-inter-bold text-white">{eyebrow}</Text>
+              </View>
+              <Text className="mt-4 max-w-[310px] font-manrope-extraBold text-[36px] leading-tight text-white">
+                Work starts here.
+              </Text>
+              <Text className="mt-3 max-w-[320px] text-[14px] leading-6 text-white/72">
+                Verified talent, protected payments, and smooth project handoffs in one place.
+              </Text>
+            </View>
+
+            <View className="relative z-10 rounded-[26px] border border-white/20 bg-white/95 p-5">
+              <Text className="font-manrope-extraBold text-[30px] leading-tight text-ink">
+                {title}
+              </Text>
+              <Text className="mt-2 text-[14.5px] leading-6 text-gray-body">{subtitle}</Text>
+              <View className="mt-7">{children}</View>
+            </View>
+          </ImageBackground>
+        </View>
+
+        <View className="mx-auto hidden w-full max-w-[1120px] overflow-hidden rounded-[28px] border border-border bg-white shadow-sm md:min-h-[700px] md:flex-row">
           <View className="hidden flex-1 overflow-hidden md:flex">
             <ImageBackground
               source={{ uri: AUTH_IMAGE }}
@@ -81,23 +120,7 @@ export function AuthShell({ eyebrow, title, subtitle, children }: AuthShellProps
           </View>
 
           <View className="w-full justify-center px-5 py-8 sm:px-8 md:w-[470px] lg:w-[520px]">
-            <View className="mb-8 md:hidden">
-              <View className="mb-5 h-[150px] overflow-hidden rounded-[22px]">
-                <ImageBackground source={{ uri: AUTH_IMAGE }} resizeMode="cover" className="flex-1">
-                  <LinearGradient
-                    colors={['rgba(11,18,32,0.08)', 'rgba(11,18,32,0.78)']}
-                    className="flex-1 justify-end p-5"
-                  >
-                    <Text className="font-manrope-extraBold text-[24px] text-white">
-                      Work starts here.
-                    </Text>
-                  </LinearGradient>
-                </ImageBackground>
-              </View>
-              <BrandMark />
-            </View>
-
-            <View className="hidden md:flex">
+            <View>
               <BrandMark />
             </View>
 
