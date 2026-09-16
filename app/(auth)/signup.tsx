@@ -62,7 +62,12 @@ function RoleChoiceCard({
         <AppIcon name={icon} size={25} color="#FFFFFF" />
       </View>
       <Text className="font-inter-bold text-[15px] text-white">{title}</Text>
-      <Text className="mt-2 text-[12.5px] leading-5 text-white/62">{body}</Text>
+      <Text
+        className="mt-2 text-[12.5px] leading-5"
+        style={{ color: 'rgba(255,255,255,0.72)' }}
+      >
+        {body}
+      </Text>
     </Pressable>
   );
 }

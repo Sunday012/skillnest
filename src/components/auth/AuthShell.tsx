@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   type TextInputProps,
@@ -47,11 +48,13 @@ export function AuthShell({ eyebrow, title, subtitle, children, mobilePanel = tr
           >
             <LinearGradient
               colors={[
-                'rgba(11,18,32,0.12)',
-                'rgba(11,18,32,0.56)',
-                'rgba(11,18,32,0.94)',
+                'rgba(7,12,22,0.42)',
+                'rgba(7,12,22,0.68)',
+                'rgba(7,12,22,0.97)',
               ]}
-              className="absolute inset-0"
+              locations={[0, 0.48, 1]}
+              pointerEvents="none"
+              style={styles.gradientOverlay}
             />
 
             <View className="relative z-10 mb-8">
@@ -62,7 +65,10 @@ export function AuthShell({ eyebrow, title, subtitle, children, mobilePanel = tr
               <Text className="mt-4 max-w-[330px] font-manrope-extraBold text-[42px] leading-tight text-white">
                 {title}
               </Text>
-              <Text className="mt-3 max-w-[330px] text-[15px] leading-6 text-white/76">
+              <Text
+                className="mt-3 max-w-[330px] text-[15px] leading-6"
+                style={{ color: 'rgba(255,255,255,0.82)' }}
+              >
                 {subtitle}
               </Text>
             </View>
@@ -86,7 +92,8 @@ export function AuthShell({ eyebrow, title, subtitle, children, mobilePanel = tr
             >
               <LinearGradient
                 colors={['rgba(11,18,32,0.2)', 'rgba(11,18,32,0.72)', 'rgba(65,13,43,0.92)']}
-                className="absolute inset-0"
+                pointerEvents="none"
+                style={styles.gradientOverlay}
               />
 
               <View className="relative z-10">
@@ -190,3 +197,13 @@ function Metric({ value, label }: { value: string; label: string }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  gradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+});
