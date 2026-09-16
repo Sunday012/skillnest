@@ -1,9 +1,11 @@
+import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import type { ReactNode } from 'react';
 import {
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -22,14 +24,29 @@ interface AuthShellProps {
   subtitle: string;
   children: ReactNode;
   mobilePanel?: boolean;
+  mobileHeadingInPanel?: boolean;
+  hideMobileSubtitle?: boolean;
+  onMobileEyebrowPress?: () => void;
+  mobilePanelVariant?: 'light' | 'glass';
 }
 
 interface AuthFieldProps extends TextInputProps {
   label: string;
   icon: AppIconName;
+  mobileGlass?: boolean;
 }
 
-export function AuthShell({ eyebrow, title, subtitle, children, mobilePanel = true }: AuthShellProps) {
+export function AuthShell({
+  eyebrow,
+  title,
+  subtitle,
+  children,
+  mobilePanel = true,
+  mobileHeadingInPanel = false,
+  hideMobileSubtitle = false,
+  onMobileEyebrowPress,
+  mobilePanelVariant = 'light',
+}: AuthShellProps) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -57,33 +74,78 @@ export function AuthShell({ eyebrow, title, subtitle, children, mobilePanel = tr
               style={styles.gradientOverlay}
             />
 
-            <View className="relative z-10 mb-8">
+            <View className={`relative z-10 ${mobileHeadingInPanel ? 'mb-5' : 'mb-8'}`}>
               <BrandMark inverse />
-              <View className="mt-10 self-start rounded-full border border-white/20 bg-white/15 px-4 py-2">
-                <Text className="text-[12.5px] font-inter-bold text-white">{eyebrow}</Text>
-              </View>
-              <Text className="mt-4 max-w-[330px] font-manrope-extraBold text-[42px] leading-tight text-white">
-                {title}
-              </Text>
-              <Text
-                className="mt-3 max-w-[330px] text-[15px] leading-6"
-                style={{ color: 'rgba(255,255,255,0.82)' }}
-              >
-                {subtitle}
-              </Text>
+              {onMobileEyebrowPress ? (
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={`Change from ${eyebrow}`}
+                  onPress={onMobileEyebrowPress}
+                  className={`${mobileHeadingInPanel ? 'mt-6' : 'mt-10'} flex-row items-center gap-2 self-start rounded-full border border-white/30 bg-black/25 px-4 py-2 active:bg-black/40`}
+                >
+                  <Text className="text-[12.5px] font-inter-bold text-white">{eyebrow}</Text>
+                  <View className="h-4 w-px bg-white/30" />
+                  <AppIcon name="swap-horizontal-outline" size={15} color="#FFFFFF" />
+                  <Text className="text-[12px] font-inter-bold text-white">Change</Text>
+                </Pressable>
+              ) : (
+                <View
+                  className={`${mobileHeadingInPanel ? 'mt-6' : 'mt-10'} self-start rounded-full border border-white/20 bg-white/15 px-4 py-2`}
+                >
+                  <Text className="text-[12.5px] font-inter-bold text-white">{eyebrow}</Text>
+                </View>
+              )}
+              {!mobileHeadingInPanel && (
+                <>
+                  <Text className="mt-4 max-w-[330px] font-manrope-extraBold text-[42px] leading-tight text-white">
+                    {title}
+                  </Text>
+                  <Text
+                    className="mt-3 max-w-[330px] text-[15px] leading-6"
+                    style={{ color: 'rgba(255,255,255,0.82)' }}
+                  >
+                    {subtitle}
+                  </Text>
+                </>
+              )}
             </View>
 
             {mobilePanel ? (
-              <View className="relative z-10 rounded-[26px] border border-white/20 bg-white/95 p-5">
+              <BlurView
+                intensity={64}
+                tint={mobilePanelVariant === 'glass' ? 'dark' : 'light'}
+                style={[
+                  styles.mobileGlassPanel,
+                  mobilePanelVariant === 'glass'
+                    ? styles.mobileGlassPanelDark
+                    : styles.mobileGlassPanelLight,
+                ]}
+              >
+                {mobileHeadingInPanel && (
+                  <View className={hideMobileSubtitle ? 'mb-4' : 'mb-5'}>
+                    <Text
+                      className={`font-manrope-extraBold text-[28px] leading-9 ${mobilePanelVariant === 'glass' ? 'text-white' : 'text-ink'}`}
+                    >
+                      {title}
+                    </Text>
+                    {!hideMobileSubtitle && (
+                      <Text
+                        className={`mt-2 text-[14px] leading-5 ${mobilePanelVariant === 'glass' ? 'text-white/75' : 'text-gray-body'}`}
+                      >
+                        {subtitle}
+                      </Text>
+                    )}
+                  </View>
+                )}
                 {children}
-              </View>
+              </BlurView>
             ) : (
               <View className="relative z-10">{children}</View>
             )}
           </ImageBackground>
         </View>
 
-        <View className="mx-auto hidden w-full max-w-[1120px] overflow-hidden rounded-[28px] border border-border bg-white shadow-sm md:min-h-[700px] md:flex-row">
+        <View className="mx-auto hidden w-full max-w-[1120px] overflow-hidden rounded-[28px] border border-border bg-white shadow-sm md:min-h-[700px] md:flex md:flex-row">
           <View className="hidden flex-1 overflow-hidden md:flex">
             <ImageBackground
               source={{ uri: AUTH_IMAGE }}
@@ -146,15 +208,25 @@ export function AuthShell({ eyebrow, title, subtitle, children, mobilePanel = tr
   );
 }
 
-export function AuthField({ label, icon, className = '', ...props }: AuthFieldProps) {
+export function AuthField({ label, icon, mobileGlass = false, className = '', ...props }: AuthFieldProps) {
   return (
     <View className={`mb-4 ${className}`}>
-      <Text className="mb-2 font-inter-bold text-[13px] text-ink">{label}</Text>
-      <View className="h-[54px] flex-row items-center gap-3 rounded-[14px] border border-border bg-white px-4 focus:border-pink">
-        <AppIcon name={icon} size={19} color="#93A0B4" />
+      <Text
+        className={`mb-2 font-inter-bold text-[13px] ${mobileGlass ? 'text-white md:text-ink' : 'text-ink'}`}
+      >
+        {label}
+      </Text>
+      <View
+        className={`h-[54px] flex-row items-center gap-3 rounded-[14px] border px-4 focus:border-pink ${
+          mobileGlass
+            ? 'border-white/25 bg-white/10 md:border-border md:bg-white'
+            : 'border-border bg-white'
+        }`}
+      >
+        <AppIcon name={icon} size={19} color={mobileGlass ? '#CFD7E4' : '#93A0B4'} />
         <TextInput
-          className="h-full flex-1 text-[15px] text-ink outline-none"
-          placeholderTextColor="#93A0B4"
+          className={`h-full flex-1 text-[15px] outline-none ${mobileGlass ? 'text-white md:text-ink' : 'text-ink'}`}
+          placeholderTextColor={mobileGlass ? '#B8C2D1' : '#93A0B4'}
           {...props}
         />
       </View>
@@ -205,5 +277,21 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
+  },
+  mobileGlassPanel: {
+    position: 'relative',
+    zIndex: 10,
+    overflow: 'hidden',
+    padding: 20,
+    borderWidth: 1,
+    borderRadius: 26,
+  },
+  mobileGlassPanelLight: {
+    borderColor: 'rgba(255,255,255,0.48)',
+    backgroundColor: 'rgba(255,255,255,0.64)',
+  },
+  mobileGlassPanelDark: {
+    borderColor: 'rgba(255,255,255,0.24)',
+    backgroundColor: 'rgba(8,15,28,0.5)',
   },
 });
