@@ -1,54 +1,63 @@
-import { View, Text, ScrollView, Platform, KeyboardAvoidingView } from 'react-native';
 import { Link } from 'expo-router';
+import { Pressable, Text, View } from 'react-native';
+import { AppIcon } from '../../src/components/AppIcon';
+import { AuthField, AuthShell } from '../../src/components/auth/AuthShell';
 import { Button } from '../../src/components/Button';
-import { Input } from '../../src/components/Input';
 
 export default function LoginScreen() {
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-bg-alt"
+    <AuthShell
+      eyebrow="Welcome back"
+      title="Log in to SkillNest"
+      subtitle="Pick up projects, messages, milestones, and payouts right where you left them."
     >
-      <ScrollView contentContainerClassName="flex-grow justify-center px-6 py-12">
-        <View className="mx-auto w-full max-w-md bg-white p-8 rounded-2xl border border-border">
-          <View className="mb-8 items-center">
-            <View className="flex-row items-center gap-2 mb-2">
-              <View className="h-8 w-8 items-center justify-center rounded-lg bg-pink">
-                <Text className="font-manrope text-base font-extrabold text-white">S</Text>
-              </View>
-              <Text className="font-manrope text-xl font-extrabold text-ink">SkillNest</Text>
-            </View>
-            <Text className="text-2xl font-manrope font-bold text-ink mb-1 mt-4">Welcome back</Text>
-            <Text className="text-gray-body">Log in to your account</Text>
+      <View className="mb-6 rounded-[18px] border border-border bg-bg-alt p-4">
+        <View className="flex-row items-center gap-3">
+          <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-pink-tint">
+            <AppIcon name="sparkles-outline" size={20} color="#EC1257" />
           </View>
-          
-          <Input 
-            label="Email Address" 
-            placeholder="you@example.com" 
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          
-          <Input 
-            label="Password" 
-            placeholder="••••••••" 
-            secureTextEntry 
-          />
-          
-          <View className="items-end mb-6">
-            <Text className="text-pink text-sm font-bold">Forgot password?</Text>
-          </View>
-          
-          <Button title="Log In" onPress={() => {}} className="mb-6" />
-          
-          <View className="flex-row justify-center">
-            <Text className="text-gray-body">Don't have an account? </Text>
-            <Link href="/signup">
-              <Text className="text-pink font-bold">Sign up</Text>
-            </Link>
+          <View className="flex-1">
+            <Text className="font-inter-bold text-[13.5px] text-ink">Your work hub is ready</Text>
+            <Text className="mt-0.5 text-[12.5px] leading-5 text-gray-body">
+              Review proposals, fund milestones, and keep delivery moving.
+            </Text>
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+
+      <AuthField
+        label="Email address"
+        icon="mail-outline"
+        placeholder="you@example.com"
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <AuthField
+        label="Password"
+        icon="lock-closed-outline"
+        placeholder="Enter your password"
+        secureTextEntry
+      />
+
+      <View className="mb-7 flex-row items-center justify-between">
+        <View className="flex-row items-center gap-2">
+          <View className="h-[18px] w-[18px] rounded-[6px] border border-border bg-white" />
+          <Text className="text-[13px] text-gray-body">Remember me</Text>
+        </View>
+        <Pressable>
+          <Text className="text-[13px] font-inter-bold text-pink">Forgot password?</Text>
+        </Pressable>
+      </View>
+
+      <Button title="Log In" onPress={() => {}} className="mb-6 h-[54px] rounded-[14px]" />
+
+      <View className="flex-row justify-center">
+        <Text className="text-gray-body">Don't have an account? </Text>
+        <Link href="/signup">
+          <Text className="font-inter-bold text-pink">Sign up</Text>
+        </Link>
+      </View>
+    </AuthShell>
   );
 }

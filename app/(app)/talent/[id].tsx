@@ -38,17 +38,17 @@ export default function TalentProfileScreen() {
         </Pressable>
 
         {/* Banner */}
-        <View className="h-[150px] rounded-[18px] bg-pink -mb-[46px] overflow-hidden">
+        <View className="h-[150px] rounded-[18px] bg-pink overflow-hidden">
           <View className="absolute inset-0 opacity-80" style={{ backgroundColor: '#0B1220' }} />
         </View>
 
         {/* Header */}
-        <View className="flex-col md:flex-row md:items-end gap-5 px-2 mb-6">
+        <View className="-mt-[46px] flex-col gap-5 px-2 mb-6 md:flex-row md:items-start">
           <View className="w-[92px] h-[92px] rounded-full bg-navy border-[4px] border-white items-center justify-center shrink-0">
             <Text className="text-white text-[30px] font-manrope-extraBold">{talent.initial}</Text>
           </View>
 
-          <View className="flex-1 pb-1.5">
+          <View className="flex-1 md:pt-[52px]">
             <View className="flex-row items-center gap-2 mb-1">
               <Text className="font-manrope-bold text-[24px] text-ink">{talent.name}</Text>
               {talent.isVerified && <Text className="text-pink text-[16px]">✓</Text>}
@@ -56,7 +56,7 @@ export default function TalentProfileScreen() {
             <Text className="text-[14px] text-gray-body">{talent.role} · {talent.location}</Text>
           </View>
 
-          <View className="flex-row gap-2.5 pb-1.5">
+          <View className="flex-row gap-2.5 md:pt-[52px]">
             <Pressable className="bg-white border-[1.5px] border-border px-5 py-2.5 rounded-[10px]">
               <Text className="font-inter-bold text-[14px] text-ink">Message</Text>
             </Pressable>
