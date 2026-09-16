@@ -52,6 +52,10 @@ export function AuthShell({
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       className="flex-1 bg-[#F3F5FA]"
     >
+      <View className="absolute left-8 top-8 z-20 hidden md:flex lg:left-10">
+        <BrandMark showTagline={false} />
+      </View>
+
       <ScrollView
         className="flex-1"
         contentContainerClassName="min-h-screen md:justify-center md:px-8 md:py-8 lg:px-10"
@@ -150,7 +154,7 @@ export function AuthShell({
             <ImageBackground
               source={{ uri: AUTH_IMAGE }}
               resizeMode="cover"
-              className="flex-1 justify-between p-8"
+              className="flex-1 p-8"
             >
               <LinearGradient
                 colors={['rgba(11,18,32,0.2)', 'rgba(11,18,32,0.72)', 'rgba(65,13,43,0.92)']}
@@ -158,11 +162,7 @@ export function AuthShell({
                 style={styles.gradientOverlay}
               />
 
-              <View className="relative z-10">
-                <BrandMark inverse />
-              </View>
-
-              <View className="relative z-10">
+              <View className="relative z-10 flex-1 justify-center">
                 <View className="mb-4 self-start rounded-full border border-white/25 bg-white/15 px-4 py-2">
                   <Text className="text-[13px] font-inter-bold text-white">{eyebrow}</Text>
                 </View>
@@ -190,10 +190,6 @@ export function AuthShell({
 
           <View className="w-full justify-center px-5 py-8 sm:px-8 md:w-[470px] lg:w-[520px]">
             <View>
-              <BrandMark />
-            </View>
-
-            <View className="mt-8">
               <Text className="font-manrope-extraBold text-[32px] leading-tight text-ink">
                 {title}
               </Text>
@@ -234,7 +230,13 @@ export function AuthField({ label, icon, mobileGlass = false, className = '', ..
   );
 }
 
-export function BrandMark({ inverse = false }: { inverse?: boolean }) {
+export function BrandMark({
+  inverse = false,
+  showTagline = true,
+}: {
+  inverse?: boolean;
+  showTagline?: boolean;
+}) {
   return (
     <View className="flex-row items-center gap-3">
       <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-pink">
@@ -244,9 +246,11 @@ export function BrandMark({ inverse = false }: { inverse?: boolean }) {
         <Text className={`font-manrope-extraBold text-[21px] ${inverse ? 'text-white' : 'text-ink'}`}>
           SkillNest
         </Text>
-        <Text className={`text-[12px] ${inverse ? 'text-white/65' : 'text-gray-muted'}`}>
-          Micro-skill marketplace
-        </Text>
+        {showTagline && (
+          <Text className={`text-[12px] ${inverse ? 'text-white/65' : 'text-gray-muted'}`}>
+            Micro-skill marketplace
+          </Text>
+        )}
       </View>
     </View>
   );
