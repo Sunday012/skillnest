@@ -20,6 +20,7 @@ interface AuthShellProps {
   title: string;
   subtitle: string;
   children: ReactNode;
+  mobilePanel?: boolean;
 }
 
 interface AuthFieldProps extends TextInputProps {
@@ -27,7 +28,7 @@ interface AuthFieldProps extends TextInputProps {
   icon: AppIconName;
 }
 
-export function AuthShell({ eyebrow, title, subtitle, children }: AuthShellProps) {
+export function AuthShell({ eyebrow, title, subtitle, children, mobilePanel = true }: AuthShellProps) {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -35,45 +36,44 @@ export function AuthShell({ eyebrow, title, subtitle, children }: AuthShellProps
     >
       <ScrollView
         className="flex-1"
-        contentContainerClassName="min-h-screen justify-center px-4 py-8 md:px-8 lg:px-10"
+        contentContainerClassName="min-h-screen md:justify-center md:px-8 md:py-8 lg:px-10"
         showsVerticalScrollIndicator={false}
       >
-        <View className="mx-auto w-full max-w-[430px] overflow-hidden rounded-[30px] bg-navy shadow-sm md:hidden">
+        <View className="w-full overflow-hidden bg-navy shadow-sm md:hidden">
           <ImageBackground
             source={{ uri: AUTH_IMAGE }}
             resizeMode="cover"
-            className="justify-end p-5"
-            style={{ minHeight: 760 }}
+            className="min-h-screen justify-end px-5 py-6"
           >
             <LinearGradient
               colors={[
-                'rgba(11,18,32,0.1)',
-                'rgba(11,18,32,0.38)',
-                'rgba(11,18,32,0.86)',
+                'rgba(11,18,32,0.12)',
+                'rgba(11,18,32,0.56)',
+                'rgba(11,18,32,0.94)',
               ]}
               className="absolute inset-0"
             />
 
-            <View className="relative z-10 mb-10">
+            <View className="relative z-10 mb-8">
               <BrandMark inverse />
-              <View className="mt-8 self-start rounded-full border border-white/20 bg-white/15 px-4 py-2">
+              <View className="mt-10 self-start rounded-full border border-white/20 bg-white/15 px-4 py-2">
                 <Text className="text-[12.5px] font-inter-bold text-white">{eyebrow}</Text>
               </View>
-              <Text className="mt-4 max-w-[310px] font-manrope-extraBold text-[36px] leading-tight text-white">
-                Work starts here.
+              <Text className="mt-4 max-w-[330px] font-manrope-extraBold text-[42px] leading-tight text-white">
+                {title}
               </Text>
-              <Text className="mt-3 max-w-[320px] text-[14px] leading-6 text-white/72">
-                Verified talent, protected payments, and smooth project handoffs in one place.
+              <Text className="mt-3 max-w-[330px] text-[15px] leading-6 text-white/76">
+                {subtitle}
               </Text>
             </View>
 
-            <View className="relative z-10 rounded-[26px] border border-white/20 bg-white/95 p-5">
-              <Text className="font-manrope-extraBold text-[30px] leading-tight text-ink">
-                {title}
-              </Text>
-              <Text className="mt-2 text-[14.5px] leading-6 text-gray-body">{subtitle}</Text>
-              <View className="mt-7">{children}</View>
-            </View>
+            {mobilePanel ? (
+              <View className="relative z-10 rounded-[26px] border border-white/20 bg-white/95 p-5">
+                {children}
+              </View>
+            ) : (
+              <View className="relative z-10">{children}</View>
+            )}
           </ImageBackground>
         </View>
 
