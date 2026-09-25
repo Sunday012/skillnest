@@ -5,21 +5,21 @@ import { OFFICIAL_CATEGORIES } from './categories';
  * Labels are sourced from OFFICIAL_CATEGORIES (single source of truth).
  */
 const CATEGORY_COUNTS: Record<string, string> = {
-  'Videography':              '640 pros',
-  'Video Editing':            '870 pros',
-  'Photography':              '760 pros',
-  'Graphic Design':           '2,410 pros',
-  'Web Design':               '1,240 pros',
-  'Software Development':     '3,180 pros',
-  'Script Writing':           '320 pros',
-  'Copywriting':              '980 pros',
-  'UGC Creation':             '510 pros',
-  'Animation':                '540 pros',
-  'Voice Over':               '290 pros',
-  'Social Media Management':  '1,150 pros',
-  'Digital Marketing':        '1,090 pros',
-  'Virtual Assistance':       '820 pros',
-  'Other Digital Skills':     '430 pros',
+  'Videography': '640 pros',
+  'Video Editing': '870 pros',
+  'Photo Editing': '760 pros',
+  'Graphic Design': '2,410 pros',
+  'Web Design': '1,240 pros',
+  'Software Development': '3,180 pros',
+  'Script Writing': '320 pros',
+  'Copywriting': '980 pros',
+  'UGC Creation': '510 pros',
+  'Animation': '540 pros',
+  'Voice Over': '290 pros',
+  'Social Media Management': '1,150 pros',
+  'Digital Marketing': '1,090 pros',
+  'Virtual Assistance': '820 pros',
+  'Other Digital Skills': '430 pros',
 };
 
 export const CATEGORIES = OFFICIAL_CATEGORIES.map((c, i) => ({

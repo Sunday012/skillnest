@@ -17,7 +17,7 @@ When a user opens the app, the two main paths should be immediately clear:
 The homepage should also provide organized skill categories so users can quickly find the type of talent they need.
 
 ## 3. Skill Categories
-Videography, Video Editing, Photography, Graphic Design, Web Design, Software Development, Script Writing, Copywriting, UGC Creation, Animation, Voice Over, Social Media Management, Digital Marketing, Virtual Assistance, Other Digital Skills.
+Videography, Video Editing, Photo Editing, Graphic Design, Web Design, Software Development, Script Writing, Copywriting, UGC Creation, Animation, Voice Over, Social Media Management, Digital Marketing, Virtual Assistance, Other Digital Skills.
 
 ## 4. Talent Category Pages
 When a client selects a category such as Video Editing, the app should display a well-organized list/grid/feed of people offering that skill.

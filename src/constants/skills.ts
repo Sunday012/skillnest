@@ -7,9 +7,9 @@ export const SKILLS_BY_CATEGORY: Record<string, string[]> = {
     'Premiere Pro', 'Final Cut Pro', 'DaVinci Resolve', 'YouTube Edits',
     'Short Form (TikTok/Reels)', 'Color Correction', 'Audio Mixing', 'Motion Graphics'
   ],
-  'Photography': [
-    'Portrait', 'Product Photography', 'Real Estate', 'Event Photography',
-    'Fashion', 'Food Photography', 'Photo Retouching', 'Lightroom'
+  'Photo Editing': [
+    'Portrait', 'Product Photo Editing', 'Real Estate', 'Event Photo Editing',
+    'Fashion', 'Food Photo Editing', 'Photo Retouching', 'Lightroom'
   ],
   'Graphic Design': [
     'Brand Identity', 'Logo Design', 'Packaging', 'Art Direction',

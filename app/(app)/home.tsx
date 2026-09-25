@@ -15,7 +15,7 @@ export default function HomeScreen() {
       <View className="px-6 py-9 max-w-[1180px] w-full self-center">
         
         <Text className="text-[13.5px] text-gray-body mb-1">
-          Good afternoon, <Text className="text-ink font-bold">Mira</Text> — here's what's happening today.
+          Good afternoon <Text className="text-ink font-bold">Mira</Text>, here's what's happening today.
         </Text>
 
         {/* Split Cards */}
@@ -34,7 +34,10 @@ export default function HomeScreen() {
             <Text className="text-white font-inter-bold text-[20px] self-end mt-4">→</Text>
           </Pressable>
 
-          <Pressable className="flex-1 bg-pink-tint rounded-[18px] p-8 min-h-[170px] justify-between">
+          <Pressable 
+            className="flex-1 bg-pink-tint rounded-[18px] p-8 min-h-[170px] justify-between"
+            onPress={() => router.push('/(app)/jobs')}
+          >
             <View>
               <View className="mb-3.5">
                 <AppIcon name="briefcase-outline" size={28} color="#10172A" />
@@ -50,7 +53,7 @@ export default function HomeScreen() {
         <View className="mb-12">
           <View className="flex-row justify-between items-baseline mb-5">
             <Text className="font-manrope-extraBold text-[21px] text-ink">Explore Skills</Text>
-            <Pressable>
+            <Pressable onPress={() => router.push('/(app)/browse')}>
               <Text className="font-inter-bold text-[13.5px] text-pink">View all →</Text>
             </Pressable>
           </View>
@@ -82,7 +85,7 @@ export default function HomeScreen() {
         <View className="mb-12">
           <View className="flex-row justify-between items-baseline mb-5">
             <Text className="font-manrope-extraBold text-[21px] text-ink">Latest Jobs</Text>
-            <Pressable>
+            <Pressable onPress={() => router.push('/(app)/jobs')}>
               <Text className="font-inter-bold text-[13.5px] text-pink">View all →</Text>
             </Pressable>
           </View>

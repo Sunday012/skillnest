@@ -15,7 +15,7 @@ export interface Category {
 export const OFFICIAL_CATEGORIES: Category[] = [
   { icon: 'videocam-outline', label: 'Videography' },
   { icon: 'cut-outline', label: 'Video Editing' },
-  { icon: 'camera-outline', label: 'Photography' },
+  { icon: 'camera-outline', label: 'Photo Editing' },
   { icon: 'color-palette-outline', label: 'Graphic Design' },
   { icon: 'desktop-outline', label: 'Web Design' },
   { icon: 'code-slash-outline', label: 'Software Development' },

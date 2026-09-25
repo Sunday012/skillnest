@@ -21,7 +21,7 @@ const AUTH_IMAGE =
 interface AuthShellProps {
   eyebrow: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   children: ReactNode;
   mobilePanel?: boolean;
   mobileHeadingInPanel?: boolean;
@@ -104,12 +104,14 @@ export function AuthShell({
                   <Text className="mt-4 max-w-[330px] font-manrope-extraBold text-[42px] leading-tight text-white">
                     {title}
                   </Text>
-                  <Text
-                    className="mt-3 max-w-[330px] text-[15px] leading-6"
-                    style={{ color: 'rgba(255,255,255,0.82)' }}
-                  >
-                    {subtitle}
-                  </Text>
+                  {!!subtitle && (
+                    <Text
+                      className="mt-3 max-w-[330px] text-[15px] leading-6"
+                      style={{ color: 'rgba(255,255,255,0.82)' }}
+                    >
+                      {subtitle}
+                    </Text>
+                  )}
                 </>
               )}
             </View>
@@ -132,9 +134,10 @@ export function AuthShell({
                     >
                       {title}
                     </Text>
-                    {!hideMobileSubtitle && (
+                    {!hideMobileSubtitle && !!subtitle && (
                       <Text
-                        className={`mt-2 text-[14px] leading-5 ${mobilePanelVariant === 'glass' ? 'text-white/75' : 'text-gray-body'}`}
+                        className={`mt-2 text-[14px] leading-5 ${mobilePanelVariant === 'glass' ? 'text-white' : 'text-gray-body'}`}
+                        style={mobilePanelVariant === 'glass' ? { color: 'rgba(255, 255, 255, 0.85)' } : undefined}
                       >
                         {subtitle}
                       </Text>
@@ -169,7 +172,10 @@ export function AuthShell({
                 <Text className="max-w-[430px] font-manrope-extraBold text-[42px] leading-tight text-white">
                   Hire confidently. Work moves safely.
                 </Text>
-                <Text className="mt-4 max-w-[430px] text-[15px] leading-6 text-white/78">
+                <Text
+                  className="mt-4 max-w-[430px] text-[15px] leading-6 text-white"
+                  style={{ color: '#FFFFFF' }}
+                >
                   SkillNest pairs verified talent with escrow-backed projects, clear milestones,
                   and a smoother way to get creative work delivered.
                 </Text>
@@ -193,7 +199,9 @@ export function AuthShell({
               <Text className="font-manrope-extraBold text-[32px] leading-tight text-ink">
                 {title}
               </Text>
-              <Text className="mt-2 text-[15px] leading-6 text-gray-body">{subtitle}</Text>
+              {!!subtitle && (
+                <Text className="mt-2 text-[15px] leading-6 text-gray-body">{subtitle}</Text>
+              )}
             </View>
 
             <View className="mt-8">{children}</View>
@@ -247,7 +255,10 @@ export function BrandMark({
           SkillNest
         </Text>
         {showTagline && (
-          <Text className={`text-[12px] ${inverse ? 'text-white/65' : 'text-gray-muted'}`}>
+          <Text
+            className={`text-[12px] ${inverse ? 'text-white' : 'text-gray-muted'}`}
+            style={inverse ? { color: 'rgba(255, 255, 255, 0.75)' } : undefined}
+          >
             Micro-skill marketplace
           </Text>
         )}
@@ -268,8 +279,8 @@ function TrustPill({ icon, label }: { icon: AppIconName; label: string }) {
 function Metric({ value, label }: { value: string; label: string }) {
   return (
     <View className="flex-1 rounded-[16px] border border-white/15 bg-white/12 p-4">
-      <Text className="font-manrope-extraBold text-[22px] text-white">{value}</Text>
-      <Text className="mt-1 text-[11px] uppercase tracking-wide text-white/62">{label}</Text>
+      <Text className="font-manrope-extraBold text-[22px] text-white" style={{ color: '#FFFFFF' }}>{value}</Text>
+      <Text className="mt-1 text-[11px] uppercase tracking-wide text-white" style={{ color: 'rgba(255, 255, 255, 0.75)' }}>{label}</Text>
     </View>
   );
 }
