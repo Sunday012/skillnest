@@ -1,4 +1,5 @@
 import { Link, useRouter } from 'expo-router';
+import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { AppIcon } from '../../src/components/AppIcon';
 import { AuthField, AuthShell } from '../../src/components/auth/AuthShell';
@@ -8,6 +9,7 @@ import { useUser } from '../../src/context/UserContext';
 export default function LoginScreen() {
   const router = useRouter();
   const { signupUser } = useUser();
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = () => {
     router.push('/home');
@@ -42,13 +44,26 @@ export default function LoginScreen() {
       />
 
       <View className="mb-7 flex-row items-center justify-between">
-        <View className="flex-row items-center gap-2">
-          <View className="h-[18px] w-[18px] rounded-[6px] border border-white/30 bg-white/10 md:border-border md:bg-white" />
+        <Pressable
+          onPress={() => setRememberMe(!rememberMe)}
+          className="flex-row items-center gap-2 cursor-pointer"
+          accessibilityRole="checkbox"
+          accessibilityState={{ checked: rememberMe }}
+        >
+          <View
+            className={`h-[18px] w-[18px] items-center justify-center rounded-[6px] border ${
+              rememberMe
+                ? 'border-pink bg-pink'
+                : 'border-white/30 bg-white/10 md:border-border md:bg-white'
+            }`}
+          >
+            {rememberMe && <AppIcon name="checkmark-outline" size={12} color="#FFFFFF" />}
+          </View>
           <Text className="text-[13px] text-white md:text-gray-body">Remember me</Text>
-        </View>
-        <Pressable>
-          <Text className="text-[13px] font-inter-bold text-pink">Forgot password?</Text>
         </Pressable>
+        <Link href="/forgot-password">
+          <Text className="text-[13px] font-inter-bold text-pink">Forgot password?</Text>
+        </Link>
       </View>
 
       <Button title="Log In" onPress={handleLogin} className="mb-4 h-[54px] rounded-[14px]" />
