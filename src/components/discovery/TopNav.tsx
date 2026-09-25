@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Pressable, Platform, StyleSheet, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput, Pressable, Platform, StyleSheet, useWindowDimensions, Image } from 'react-native';
 import { useRouter, usePathname } from 'expo-router';
 import { useUser } from '../../context/UserContext';
 import { AppIcon, type AppIconName } from '../AppIcon';
@@ -76,11 +76,11 @@ export function TopNav() {
         }}
       >
         {/* Logo */}
-        <Pressable onPress={() => router.push('/home')} className="flex-row items-center gap-[8px] shrink-0">
-          <View className="w-[32px] h-[32px] rounded-[9px] bg-pink items-center justify-center">
-            <Text className="text-white font-manrope-extraBold text-[14px]">S</Text>
-          </View>
-          <Text className="font-manrope-extraBold text-[18px] text-ink">SkillNest</Text>
+        <Pressable onPress={() => router.push('/home')} className="flex-row items-center shrink-0">
+          <Image
+            source={require('../../../assets/logo.png')}
+            style={{ width: 110, height: 32, resizeMode: 'contain' }}
+          />
         </Pressable>
 
         {/* Search pill */}

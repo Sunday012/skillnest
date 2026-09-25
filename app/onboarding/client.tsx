@@ -42,7 +42,7 @@ export default function ClientOnboarding() {
           <Text className="text-pink-dark font-bold text-[13px]">You're in</Text>
         </View>
         <Text className="font-manrope font-extrabold text-[30px] md:text-[40px] leading-[1.12] text-ink mb-4">
-          Welcome to <Text className="text-pink">SkillNest.</Text>
+          Welcome to <Text className="text-pink">NavoNext.</Text>
         </Text>
         <Text className="text-[16.5px] text-gray-body leading-relaxed mb-8 max-w-[440px]">
           You're joining a global marketplace of vetted freelancers. Here's what makes hiring here different.

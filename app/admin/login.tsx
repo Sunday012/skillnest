@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAdminAuth } from '../../src/context/AdminAuthContext';
 import { AppIcon } from '../../src/components/AppIcon';
@@ -7,7 +7,7 @@ import { AppIcon } from '../../src/components/AppIcon';
 export default function AdminLoginScreen() {
   const router = useRouter();
   const { loginAdmin } = useAdminAuth();
-  const [email, setEmail] = useState('you@skillnest.com');
+  const [email, setEmail] = useState('you@navonext.com');
   const [password, setPassword] = useState('••••••••');
 
   const handleSignIn = () => {
@@ -22,11 +22,12 @@ export default function AdminLoginScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container} bounces={false}>
       <View style={styles.card}>
-        <View style={styles.markContainer}>
-          <Text style={styles.markText}>S</Text>
-        </View>
+        <Image
+          source={require('../../assets/logo.png')}
+          style={{ width: 135, height: 40, resizeMode: 'contain', alignSelf: 'center', marginBottom: 16 }}
+        />
 
-        <Text style={styles.title}>SkillNest Admin</Text>
+        <Text style={styles.title}>Admin Portal</Text>
         <Text style={styles.sub}>Restricted access — staff sign-in only.</Text>
 
         <View style={styles.fieldGroup}>
@@ -35,7 +36,7 @@ export default function AdminLoginScreen() {
             style={styles.input}
             value={email}
             onChangeText={setEmail}
-            placeholder="you@skillnest.com"
+            placeholder="you@navonext.com"
             placeholderTextColor="rgba(255,255,255,0.35)"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -61,14 +62,14 @@ export default function AdminLoginScreen() {
         <View style={styles.noteBox}>
           <AppIcon name="lock-closed-outline" size={17} color="#B8C2D6" />
           <Text style={styles.noteText}>
-            This portal is for authorized SkillNest staff only. Unauthorized access attempts are logged.
+            This portal is for authorized NavoNext staff only. Unauthorized access attempts are logged.
           </Text>
         </View>
 
         <View style={styles.footRow}>
           <Text style={styles.footText}>Not staff? </Text>
           <TouchableOpacity onPress={handleReturnToConsumer}>
-            <Text style={styles.footLink}>Return to SkillNest</Text>
+            <Text style={styles.footLink}>Return to NavoNext</Text>
           </TouchableOpacity>
         </View>
       </View>

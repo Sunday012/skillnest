@@ -32,7 +32,7 @@ export function LeaveReviewCard({ freelancerFirstName, onSubmitReview }: LeaveRe
   return (
     <View style={styles.reviewBox}>
       <Text style={styles.title}>Leave a Review</Text>
-      <Text style={styles.subtitle}>Your rating helps keep SkillNest quality high.</Text>
+      <Text style={styles.subtitle}>Your rating helps keep NavoNext quality high.</Text>
 
       {/* Interactive Stars */}
       <View style={styles.starsRow}>

@@ -31,7 +31,7 @@ export function LiveMilestoneBox({
       </View>
 
       <View style={styles.row}>
-        <Text style={styles.rowLabel}>SkillNest fee (5%)</Text>
+        <Text style={styles.rowLabel}>NavoNext fee (5%)</Text>
         <Text style={styles.rowValue}>{formatCurrency(fee)}</Text>
       </View>
 

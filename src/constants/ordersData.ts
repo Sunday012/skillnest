@@ -222,7 +222,7 @@ export const MOCK_ORDERS: OrderItem[] = [
         description: 'Delivered 30s cut with original audio stems',
         amount: 400,
         status: 'disputed',
-        note: 'Under review by SkillNest support.',
+        note: 'Under review by NavoNext support.',
       },
     ],
   },

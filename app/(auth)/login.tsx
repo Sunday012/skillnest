@@ -21,7 +21,7 @@ export default function LoginScreen() {
   return (
     <AuthShell
       eyebrow="Welcome back"
-      title="Log in to SkillNest"
+      title="Login to NavoNext"
       mobilePanelVariant="glass"
     >
       <AuthField

@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "SkillNest",
-    "slug": "skillnest",
+    "name": "NavoNext",
+    "slug": "navonext",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "scheme": "skillnest",
+    "scheme": "navonext",
     "assetBundlePatterns": [
       "**/*"
     ],

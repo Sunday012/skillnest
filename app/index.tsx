@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Platform, Pressable } from 'react-native';
+import { View, Text, ScrollView, Platform, Pressable, Image } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router';
@@ -46,10 +46,10 @@ export default function LandingPage() {
         <View className="max-w-[1180px] w-full mx-auto px-6 h-[76px] flex-row items-center justify-between">
           {/* Logo */}
           <View className="flex-row items-center gap-2">
-            <View className="w-[34px] h-[34px] rounded-[9px] bg-pink items-center justify-center">
-              <Text className="text-white font-manrope font-extrabold text-[16px]">S</Text>
-            </View>
-            <Text className="font-manrope font-extrabold text-[20px] text-ink">SkillNest</Text>
+            <Image
+              source={require('../assets/logo.png')}
+              style={{ width: 120, height: 35, resizeMode: 'contain' }}
+            />
           </View>
 
           {/* Desktop Links */}
@@ -106,7 +106,7 @@ export default function LandingPage() {
               <Text className="text-pink">Get real work done.</Text>
             </Text>
             <Text className="text-[19px] text-gray-body mb-8 max-w-[520px] leading-relaxed">
-              SkillNest connects vetted freelancers with clients through milestone escrow — work gets delivered, funds move safely, and nobody chases an invoice.
+              NavoNext connects vetted freelancers with clients through milestone escrow — work gets delivered, funds move safely, and nobody chases an invoice.
             </Text>
             <View className="flex-row flex-wrap gap-3.5 mb-7">
               <Button title="Post a Job →" onPress={() => {}} />
@@ -314,19 +314,19 @@ export default function LandingPage() {
             <FAQItem 
               isFirst
               question="How does escrow protect my payment?"
-              answer="When a milestone is funded, money moves into a secure escrow account — not to the freelancer and not to SkillNest. It only releases once you review and approve the delivered work."
+              answer="When a milestone is funded, money moves into a secure escrow account — not to the freelancer and not to NavoNext. It only releases once you review and approve the delivered work."
             />
             <FAQItem 
               question="What happens if there's a dispute?"
               answer="Either side can open a dispute on a milestone. Funds stay frozen while a mediator reviews the evidence submitted by both parties before releasing or refunding."
             />
             <FAQItem 
-              question="How much does SkillNest charge?"
-              answer="SkillNest takes a small commission on completed transactions. Freelancers can also opt into a Premium plan for unlimited applications and higher visibility."
+              question="How much does NavoNext charge?"
+              answer="NavoNext takes a small commission on completed transactions. Freelancers can also opt into a Premium plan for unlimited applications and higher visibility."
             />
             <FAQItem 
               question="Can I hire freelancers from anywhere?"
-              answer="Yes — SkillNest is a global marketplace. You can filter talent by location, or set your job to remote-only if location doesn't matter."
+              answer="Yes — NavoNext is a global marketplace. You can filter talent by location, or set your job to remote-only if location doesn't matter."
             />
             <FAQItem 
               question="What if I'm not satisfied with the delivery?"
@@ -361,10 +361,10 @@ export default function LandingPage() {
             <View className="flex-col md:flex-row gap-8 pb-[44px]">
               <View className="flex-[1.4]">
                 <View className="flex-row items-center gap-2 mb-3.5">
-                  <View className="w-[34px] h-[34px] rounded-[9px] bg-pink items-center justify-center">
-                    <Text className="text-white font-manrope font-extrabold text-[16px]">S</Text>
-                  </View>
-                  <Text className="font-manrope font-extrabold text-[19px] text-white">SkillNest</Text>
+                  <Image
+                    source={require('../assets/logo.png')}
+                    style={{ width: 125, height: 36, resizeMode: 'contain' }}
+                  />
                 </View>
                 <Text className="text-[14px] text-gray-muted max-w-[260px] leading-relaxed">The trusted way to hire freelancers and get hired — backed by milestone escrow.</Text>
               </View>
@@ -376,7 +376,7 @@ export default function LandingPage() {
               </View>
               <View className="flex-1">
                 <Text className="text-[13px] font-bold tracking-widest uppercase text-white mb-4">Company</Text>
-                {['About SkillNest', 'Contact Us', 'Careers', 'Become a Seller'].map(link => (
+                {['About NavoNext', 'Contact Us', 'Careers', 'Become a Seller'].map(link => (
                   <Text key={link} className="text-[14px] text-gray-muted mb-2.5 hover:text-white">{link}</Text>
                 ))}
               </View>
@@ -389,8 +389,8 @@ export default function LandingPage() {
             </View>
             <View className="border-t border-white/10 pt-6">
               <Text className="text-[12.5px] text-gray-muted leading-relaxed">
-                SkillNest is a marketplace connecting independent freelancers with clients worldwide. Freelancers are independent contractors, not employees of SkillNest.{'\n\n'}
-                © 2026 SkillNest. All rights reserved.
+                NavoNext is a marketplace connecting independent freelancers with clients worldwide. Freelancers are independent contractors, not employees of NavoNext.{'\n\n'}
+                © 2026 NavoNext. All rights reserved.
               </Text>
             </View>
           </View>

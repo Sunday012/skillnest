@@ -8,7 +8,7 @@ export default function SignupRoleScreen() {
 
   return (
     <AuthShell
-      eyebrow="Join SkillNest"
+      eyebrow="Join NavoNext"
       title="Freelance services. On demand."
       subtitle="Choose how you want to start. We will ask for your details next."
       mobilePanel={false}

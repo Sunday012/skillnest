@@ -8,6 +8,7 @@ import {
   TextInput,
   useWindowDimensions,
   Platform,
+  Image,
 } from 'react-native';
 import { useRouter, Redirect } from 'expo-router';
 import { useAdminAuth } from '../../src/context/AdminAuthContext';
@@ -189,10 +190,11 @@ export default function AdminDashboardScreen() {
       {/* SIDEBAR / TOPNAV HEADER */}
       <View style={isWide ? styles.sidebar : styles.mobileNav}>
         <View style={styles.sbLogoRow}>
-          <View style={styles.sbMark}>
-            <Text style={styles.sbMarkText}>S</Text>
-          </View>
-          <Text style={styles.sbLogoTitle}>SkillNest Admin</Text>
+          <Image
+            source={require('../../assets/logo.png')}
+            style={{ width: 110, height: 32, resizeMode: 'contain' }}
+          />
+          <Text style={styles.sbLogoTitle}>Admin</Text>
         </View>
 
         <ScrollView

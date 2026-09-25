@@ -2,6 +2,7 @@ import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import type { ReactNode } from 'react';
 import {
+  Image,
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
@@ -176,7 +177,7 @@ export function AuthShell({
                   className="mt-4 max-w-[430px] text-[15px] leading-6 text-white"
                   style={{ color: '#FFFFFF' }}
                 >
-                  SkillNest pairs verified talent with escrow-backed projects, clear milestones,
+                  NavoNext pairs verified talent with escrow-backed projects, clear milestones,
                   and a smoother way to get creative work delivered.
                 </Text>
 
@@ -247,22 +248,10 @@ export function BrandMark({
 }) {
   return (
     <View className="flex-row items-center gap-3">
-      <View className="h-10 w-10 items-center justify-center rounded-[12px] bg-pink">
-        <Text className="font-manrope-extraBold text-[18px] text-white">S</Text>
-      </View>
-      <View>
-        <Text className={`font-manrope-extraBold text-[21px] ${inverse ? 'text-white' : 'text-ink'}`}>
-          SkillNest
-        </Text>
-        {showTagline && (
-          <Text
-            className={`text-[12px] ${inverse ? 'text-white' : 'text-gray-muted'}`}
-            style={inverse ? { color: 'rgba(255, 255, 255, 0.75)' } : undefined}
-          >
-            Micro-skill marketplace
-          </Text>
-        )}
-      </View>
+      <Image
+        source={require('../../../assets/logo.png')}
+        style={{ width: 125, height: 38, resizeMode: 'contain' }}
+      />
     </View>
   );
 }

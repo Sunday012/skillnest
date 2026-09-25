@@ -158,7 +158,7 @@ export const INITIAL_APPROVALS: AdminApprovalItem[] = [
     submittedDate: '18 Sep 2026',
     submittedDaysAgo: '2 days ago',
     status: 'Pending Review',
-    description: 'ID document and portfolio (3 video samples) uploaded. No prior SkillNest history.',
+    description: 'ID document and portfolio (3 video samples) uploaded. No prior NavoNext history.',
     documents: {
       idType: 'Passport (Japan)',
       idFileName: 'passport_kaito_tanaka.pdf',
@@ -215,7 +215,7 @@ export const INITIAL_DISPUTES: AdminDisputeItem[] = [
     chatHistory: [
       { sender: 'Ravi Mehta (Client)', time: '3 days ago', text: 'The motion graphics in cut 2 don’t follow the storyboard agreed upon in Milestone 1.' },
       { sender: 'Aria Sol (Freelancer)', time: '2 days ago', text: 'The storyboard changes were discussed in chat and approved before rendering.' },
-      { sender: 'SkillNest Mediator', time: '1 day ago', text: 'Reviewing milestone agreement and export history.' },
+      { sender: 'NavoNext Mediator', time: '1 day ago', text: 'Reviewing milestone agreement and export history.' },
     ],
   },
   {
